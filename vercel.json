@@ -4,6 +4,6 @@
   "outputDirectory": "dist",
   "rewrites": [
     { "source": "/Cars4Mars/:path*", "destination": "/index.html" },
-    { "source": "/((?!sitemap.xml|release.json|humans.txt|reports/).*)", "destination": "/index.html" }
+    { "source": "/((?!robots.txt|sitemap.xml|release.json|humans.txt|reports/).*)", "destination": "/index.html" }
   ]
 }

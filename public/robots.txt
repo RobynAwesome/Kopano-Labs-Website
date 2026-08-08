@@ -1,0 +1,22 @@
+# Kopano Labs crawler guidance
+# Public discovery is welcome. Follow the sitemap and stay on public product/evidence surfaces.
+
+User-agent: *
+Allow: /
+Allow: /labs/
+Allow: /systems/
+Allow: /Cars4Mars/
+Allow: /proof/
+Allow: /reports/
+Allow: /sitemap.xml
+Allow: /release.json
+Allow: /humans.txt
+
+Disallow: /admin/
+Disallow: /api/
+Disallow: /internal/
+Disallow: /private/
+Disallow: /telemetry/
+Disallow: /debug/
+
+Sitemap: https://kopanolabs.com/sitemap.xml

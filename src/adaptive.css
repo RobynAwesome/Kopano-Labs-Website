@@ -1,0 +1,73 @@
+.adaptive-command .command-body {
+  gap: 18px;
+}
+
+.intent-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+}
+
+.intent-form input {
+  width: 100%;
+  min-width: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.05);
+  color: inherit;
+  outline: none;
+}
+
+.intent-form input:focus {
+  border-color: rgba(245,166,35,.7);
+  box-shadow: 0 0 0 3px rgba(245,166,35,.12);
+}
+
+.intent-form button,
+.intent-shortcuts button {
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(255,255,255,.05);
+  color: inherit;
+  cursor: pointer;
+}
+
+.intent-form button {
+  padding: 12px 16px;
+  border-radius: 14px;
+  font-weight: 700;
+  background: rgba(245,166,35,.14);
+  border-color: rgba(245,166,35,.34);
+}
+
+.intent-shortcuts {
+  display: grid;
+  gap: 8px;
+}
+
+.intent-shortcuts button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 11px 12px;
+  border-radius: 12px;
+  text-align: left;
+}
+
+.intent-shortcuts button:hover,
+.intent-shortcuts button:focus-visible {
+  border-color: rgba(0,230,118,.38);
+  background: rgba(0,230,118,.08);
+}
+
+.intent-shortcuts span {
+  color: var(--muted-strong, #c4d2dd);
+  font-size: .9rem;
+}
+
+@media (max-width: 720px) {
+  .intent-form {
+    grid-template-columns: 1fr;
+  }
+}

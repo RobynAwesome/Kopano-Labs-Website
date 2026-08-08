@@ -19,11 +19,26 @@ jobs:
         run: |
           test -f public/sitemap.xml
           test -f public/release.json
+          test -f public/humans.txt
+          test ! -f public/robots.txt
           grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
+      - name: Verify indexed product routes
+        run: |
+          grep -q 'https://kopanolabs.com/labs/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
       - name: Verify core product surfaces
         run: |
           grep -q 'Kopano Labs' src/App.tsx
           grep -q 'Cars4Mars' src/App.tsx
           grep -q 'Experiments with a path to impact' src/App.tsx
           grep -q 'Show the lineage. Show the state.' src/App.tsx
+          grep -q "labs: '/labs/'" src/App.tsx
+          grep -q "systems: '/systems/'" src/App.tsx
+          grep -q "proof: '/proof/'" src/App.tsx
+      - name: Verify implementation priority is explicit
+        run: |
+          test -f IMPLEMENTATION_ORDER.md
+          grep -q 'P5 — Human verification + first-party telemetry' IMPLEMENTATION_ORDER.md

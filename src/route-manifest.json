@@ -1,0 +1,72 @@
+{
+  "site": {
+    "origin": "https://kopanolabs.com",
+    "defaultIntent": "explore"
+  },
+  "routes": [
+    {
+      "id": "cars4mars",
+      "path": "/Cars4Mars/",
+      "title": "Cars4Mars — Kopano Labs",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 1,
+      "intents": ["mars", "rover", "engineering", "evidence", "competition", "build"],
+      "humanPrompt": "I want the Mars rover programme and its evidence."
+    },
+    {
+      "id": "home",
+      "path": "/",
+      "title": "Kopano Labs — South African Systems Studio",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 2,
+      "intents": ["explore", "kopano", "south africa", "studio"],
+      "humanPrompt": "I want to understand Kopano Labs."
+    },
+    {
+      "id": "labs",
+      "path": "/labs/",
+      "title": "Experiments — Kopano Labs",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 3,
+      "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
+      "humanPrompt": "I need an experiment or practical tool."
+    },
+    {
+      "id": "systems",
+      "path": "/systems/",
+      "title": "Systems — Kopano Labs",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 4,
+      "intents": ["systems", "crisisconnect", "fives arena", "starfall", "infrastructure"],
+      "humanPrompt": "I want to inspect the systems being built."
+    },
+    {
+      "id": "proof",
+      "path": "/proof/",
+      "title": "Proof & Lineage — Kopano Labs",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 5,
+      "intents": ["proof", "source", "audit", "lineage", "verification"],
+      "humanPrompt": "I want evidence, source lineage and verification."
+    }
+  ],
+  "protectedPaths": [
+    "/admin/",
+    "/api/",
+    "/internal/",
+    "/private/",
+    "/telemetry/",
+    "/debug/"
+  ],
+  "publicArtifacts": [
+    "/sitemap.xml",
+    "/release.json",
+    "/humans.txt",
+    "/reports/"
+  ]
+}

@@ -15,7 +15,12 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
-      - name: Verify public metadata
+      - name: Verify generated discovery policy is committed
+        run: |
+          git diff --exit-code -- public/sitemap.xml public/robots.txt
+          test -f src/route-manifest.json
+          test -f scripts/generate-crawl-policy.mjs
+      - name: Verify public metadata and guided crawler policy
         run: |
           test -f public/robots.txt
           test -f public/sitemap.xml
@@ -29,21 +34,23 @@ jobs:
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
           grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
-      - name: Verify indexed product routes
+      - name: Verify sitemap follows adaptive route registry
         run: |
+          grep -q 'https://kopanolabs.com/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/labs/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
-      - name: Verify core product surfaces
+          first_loc=$(grep -o '<loc>[^<]*' public/sitemap.xml | head -1)
+          test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
+          grep -q '"sitemapOrder": 1' src/route-manifest.json
+          grep -q '"id": "cars4mars"' src/route-manifest.json
+      - name: Verify human adaptive routing uses same registry
         run: |
-          grep -q 'Kopano Labs' src/App.tsx
-          grep -q 'Cars4Mars' src/App.tsx
-          grep -q 'Experiments with a path to impact' src/App.tsx
-          grep -q 'Show the lineage. Show the state.' src/App.tsx
-          grep -q "labs: '/labs/'" src/App.tsx
-          grep -q "systems: '/systems/'" src/App.tsx
-          grep -q "proof: '/proof/'" src/App.tsx
+          grep -q 'routeForIntent' src/App.tsx
+          grep -q 'publicRoutes' src/App.tsx
+          grep -q 'What do you want?' src/App.tsx
+          grep -q 'route-manifest.json' src/routeRegistry.ts
       - name: Verify implementation priority is explicit
         run: |
           test -f IMPLEMENTATION_ORDER.md

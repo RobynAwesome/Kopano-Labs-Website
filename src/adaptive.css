@@ -66,6 +66,17 @@
   font-size: .9rem;
 }
 
+/* APWA experience tiers: same information, different rendering cost. */
+html[data-experience-tier='balanced'] .ambient { opacity: .68; filter: blur(18px); }
+html[data-experience-tier='balanced'] .spatial-stage { box-shadow: 0 30px 90px rgba(0,0,0,.42); }
+html[data-experience-tier='lite'] .ambient { display: none; }
+html[data-experience-tier='lite'] .kopano-scene canvas { opacity: .46; }
+html[data-experience-tier='lite'] .spatial-stage { backdrop-filter: none; box-shadow: 0 16px 48px rgba(0,0,0,.35); }
+html[data-experience-tier='lite'] .scene-label { backdrop-filter: none; }
+html[data-save-data='true'] .spatial-mars::before,
+html[data-save-data='true'] .split-section::after { background-image: none; }
+html[data-motion='reduced'] * { scroll-behavior: auto !important; }
+
 @media (max-width: 720px) {
   .intent-form {
     grid-template-columns: 1fr;

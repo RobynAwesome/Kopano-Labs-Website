@@ -1,0 +1,16 @@
+{
+  "site": "Kopano Labs",
+  "domain": "https://KopanoLabs.com",
+  "source_repository": "RobynAwesome/Kopano-Labs-Website",
+  "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "production_dependency_policy": {
+    "retired_repository": "RobynAwesome/cars4mars-landingpage",
+    "retired_repo_is_dependency": false,
+    "money_managing_app_is_dependency": false
+  },
+  "surface": "kopano-studio-public",
+  "cars4mars": {
+    "state": "BUILD",
+    "evidence_rule": "design claims remain separate from physical proof"
+  }
+}

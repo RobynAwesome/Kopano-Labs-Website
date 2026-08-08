@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 type View = 'home' | 'labs' | 'systems' | 'cars4mars' | 'proof';
 
@@ -26,19 +26,42 @@ const proof = [
   ['BUILD MODEL', 'Public work moves through visible states', 'idea → experiment → proof → production'],
 ];
 
+const routeByView: Record<View, string> = {
+  home: '/',
+  labs: '/labs/',
+  systems: '/systems/',
+  cars4mars: '/Cars4Mars/',
+  proof: '/proof/',
+};
+
+function viewFromPath(pathname: string): View {
+  const path = pathname.toLowerCase().replace(/\/+$/, '') || '/';
+  if (path === '/labs') return 'labs';
+  if (path === '/systems') return 'systems';
+  if (path === '/cars4mars') return 'cars4mars';
+  if (path === '/proof') return 'proof';
+  return 'home';
+}
+
 function NavButton({ id, active, onClick, children }: { id: View; active: View; onClick: (id: View) => void; children: React.ReactNode }) {
   return <button className={`nav-button ${active === id ? 'active' : ''}`} onClick={() => onClick(id)}>{children}</button>;
 }
 
 export function App() {
-  const initial = useMemo<View>(() => location.pathname.toLowerCase().startsWith('/cars4mars') ? 'cars4mars' : 'home', []);
+  const initial = useMemo<View>(() => viewFromPath(location.pathname), []);
   const [view, setView] = useState<View>(initial);
   const [query, setQuery] = useState('');
 
+  useEffect(() => {
+    const syncFromHistory = () => setView(viewFromPath(location.pathname));
+    window.addEventListener('popstate', syncFromHistory);
+    return () => window.removeEventListener('popstate', syncFromHistory);
+  }, []);
+
   const navigate = (next: View) => {
     setView(next);
-    const path = next === 'cars4mars' ? '/Cars4Mars/' : '/';
-    history.pushState({}, '', path);
+    const path = routeByView[next];
+    if (location.pathname !== path) history.pushState({}, '', path);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

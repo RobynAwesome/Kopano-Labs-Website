@@ -1,0 +1,9 @@
+{
+  "framework": "vite",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "rewrites": [
+    { "source": "/Cars4Mars/:path*", "destination": "/index.html" },
+    { "source": "/((?!robots.txt|sitemap.xml|release.json|reports/).*)", "destination": "/index.html" }
+  ]
+}

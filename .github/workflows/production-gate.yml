@@ -45,12 +45,28 @@ jobs:
           test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
           grep -q '"sitemapOrder": 1' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
+      - name: Verify adaptive SEO metadata
+        run: |
+          grep -q 'rel="canonical"' index.html
+          grep -q 'name="robots" content="index,follow' index.html
+          grep -q 'application/ld+json' index.html
+          grep -q 'Organization' index.html
+          grep -q 'canonicalForView' src/App.tsx
+          grep -q 'route.description' src/App.tsx
+          grep -q 'og:url' src/App.tsx
+          grep -q '"description"' src/route-manifest.json
       - name: Verify human adaptive routing uses same registry
         run: |
           grep -q 'routeForIntent' src/App.tsx
           grep -q 'publicRoutes' src/App.tsx
           grep -q 'What do you want?' src/App.tsx
           grep -q 'route-manifest.json' src/routeRegistry.ts
+      - name: Verify Search Console baseline is preserved
+        run: |
+          test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
+          grep -q '53' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
+          grep -q '1.18K' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
+          grep -q 'Blocked by robots.txt' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
       - name: Verify implementation priority is explicit
         run: |
           test -f IMPLEMENTATION_ORDER.md

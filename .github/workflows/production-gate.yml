@@ -61,6 +61,21 @@ jobs:
           grep -q 'publicRoutes' src/App.tsx
           grep -q 'What do you want?' src/App.tsx
           grep -q 'route-manifest.json' src/routeRegistry.ts
+      - name: Verify spatial brand and experience runtime
+        run: |
+          test -f public/assets/brand/kopano-mark.svg
+          test -f public/assets/brand/kopano-logo.svg
+          test -f public/assets/cars4mars/astronaut-campaign.svg
+          test -f public/assets/diagrams/agent-routing.svg
+          test -f src/components/KopanoScene.tsx
+          test -f src/experienceRuntime.ts
+          grep -q '@react-three/fiber' package.json
+          grep -q '@react-three/drei' package.json
+          grep -q 'gsap' package.json
+          grep -q 'Save-Data\|saveData' src/experienceRuntime.ts
+          grep -q 'experienceTier' src/experienceRuntime.ts
+          grep -q 'astronaut-campaign.svg' src/spatial.css
+          grep -q 'agent-routing.svg' src/spatial.css
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md

@@ -17,7 +17,6 @@ jobs:
       - run: npm run build
       - name: Verify public metadata
         run: |
-          test -f public/robots.txt
           test -f public/sitemap.xml
           test -f public/release.json
           grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json

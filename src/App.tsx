@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import './adaptive.css';
-import { pathForView, publicRoutes, routeForIntent, type View, viewForPath } from './routeRegistry';
+import { canonicalForView, pathForView, publicRoutes, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
 
 const experiments = [
   ['Gig Matcher', 'Jobs + income', 'Match people to verified local work and apprenticeship paths.'],
@@ -30,6 +30,11 @@ function NavButton({ id, active, onClick, children }: { id: View; active: View; 
   return <button className={`nav-button ${active === id ? 'active' : ''}`} onClick={() => onClick(id)}>{children}</button>;
 }
 
+function setMeta(selector: string, attribute: 'content' | 'href', value: string) {
+  const node = document.querySelector(selector);
+  if (node) node.setAttribute(attribute, value);
+}
+
 export function App() {
   const initial = useMemo<View>(() => viewForPath(location.pathname), []);
   const [view, setView] = useState<View>(initial);
@@ -43,8 +48,16 @@ export function App() {
   }, []);
 
   useEffect(() => {
-    const route = publicRoutes.find((entry) => entry.id === view);
-    if (route) document.title = route.title;
+    const route = routeForView(view);
+    const canonical = canonicalForView(view);
+    document.title = route.title;
+    setMeta('meta[name="description"]', 'content', route.description);
+    setMeta('link[rel="canonical"]', 'href', canonical);
+    setMeta('meta[property="og:title"]', 'content', route.title);
+    setMeta('meta[property="og:description"]', 'content', route.description);
+    setMeta('meta[property="og:url"]', 'content', canonical);
+    setMeta('meta[name="twitter:title"]', 'content', route.title);
+    setMeta('meta[name="twitter:description"]', 'content', route.description);
   }, [view]);
 
   const navigate = (next: View) => {

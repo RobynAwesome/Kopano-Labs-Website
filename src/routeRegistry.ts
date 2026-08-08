@@ -2,10 +2,11 @@ import manifest from './route-manifest.json';
 
 export type View = 'home' | 'labs' | 'systems' | 'cars4mars' | 'proof';
 
-type RouteRecord = {
+export type RouteRecord = {
   id: View;
   path: string;
   title: string;
+  description: string;
   index: boolean;
   crawl: boolean;
   sitemapOrder: number;
@@ -24,8 +25,12 @@ export const publicRoutes = [...routeManifest.routes]
   .filter((route) => route.index && route.crawl)
   .sort((a, b) => a.sitemapOrder - b.sitemapOrder);
 
-export const pathForView = (view: View) =>
-  routeManifest.routes.find((route) => route.id === view)?.path ?? '/';
+export const routeForView = (view: View) =>
+  routeManifest.routes.find((route) => route.id === view) ?? routeManifest.routes.find((route) => route.id === 'home')!;
+
+export const pathForView = (view: View) => routeForView(view).path;
+
+export const canonicalForView = (view: View) => `${routeManifest.site.origin}${routeForView(view).path}`;
 
 export const viewForPath = (pathname: string): View => {
   const normalized = pathname.toLowerCase();

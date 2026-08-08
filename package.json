@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "crawl:generate": "node scripts/generate-crawl-policy.mjs",
+    "build": "npm run crawl:generate && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

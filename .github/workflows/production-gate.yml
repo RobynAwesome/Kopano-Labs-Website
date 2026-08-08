@@ -1,0 +1,31 @@
+name: production-gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build-and-surface-gates:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm install
+      - run: npm run build
+      - name: Verify public metadata
+        run: |
+          test -f public/robots.txt
+          test -f public/sitemap.xml
+          test -f public/release.json
+          grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json
+          grep -q 'retired_repo_is_dependency.*false' public/release.json
+      - name: Verify core product surfaces
+        run: |
+          grep -q 'Kopano Labs' src/App.tsx
+          grep -q 'Cars4Mars' src/App.tsx
+          grep -q 'Experiments with a path to impact' src/App.tsx
+          grep -q 'Show the lineage. Show the state.' src/App.tsx

@@ -15,24 +15,26 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
+
       - name: Verify stateless renter governance entry
         run: |
           test -f AGENTS.md
           test -f docs/STATELESS_RENTER_ENTRYWAY.md
           test -f public/governance.json
           grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' AGENTS.md
-          grep -q 'RobynAwesome/Kopano-Labs-Website' AGENTS.md
           grep -q 'Kopano-Labs/Introduction-to-MCP' AGENTS.md
           grep -q 'RobynAwesome/Money-managing-app' AGENTS.md
           grep -q 'RobynAwesome/cars4mars-landingpage' AGENTS.md
           grep -q 'a block is a branch point' public/governance.json
           grep -q 'transition_only' public/governance.json
+
       - name: Verify generated discovery policy is committed
         run: |
           git diff --exit-code -- public/sitemap.xml public/robots.txt
           test -f src/route-manifest.json
           test -f scripts/generate-crawl-policy.mjs
           test -f scripts/generate-route-shells.mjs
+
       - name: Verify public metadata and guided crawler policy
         run: |
           test -f public/robots.txt
@@ -42,15 +44,17 @@ jobs:
           grep -q 'User-agent: \*' public/robots.txt
           grep -q 'Allow: /Cars4Mars/' public/robots.txt
           grep -q 'Allow: /proof/' public/robots.txt
-          grep -q 'Allow: /reports/KOPANO_LABS.pdf' public/robots.txt
+          ! grep -q 'KOPANO_LABS.pdf' public/robots.txt
           grep -q 'Disallow: /admin/' public/robots.txt
           grep -q 'Disallow: /api/' public/robots.txt
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
-          grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json
+          grep -q '"canonical_source_repository": null' public/release.json
+          grep -q '"deployment_source_observed": "RobynAwesome/Kopano-Labs-Website"' public/release.json
           grep -q 'Kopano-Labs/Introduction-to-MCP' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
           grep -q 'money_managing_app_is_dependency.*false' public/release.json
           grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' public/release.json
+
       - name: Verify sitemap follows adaptive route registry
         run: |
           grep -q 'https://kopanolabs.com/' public/sitemap.xml
@@ -58,12 +62,12 @@ jobs:
           grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/reports/KOPANO_LABS.pdf' public/sitemap.xml
+          ! grep -q 'KOPANO_LABS.pdf' public/sitemap.xml
           first_loc=$(grep -o '<loc>[^<]*' public/sitemap.xml | head -1)
           test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
           grep -q '"sitemapOrder": 1' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
-          grep -q '"/reports/KOPANO_LABS.pdf"' src/route-manifest.json
+
       - name: Verify adaptive SEO metadata
         run: |
           grep -q 'rel="canonical"' index.html
@@ -74,6 +78,7 @@ jobs:
           grep -q 'route.description' src/App.tsx
           grep -q 'og:url' src/App.tsx
           grep -q '"description"' src/route-manifest.json
+
       - name: Verify route-specific crawl shells
         run: |
           test -f dist/Cars4Mars/index.html
@@ -86,6 +91,7 @@ jobs:
           grep -q 'rel="canonical" href="https://kopanolabs.com/labs/"' dist/labs/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/systems/"' dist/systems/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/proof/"' dist/proof/index.html
+
       - name: Verify human adaptive routing uses same registry
         run: |
           grep -q 'routeForIntent' src/App.tsx
@@ -95,6 +101,7 @@ jobs:
           test -f src/directory.css
           grep -q 'SpatialDirectory' src/App.tsx
           grep -q 'directory-stage' src/directory.css
+
       - name: Verify spatial brand and experience runtime
         run: |
           test -f public/assets/brand/kopano-mark.svg
@@ -110,25 +117,25 @@ jobs:
           grep -q 'experienceTier' src/experienceRuntime.ts
           grep -q 'astronaut-campaign.svg' src/App.tsx
           grep -q 'agent-routing.svg' src/App.tsx
-      - name: Verify Cars4Mars evidence honesty and report state
+
+      - name: Verify Cars4Mars evidence honesty and submission state
         run: |
           grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
           grep -q 'not concept art' src/App.tsx
-          grep -q 'never fabricate the PDF' IMPLEMENTATION_ORDER.md
           test -f src/components/Cars4MarsMissionControl.tsx
-          test -f docs/cars4mars/DFR-01.md
-          grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
-          grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
-          grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json
-          grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' docs/cars4mars/DFR-01.md
-          grep -q 'REMEDIATION_REQUIRED' public/release.json
-          grep -q 'Google Drive external-origin rewrite' public/release.json
+          grep -q 'SUBMISSION COMPLETE' src/components/Cars4MarsMissionControl.tsx
+          ! grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
+          grep -q '"submission_state": "COMPLETE"' public/release.json
+          grep -q '"website_dependency": false' public/release.json
+          grep -q '"public_delivery_gate": false' public/release.json
+
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
           grep -q '53' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
           grep -q '1.18K' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
           grep -q 'Blocked by robots.txt' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
+
       - name: Verify implementation priority is explicit
         run: |
           test -f IMPLEMENTATION_ORDER.md

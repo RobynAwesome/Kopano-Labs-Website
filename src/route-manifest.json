@@ -60,15 +60,26 @@
       "humanPrompt": "I want to support or collaborate on Cars4Mars."
     },
     {
-      "id": "home",
-      "path": "/",
-      "title": "Kopano Labs — South African Systems Studio",
-      "description": "Kopano Labs is a South African systems studio building experiments, software, games, infrastructure and public proof around real-world problems.",
+      "id": "foc",
+      "path": "/FOC/",
+      "title": "FOC Validation — Kopano Labs",
+      "description": "Kopano Labs FOC validation matrix: working state, public visibility, backing and recency across active MVPs.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 6,
-      "intents": ["explore", "kopano", "south africa", "studio", "official website"],
-      "humanPrompt": "I want to understand Kopano Labs."
+      "intents": ["foc", "fake of concept", "freedom of concept", "validation", "backing", "mvp state"],
+      "humanPrompt": "I want to inspect FOC validation across the MVP portfolio."
+    },
+    {
+      "id": "home",
+      "path": "/",
+      "title": "Kopano Labs — What We Are Building Now",
+      "description": "Current Kopano Labs work: Cars4Mars, FiveS Arena, KasiLink, Cape Campus, Starfall Salvage and active validation work from South Africa.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 7,
+      "intents": ["explore", "kopano", "south africa", "now", "current work", "official website"],
+      "humanPrompt": "I want to see what Kopano Labs is doing now."
     },
     {
       "id": "labs",
@@ -77,7 +88,7 @@
       "description": "Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 7,
+      "sitemapOrder": 8,
       "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
       "humanPrompt": "I need an experiment or practical tool."
     },
@@ -88,7 +99,7 @@
       "description": "Inspect Kopano Labs systems including Kopano Context, CrisisConnect, FiveS Arena and Starfall Salvage, each with its own evidence and lifecycle.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 8,
+      "sitemapOrder": 9,
       "intents": ["systems", "crisisconnect", "fives arena", "starfall", "infrastructure"],
       "humanPrompt": "I want to inspect the systems being built."
     },
@@ -99,7 +110,7 @@
       "description": "Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 9,
+      "sitemapOrder": 10,
       "intents": ["proof", "source", "audit", "lineage", "verification"],
       "humanPrompt": "I want evidence, source lineage and verification."
     }

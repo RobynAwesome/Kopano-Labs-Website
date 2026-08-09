@@ -12,7 +12,8 @@ This file is the execution ladder for https://KopanoLabs.com. New ideas are appe
 - Rebuild from scratch around the actual Kopano Labs / Kopano Studio architecture.
 - Preserve the strongest implementation lineage from `Introduction-to-MCP` without copying unrelated MCP internals.
 - Public surface must expose Labs, Systems, Cars4Mars, Proof/ledger, and workspace-oriented interaction.
-- Mobile-first, accessible, crawlable, and visually stronger than the old Lovable/static surfaces.
+- Mobile-first, accessible, crawlable, adaptive by hardware/network tier, and visually stronger than the old Lovable/static surfaces.
+- Visual authority: main-site interaction DNA → `Introduction-to-MCP` product architecture → Cars4Mars cinematic evidence → owned/forked graphics/tooling repositories.
 
 ## P2 — Source-lineage extraction — ACTIVE
 - Extract and preserve all website-relevant strategy, brand, Studio, deployment, and public-surface references from `Kopano-Labs/Introduction-to-MCP`.
@@ -23,10 +24,12 @@ This file is the execution ladder for https://KopanoLabs.com. New ideas are appe
 - Restore `/reports/KOPANO_LABS.pdf` only from a verified report artifact; never fabricate the PDF.
 - Separate design state from physical-build evidence.
 - Keep public build/evidence ledger semantics.
+- Cars4Mars remains the first discovery/evidence route in the adaptive public map.
 
 ## P4 — Production-readiness and indexing gates
-- Keep `sitemap.xml`, `release.json`, canonical metadata, build checks, accessibility baseline, route checks, and source-production parity checks.
-- `robots.txt` is intentionally absent. Public crawling is allowed by default.
+- Keep `sitemap.xml`, `robots.txt`, `release.json`, canonical metadata, build checks, accessibility baseline, route checks, and source-production parity checks synchronized from the public route/intention registry.
+- `robots.txt` is a crawler guidance policy, not a security boundary: public/evidence routes are welcomed; admin/API/internal/private/telemetry/debug surfaces are disallowed for compliant crawlers.
+- `sitemap.xml` is generated from the same route registry used by human adaptive routing.
 - No stale repository lineage in release metadata.
 
 ## P5 — Human verification + first-party telemetry — QUEUED BEHIND P1–P4

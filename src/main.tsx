@@ -6,6 +6,8 @@ import './styles.css';
 import './spatial.css';
 import './directory.css';
 import './mission.css';
+import './now.css';
+import './foc.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

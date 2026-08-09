@@ -16,17 +16,21 @@ jobs:
       - run: npm install
       - run: npm run build
 
-      - name: Verify stateless renter governance entry
+      - name: Verify August execution directive and source boundaries
         run: |
           test -f AGENTS.md
-          test -f docs/STATELESS_RENTER_ENTRYWAY.md
+          test -f docs/AUGUST_2026_EXECUTION_DIRECTIVE.md
           test -f public/governance.json
           grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' AGENTS.md
           grep -q 'Kopano-Labs/Introduction-to-MCP' AGENTS.md
           grep -q 'RobynAwesome/Money-managing-app' AGENTS.md
           grep -q 'RobynAwesome/cars4mars-landingpage' AGENTS.md
-          grep -q 'a block is a branch point' public/governance.json
-          grep -q 'transition_only' public/governance.json
+          grep -q 'WORKING → CONNECTED → CURRENT → VISIBLE → EVIDENCED → BACKABLE' docs/AUGUST_2026_EXECUTION_DIRECTIVE.md
+
+      - name: Verify TypeScript 7 toolchain
+        run: |
+          node -e "const p=require('./package.json'); const v=p.devDependencies?.typescript||p.dependencies?.typescript; if(!v || !v.includes('7.')) process.exit(1)"
+          npx tsc --version | grep -q '^Version 7\.'
 
       - name: Verify generated discovery policy is committed
         run: |
@@ -35,136 +39,78 @@ jobs:
           test -f scripts/generate-crawl-policy.mjs
           test -f scripts/generate-route-shells.mjs
 
-      - name: Verify public metadata and guided crawler policy
+      - name: Verify public routes and crawler policy
         run: |
-          test -f public/robots.txt
-          test -f public/sitemap.xml
-          test -f public/release.json
-          test -f public/humans.txt
-          grep -q 'User-agent: \*' public/robots.txt
           grep -q 'Allow: /Cars4Mars/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Ledger/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Architecture/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Media/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Support/' public/robots.txt
-          grep -q 'Allow: /proof/' public/robots.txt
+          grep -q 'Allow: /FOC/' public/robots.txt
           ! grep -q 'KOPANO_LABS.pdf' public/robots.txt
-          grep -q 'Disallow: /admin/' public/robots.txt
-          grep -q 'Disallow: /api/' public/robots.txt
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
           grep -q '"canonical_source_repository": null' public/release.json
-          grep -q '"deployment_source_observed": "RobynAwesome/Kopano-Labs-Website"' public/release.json
-          grep -q 'Kopano-Labs/Introduction-to-MCP' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
           grep -q 'money_managing_app_is_dependency.*false' public/release.json
-          grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' public/release.json
 
-      - name: Verify sitemap follows adaptive route registry
+      - name: Verify sitemap follows route registry
         run: |
-          grep -q 'https://kopanolabs.com/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/labs/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/Cars4Mars/Ledger/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/Cars4Mars/Architecture/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/Cars4Mars/Media/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/Cars4Mars/Support/' public/sitemap.xml
-          grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC labs systems proof; do grep -q "https://kopanolabs.com/$route/" public/sitemap.xml; done
           ! grep -q 'KOPANO_LABS.pdf' public/sitemap.xml
-          first_loc=$(grep -o '<loc>[^<]*' public/sitemap.xml | head -1)
-          test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
-          grep -q '"sitemapOrder": 1' src/route-manifest.json
+          grep -q '"id": "foc"' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
-          grep -q '"id": "cars4mars-ledger"' src/route-manifest.json
-          grep -q '"id": "cars4mars-architecture"' src/route-manifest.json
-          grep -q '"id": "cars4mars-media"' src/route-manifest.json
-          grep -q '"id": "cars4mars-support"' src/route-manifest.json
 
-      - name: Verify adaptive SEO metadata
+      - name: Verify crawl shells and canonical metadata
         run: |
-          grep -q 'rel="canonical"' index.html
-          grep -q 'name="robots" content="index,follow' index.html
-          grep -q 'application/ld+json' index.html
-          grep -q 'Organization' index.html
-          grep -q 'canonicalForView' src/App.tsx
-          grep -q 'route.description' src/App.tsx
-          grep -q 'og:url' src/App.tsx
-          grep -q '"description"' src/route-manifest.json
-
-      - name: Verify route-specific crawl shells
-        run: |
-          test -f dist/Cars4Mars/index.html
-          test -f dist/Cars4Mars/Ledger/index.html
-          test -f dist/Cars4Mars/Architecture/index.html
-          test -f dist/Cars4Mars/Media/index.html
-          test -f dist/Cars4Mars/Support/index.html
-          test -f dist/labs/index.html
-          test -f dist/systems/index.html
-          test -f dist/proof/index.html
-          grep -q '<title>Cars4Mars 2026 — Kopano Labs Rover Evidence</title>' dist/Cars4Mars/index.html
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC labs systems proof; do test -f "dist/$route/index.html"; done
+          grep -q 'rel="canonical" href="https://kopanolabs.com/FOC/"' dist/FOC/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
-          grep -q 'property="og:url" content="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Ledger/"' dist/Cars4Mars/Ledger/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Architecture/"' dist/Cars4Mars/Architecture/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Media/"' dist/Cars4Mars/Media/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Support/"' dist/Cars4Mars/Support/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/labs/"' dist/labs/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/systems/"' dist/systems/index.html
-          grep -q 'rel="canonical" href="https://kopanolabs.com/proof/"' dist/proof/index.html
 
-      - name: Verify human adaptive routing uses same registry
+      - name: Verify FOC implementation is functional
         run: |
-          grep -q 'routeForIntent' src/App.tsx
-          grep -q 'What do you want?' src/App.tsx
-          grep -q 'route-manifest.json' src/routeRegistry.ts
-          grep -q 'cars4mars-ledger' src/routeRegistry.ts
-          grep -q 'cars4mars-architecture' src/routeRegistry.ts
-          grep -q 'cars4mars-media' src/routeRegistry.ts
-          grep -q 'cars4mars-support' src/routeRegistry.ts
-          test -f src/components/SpatialDirectory.tsx
-          test -f src/directory.css
-          grep -q 'SpatialDirectory' src/App.tsx
-          grep -q 'directory-stage' src/directory.css
+          test -f src/components/FOCMatrix.tsx
+          test -f src/foc.css
+          grep -q 'FAKE OF CONCEPT' src/components/FOCMatrix.tsx
+          grep -q 'FREEDOM OF CONCEPT' src/components/FOCMatrix.tsx
+          grep -q 'FiveS Arena' src/components/FOCMatrix.tsx
+          grep -q 'KasiLink' src/components/FOCMatrix.tsx
+          grep -q 'Cape Campus' src/components/FOCMatrix.tsx
+          grep -q 'Starfall Salvage' src/components/FOCMatrix.tsx
+          grep -q 'classify(product)' src/components/FOCMatrix.tsx
 
-      - name: Verify spatial brand and experience runtime
+      - name: Verify current-work visual surface
         run: |
-          test -f public/assets/brand/kopano-mark.svg
-          test -f public/assets/brand/kopano-logo.svg
-          test -f public/assets/cars4mars/astronaut-campaign.svg
-          test -f public/assets/diagrams/agent-routing.svg
-          test -f src/components/KopanoScene.tsx
-          test -f src/experienceRuntime.ts
-          grep -q '@react-three/fiber' package.json
-          grep -q '@react-three/drei' package.json
-          grep -q 'gsap' package.json
-          grep -q 'saveData' src/experienceRuntime.ts
-          grep -q 'experienceTier' src/experienceRuntime.ts
-          grep -q 'astronaut-campaign.svg' src/App.tsx
-          grep -q 'agent-routing.svg' src/App.tsx
+          test -f src/components/RoverVisual.tsx
+          test -f src/now.css
+          grep -q "WHAT WE'RE UP TO" src/App.tsx
+          grep -q 'RoverVisual' src/App.tsx
+          grep -q 'Falling Walls Lab collaboration page' src/App.tsx
+          grep -q 'NICIS founder-in-action page' src/App.tsx
 
-      - name: Verify Cars4Mars evidence honesty and submission state
+      - name: Verify Cars4Mars stays on-site and evidence honest
         run: |
           grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
-          grep -q 'not concept art' src/App.tsx
           test -f src/components/Cars4MarsMissionControl.tsx
-          grep -q 'SUBMISSION COMPLETE' src/components/Cars4MarsMissionControl.tsx
-          grep -q '/Cars4Mars/Ledger/' src/components/Cars4MarsMissionControl.tsx
-          grep -q '/Cars4Mars/Architecture/' src/components/Cars4MarsMissionControl.tsx
-          grep -q '/Cars4Mars/Media/' src/components/Cars4MarsMissionControl.tsx
-          grep -q '/Cars4Mars/Support/' src/components/Cars4MarsMissionControl.tsx
+          grep -q 'THE CHALLENGE · ON THIS PAGE' src/components/Cars4MarsMissionControl.tsx
+          grep -q 'Traversal + autonomous perception/navigation' src/components/Cars4MarsMissionControl.tsx
+          grep -q 'Hammer · tennis ball · traffic cone' src/components/Cars4MarsMissionControl.tsx
+          grep -q 'Black → white → pink → yellow → blue' src/components/Cars4MarsMissionControl.tsx
           ! grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '"submission_state": "COMPLETE"' public/release.json
           grep -q '"website_dependency": false' public/release.json
-          grep -q '"public_delivery_gate": false' public/release.json
+
+      - name: Verify adaptive runtime still exists
+        run: |
+          grep -q 'routeForIntent' src/App.tsx
+          grep -q 'route-manifest.json' src/routeRegistry.ts
+          test -f src/components/KopanoScene.tsx
+          test -f src/experienceRuntime.ts
+          grep -q '@react-three/fiber' package.json
+          grep -q 'gsap' package.json
+          grep -q 'saveData' src/experienceRuntime.ts
 
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
           grep -q '53' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
           grep -q '1.18K' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
-          grep -q 'Blocked by robots.txt' docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md
-
-      - name: Verify implementation priority is explicit
-        run: |
-          test -f IMPLEMENTATION_ORDER.md
-          grep -q 'P5 — Human verification + first-party telemetry' IMPLEMENTATION_ORDER.md

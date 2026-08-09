@@ -1,12 +1,13 @@
 {
   "name": "kopano-labs-website",
   "private": true,
-  "version": "1.1.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
-    "build": "npm run crawl:generate && tsc -b && vite build",
+    "routes:generate": "node scripts/generate-route-shells.mjs",
+    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate",
     "preview": "vite preview"
   },
   "dependencies": {

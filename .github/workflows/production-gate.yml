@@ -43,6 +43,10 @@ jobs:
           test -f public/humans.txt
           grep -q 'User-agent: \*' public/robots.txt
           grep -q 'Allow: /Cars4Mars/' public/robots.txt
+          grep -q 'Allow: /Cars4Mars/Ledger/' public/robots.txt
+          grep -q 'Allow: /Cars4Mars/Architecture/' public/robots.txt
+          grep -q 'Allow: /Cars4Mars/Media/' public/robots.txt
+          grep -q 'Allow: /Cars4Mars/Support/' public/robots.txt
           grep -q 'Allow: /proof/' public/robots.txt
           ! grep -q 'KOPANO_LABS.pdf' public/robots.txt
           grep -q 'Disallow: /admin/' public/robots.txt
@@ -61,12 +65,20 @@ jobs:
           grep -q 'https://kopanolabs.com/labs/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/Cars4Mars/Ledger/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/Cars4Mars/Architecture/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/Cars4Mars/Media/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/Cars4Mars/Support/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
           ! grep -q 'KOPANO_LABS.pdf' public/sitemap.xml
           first_loc=$(grep -o '<loc>[^<]*' public/sitemap.xml | head -1)
           test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
           grep -q '"sitemapOrder": 1' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
+          grep -q '"id": "cars4mars-ledger"' src/route-manifest.json
+          grep -q '"id": "cars4mars-architecture"' src/route-manifest.json
+          grep -q '"id": "cars4mars-media"' src/route-manifest.json
+          grep -q '"id": "cars4mars-support"' src/route-manifest.json
 
       - name: Verify adaptive SEO metadata
         run: |
@@ -82,12 +94,20 @@ jobs:
       - name: Verify route-specific crawl shells
         run: |
           test -f dist/Cars4Mars/index.html
+          test -f dist/Cars4Mars/Ledger/index.html
+          test -f dist/Cars4Mars/Architecture/index.html
+          test -f dist/Cars4Mars/Media/index.html
+          test -f dist/Cars4Mars/Support/index.html
           test -f dist/labs/index.html
           test -f dist/systems/index.html
           test -f dist/proof/index.html
           grep -q '<title>Cars4Mars 2026 — Kopano Labs Rover Evidence</title>' dist/Cars4Mars/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
           grep -q 'property="og:url" content="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Ledger/"' dist/Cars4Mars/Ledger/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Architecture/"' dist/Cars4Mars/Architecture/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Media/"' dist/Cars4Mars/Media/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/Support/"' dist/Cars4Mars/Support/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/labs/"' dist/labs/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/systems/"' dist/systems/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/proof/"' dist/proof/index.html
@@ -97,6 +117,10 @@ jobs:
           grep -q 'routeForIntent' src/App.tsx
           grep -q 'What do you want?' src/App.tsx
           grep -q 'route-manifest.json' src/routeRegistry.ts
+          grep -q 'cars4mars-ledger' src/routeRegistry.ts
+          grep -q 'cars4mars-architecture' src/routeRegistry.ts
+          grep -q 'cars4mars-media' src/routeRegistry.ts
+          grep -q 'cars4mars-support' src/routeRegistry.ts
           test -f src/components/SpatialDirectory.tsx
           test -f src/directory.css
           grep -q 'SpatialDirectory' src/App.tsx
@@ -124,6 +148,10 @@ jobs:
           grep -q 'not concept art' src/App.tsx
           test -f src/components/Cars4MarsMissionControl.tsx
           grep -q 'SUBMISSION COMPLETE' src/components/Cars4MarsMissionControl.tsx
+          grep -q '/Cars4Mars/Ledger/' src/components/Cars4MarsMissionControl.tsx
+          grep -q '/Cars4Mars/Architecture/' src/components/Cars4MarsMissionControl.tsx
+          grep -q '/Cars4Mars/Media/' src/components/Cars4MarsMissionControl.tsx
+          grep -q '/Cars4Mars/Support/' src/components/Cars4MarsMissionControl.tsx
           ! grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '"submission_state": "COMPLETE"' public/release.json
           grep -q '"website_dependency": false' public/release.json

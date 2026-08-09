@@ -23,6 +23,7 @@ const systems: [string, string, string][] = [
 ];
 
 const proof = [
+  ['FOUNDER AUTHORITY', 'Kholofelo Robyn Rababalela', 'Founder · Sovereign System Engineer · final public-system decision authority'],
   ['PUBLIC SOURCE', 'Dedicated website repository established', 'RobynAwesome/Kopano-Labs-Website'],
   ['SOURCE AUTHORITY', 'Kopano Studio + Schematics lineage preserved', 'Kopano-Labs/Introduction-to-MCP'],
   ['OPERATING PRINCIPLE', 'No claims without evidence', 'Audit twice. Show the artifact.'],
@@ -128,11 +129,11 @@ export function App() {
             <div id="mission-control"><Cars4MarsMissionControl /></div>
           </motion.section>}
 
-          {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Show the lineage. Show the state.</h1><p>Every important claim needs a source, state or artifact.</p></div><div className="ledger">{proof.map(([kind,title,artifact]) => <article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div><div className="source-callout"><div><span className="eyebrow">DISCOVERY WORKFLOW</span><h2>Route manifest → humans + sitemap + robots + CI.</h2></div><p>The website owns one public discovery map. Crawlers receive XML/TXT guidance; humans receive the adaptive interface; CI verifies they remain synchronized.</p></div></motion.section>}
+          {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Show the lineage. Show the state.</h1><p>Every important claim needs a source, state or artifact — including who owns the final public-system decision.</p></div><div className="ledger">{proof.map(([kind,title,artifact]) => <article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div><div className="source-callout"><div><span className="eyebrow">DISCOVERY WORKFLOW</span><h2>Route manifest → humans + sitemap + robots + CI.</h2></div><p>The website owns one public discovery map. Crawlers receive XML/TXT guidance; humans receive the adaptive interface; CI verifies they remain synchronized.</p></div></motion.section>}
         </AnimatePresence>
       </main>
 
-      <footer><span>Kopano Labs · Cape Town, South Africa</span><span>Intent → Route → Evidence → Production</span></footer>
+      <footer><span>Kopano Labs · Cape Town, South Africa</span><span>Founder: Kholofelo Robyn Rababalela · Intent → Route → Evidence → Production</span></footer>
     </div>
   );
 }

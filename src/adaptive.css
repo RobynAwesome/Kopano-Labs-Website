@@ -45,7 +45,6 @@
 .intent-shortcuts button:hover,.intent-shortcuts button:focus-visible { border-color:rgba(0,230,118,.38);background:rgba(0,230,118,.08); }
 .intent-shortcuts span { color:var(--muted-strong,#c4d2dd);font-size:.9rem; }
 
-/* Same information, less rendering cost. */
 html[data-experience-tier='balanced'] .ambient { opacity:.55;filter:blur(18px); }
 html[data-experience-tier='lite'] .ambient { display:none; }
 html[data-experience-tier='lite'] .kopano-scene canvas { opacity:.36; }
@@ -54,8 +53,9 @@ html[data-experience-tier='lite'] .scene-label { display:none; }
 html[data-save-data='true'] .spatial-mars::before { background-image:none; }
 html[data-motion='reduced'] * { scroll-behavior:auto!important; }
 
-/* The real diagram is in the document. Do not render a second decorative copy. */
 .split-section::after { display:none!important;content:none!important; }
+
+.video-poster{position:relative;display:block;overflow:hidden;margin:12px 0 18px;border:1px solid rgba(255,255,255,.1);border-radius:18px;background:#081017;text-decoration:none;color:#fff}.video-poster img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover}.video-poster span{position:absolute;left:12px;bottom:12px;padding:8px 10px;border-radius:999px;background:rgba(8,13,18,.82);border:1px solid rgba(255,255,255,.12);font-size:11px;font-weight:800}.video-poster:focus-visible{outline:3px solid rgba(99,213,255,.45);outline-offset:3px}
 
 @media (max-width: 720px) {
   .app-shell{overflow-x:hidden}
@@ -72,6 +72,7 @@ html[data-motion='reduced'] * { scroll-behavior:auto!important; }
   .split-section{padding-top:54px;gap:14px}.split-section h2{font-size:38px}.split-section p{font-size:15px;line-height:1.65}.adaptive-story img{margin-top:16px;border-radius:18px}
   .search-row{display:grid;grid-template-columns:1fr auto;gap:9px;padding:18px 0}.search-row input{grid-column:1/-1;padding:13px 14px}.search-row span{justify-self:end;font-size:10px}
   .mars-stage{min-height:430px!important}.mission-chip{left:12px;right:12px;bottom:12px;text-align:left}.mars-campaign-figure{opacity:.38}
+  .video-poster{border-radius:14px}
   footer{display:grid;gap:6px;padding:18px 14px;font-size:9px}
 }
 

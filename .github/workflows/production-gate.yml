@@ -58,9 +58,12 @@ jobs:
       - name: Verify human adaptive routing uses same registry
         run: |
           grep -q 'routeForIntent' src/App.tsx
-          grep -q 'publicRoutes' src/App.tsx
           grep -q 'What do you want?' src/App.tsx
           grep -q 'route-manifest.json' src/routeRegistry.ts
+          test -f src/components/SpatialDirectory.tsx
+          test -f src/directory.css
+          grep -q 'SpatialDirectory' src/App.tsx
+          grep -q 'directory-stage' src/directory.css
       - name: Verify spatial brand and experience runtime
         run: |
           test -f public/assets/brand/kopano-mark.svg
@@ -72,10 +75,16 @@ jobs:
           grep -q '@react-three/fiber' package.json
           grep -q '@react-three/drei' package.json
           grep -q 'gsap' package.json
-          grep -q 'Save-Data\|saveData' src/experienceRuntime.ts
+          grep -q 'saveData' src/experienceRuntime.ts
           grep -q 'experienceTier' src/experienceRuntime.ts
-          grep -q 'astronaut-campaign.svg' src/spatial.css
-          grep -q 'agent-routing.svg' src/spatial.css
+          grep -q 'astronaut-campaign.svg' src/App.tsx
+          grep -q 'agent-routing.svg' src/App.tsx
+      - name: Verify Cars4Mars evidence honesty
+        run: |
+          grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
+          grep -q 'not concept art' src/App.tsx
+          grep -q 'never fabricate the PDF' IMPLEMENTATION_ORDER.md
+          ! grep -q 'reports/KOPANO_LABS.pdf' src/App.tsx || test -f public/reports/KOPANO_LABS.pdf
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md

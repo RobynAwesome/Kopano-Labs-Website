@@ -1,6 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import './adaptive.css';
+import { Cars4MarsMissionControl } from './components/Cars4MarsMissionControl';
 import { KopanoScene } from './components/KopanoScene';
 import { SpatialDirectory } from './components/SpatialDirectory';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
@@ -79,6 +80,7 @@ export function App() {
 
   return (
     <div className="app-shell">
+      <a className="skip-link" href="#main-content">Skip to content</a>
       <div className="ambient ambient-a" />
       <div className="ambient ambient-b" />
       <header className="topbar">
@@ -95,7 +97,7 @@ export function App() {
         <a className="source-pill" href="https://github.com/RobynAwesome/Kopano-Labs-Website" target="_blank" rel="noreferrer">Source ↗</a>
       </header>
 
-      <main>
+      <main id="main-content">
         <AnimatePresence mode="wait">
           {view === 'home' && <motion.section key="home" className="page home" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
             <div className="hero-grid spatial-hero">
@@ -103,57 +105,30 @@ export function App() {
                 <span className="eyebrow">SOVEREIGN SYSTEMS · BUILT IN SOUTH AFRICA</span>
                 <h1>Not a portfolio.<br/><em>A living system.</em></h1>
                 <p>Kopano Labs turns lived problems into experiments, systems and public proof. Context, evidence and systems orbit one another instead of sitting inside dead cards.</p>
-                <div className="hero-actions">
-                  <button className="primary" onClick={() => navigate('cars4mars')}>Enter Cars4Mars</button>
-                  <button className="secondary" onClick={() => navigate('labs')}>Open the lab</button>
-                </div>
+                <div className="hero-actions"><button className="primary" onClick={() => navigate('cars4mars')}>Enter Cars4Mars</button><button className="secondary" onClick={() => navigate('labs')}>Open the lab</button></div>
               </motion.div>
               <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:12}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1.1,ease:[.23,1,.32,1]}}>
                 <KopanoScene />
                 <div className="command-card adaptive-command spatial-panel">
                   <div className="command-tabs"><span className="active">Need</span><span>Route</span><span>Verify</span></div>
-                  <div className="command-body">
-                    <span className="eyebrow">ADAPTIVE ENTRY</span>
-                    <h2>What do you want?</h2>
-                    <form className="intent-form" onSubmit={resolveIntent}>
-                      <input value={intent} onChange={(event) => setIntent(event.target.value)} placeholder="Mars rover, jobs, systems, proof…" aria-label="What are you looking for?" />
-                      <button type="submit">Route me →</button>
-                    </form>
-                  </div>
+                  <div className="command-body"><span className="eyebrow">ADAPTIVE ENTRY</span><h2>What do you want?</h2><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event) => setIntent(event.target.value)} placeholder="Mars rover, jobs, systems, proof…" aria-label="What are you looking for?" /><button type="submit">Route me →</button></form></div>
                 </div>
               </motion.div>
             </div>
             <section className="manifesto-band"><span>IMAGINE</span><i>→</i><span>BUILD</span><i>→</i><span>PROVE</span><i>→</i><span>PRESERVE</span></section>
-            <section className="split-section adaptive-story">
-              <div><span className="eyebrow">ADAPTIVE BY DESIGN</span><h2>One system. Different depths.</h2><img src="/assets/diagrams/agent-routing.svg" alt="User intent routes through an agent toward databases, APIs and documents" /></div>
-              <p>People should not receive the same wall of information. Crawlers, judges, builders, clients and curious visitors enter through different intentions while one route and evidence registry keeps the system coherent.</p>
-            </section>
+            <section className="split-section adaptive-story"><div><span className="eyebrow">ADAPTIVE BY DESIGN</span><h2>One system. Different depths.</h2><img src="/assets/diagrams/agent-routing.svg" alt="User intent routes through an agent toward databases, APIs and documents" /></div><p>People should not receive the same wall of information. Crawlers, judges, builders, clients and curious visitors enter through different intentions while one route and evidence registry keeps the system coherent.</p></section>
           </motion.section>}
 
-          {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-            <div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments with a path to impact.</h1><p>Search by problem or capability, then enter one context instead of reading a catalogue wall.</p></div>
-            <div className="search-row"><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search experiments, problems or capabilities…"/><span>{filteredExperiments.length} experiments</span></div>
-            <SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No experiment matches that intent yet." />
-          </motion.section>}
+          {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments with a path to impact.</h1><p>Search by problem or capability, then enter one context instead of reading a catalogue wall.</p></div><div className="search-row"><input value={query} onChange={e => setQuery(e.target.value)} placeholder="Search experiments, problems or capabilities…"/><span>{filteredExperiments.length} experiments</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No experiment matches that intent yet." /></motion.section>}
 
-          {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-            <div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>The lab graduates into systems.</h1><p>Each operational surface has its own context, evidence, constraints and lifecycle.</p></div>
-            <SpatialDirectory items={systems} kind="system" />
-          </motion.section>}
+          {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>The lab graduates into systems.</h1><p>Each operational surface has its own context, evidence, constraints and lifecycle.</p></div><SpatialDirectory items={systems} kind="system" /></motion.section>}
 
           {view === 'cars4mars' && <motion.section key="cars" className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-            <div className="mars-hero spatial-mars">
-              <div><span className="eyebrow">CARS4MARS · PRIMARY EVIDENCE ROUTE</span><h1>From Cape Town<br/>to Mars.</h1><p>A rover programme treated as an engineering evidence chain, not concept art. Design, procurement, assembly and field validation remain visibly separate states.</p><div className="hero-actions"><button className="primary" onClick={() => navigate('proof')}>Open evidence ledger</button><a className="secondary" href="https://github.com/RobynAwesome/Kopano-Labs-Website" target="_blank" rel="noreferrer">Mission source ↗</a></div></div>
-              <div className="spatial-stage mars-stage"><KopanoScene /><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars astronaut campaign artwork" /><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div>
-            </div>
-            <div className="evidence-grid"><article><span className="eyebrow">01 · DESIGN</span><h3>Architecture defined</h3><p>Geometry, power, communications, compute and bounded intelligence remain design representations until built.</p></article><article><span className="eyebrow">02 · BUILD</span><h3>Procure + assemble</h3><p>Parts, frame, drivetrain and protected power move the programme from representation into physical evidence.</p></article><article><span className="eyebrow">03 · TEST</span><h3>Break it in public</h3><p>Failures, field footage, telemetry and corrections belong in the ledger rather than being hidden behind campaign polish.</p></article></div>
+            <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · PRIMARY EVIDENCE ROUTE</span><h1>From Cape Town<br/>to Mars.</h1><p>A rover programme treated as an engineering evidence chain, not concept art. Design, procurement, assembly and field validation remain visibly separate states.</p><div className="hero-actions"><a className="primary" href="#mission-control">Mission control</a><button className="secondary" onClick={() => navigate('proof')}>Public proof</button></div></div><div className="spatial-stage mars-stage"><KopanoScene /><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars campaign concept artwork, not physical rover evidence" /><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
+            <div id="mission-control"><Cars4MarsMissionControl /></div>
           </motion.section>}
 
-          {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-            <div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Show the lineage. Show the state.</h1><p>Every important claim needs a source, state or artifact.</p></div>
-            <div className="ledger">{proof.map(([kind,title,artifact]) => <article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div>
-            <div className="source-callout"><div><span className="eyebrow">DISCOVERY WORKFLOW</span><h2>Route manifest → humans + sitemap + robots + CI.</h2></div><p>The website owns one public discovery map. Crawlers receive XML/TXT guidance; humans receive the adaptive interface; CI verifies they remain synchronized.</p></div>
-          </motion.section>}
+          {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Show the lineage. Show the state.</h1><p>Every important claim needs a source, state or artifact.</p></div><div className="ledger">{proof.map(([kind,title,artifact]) => <article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div><div className="source-callout"><div><span className="eyebrow">DISCOVERY WORKFLOW</span><h2>Route manifest → humans + sitemap + robots + CI.</h2></div><p>The website owns one public discovery map. Crawlers receive XML/TXT guidance; humans receive the adaptive interface; CI verifies they remain synchronized.</p></div></motion.section>}
         </AnimatePresence>
       </main>
 

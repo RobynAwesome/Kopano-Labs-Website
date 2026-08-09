@@ -38,6 +38,7 @@ jobs:
           test -f public/robots.txt
           test -f public/sitemap.xml
           test -f public/release.json
+          test -f public/governance.json
           test -f public/humans.txt
           grep -q 'User-agent: \*' public/robots.txt
           grep -q 'Allow: /Cars4Mars/' public/robots.txt
@@ -109,20 +110,27 @@ jobs:
           grep -q 'saveData' src/experienceRuntime.ts
           grep -q 'experienceTier' src/experienceRuntime.ts
           grep -q 'astronaut-campaign.svg' src/App.tsx
-          grep -q 'agent-routing.svg' src/App.tsx
-      - name: Verify Cars4Mars evidence honesty and report state
+      - name: Verify Cars4Mars first-party DFR-01 artifact
         run: |
           grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
           grep -q 'not concept art' src/App.tsx
           grep -q 'never fabricate the PDF' IMPLEMENTATION_ORDER.md
           test -f src/components/Cars4MarsMissionControl.tsx
           test -f docs/cars4mars/DFR-01.md
+          test -f source-artifacts/cars4mars/KOPANO_LABS.pdf.b64.00
+          test -f source-artifacts/cars4mars/KOPANO_LABS.pdf.b64.01
+          test -f scripts/materialize-cars4mars-report.mjs
+          test -f dist/reports/KOPANO_LABS.pdf
+          test "$(wc -c < dist/reports/KOPANO_LABS.pdf)" -eq 88367
+          echo '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855  dist/reports/KOPANO_LABS.pdf' | sha256sum -c -
+          grep -q 'report:materialize' package.json
           grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' docs/cars4mars/DFR-01.md
           grep -q 'REMEDIATION_REQUIRED' public/release.json
-          grep -q 'Google Drive external-origin rewrite' public/release.json
+          ! grep -q 'drive.google.com' vercel.json
+          ! grep -q 'drive.usercontent.google.com' vercel.json
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md

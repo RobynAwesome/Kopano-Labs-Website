@@ -29,11 +29,14 @@ jobs:
           grep -q 'User-agent: \*' public/robots.txt
           grep -q 'Allow: /Cars4Mars/' public/robots.txt
           grep -q 'Allow: /proof/' public/robots.txt
+          grep -q 'Allow: /reports/KOPANO_LABS.pdf' public/robots.txt
           grep -q 'Disallow: /admin/' public/robots.txt
           grep -q 'Disallow: /api/' public/robots.txt
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
           grep -q 'RobynAwesome/Kopano-Labs-Website' public/release.json
+          grep -q 'Kopano-Labs/Introduction-to-MCP' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
+          grep -q 'money_managing_app_is_dependency.*false' public/release.json
       - name: Verify sitemap follows adaptive route registry
         run: |
           grep -q 'https://kopanolabs.com/' public/sitemap.xml
@@ -41,10 +44,12 @@ jobs:
           grep -q 'https://kopanolabs.com/systems/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/Cars4Mars/' public/sitemap.xml
           grep -q 'https://kopanolabs.com/proof/' public/sitemap.xml
+          grep -q 'https://kopanolabs.com/reports/KOPANO_LABS.pdf' public/sitemap.xml
           first_loc=$(grep -o '<loc>[^<]*' public/sitemap.xml | head -1)
           test "$first_loc" = '<loc>https://kopanolabs.com/Cars4Mars/'
           grep -q '"sitemapOrder": 1' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
+          grep -q '"/reports/KOPANO_LABS.pdf"' src/route-manifest.json
       - name: Verify adaptive SEO metadata
         run: |
           grep -q 'rel="canonical"' index.html
@@ -79,12 +84,18 @@ jobs:
           grep -q 'experienceTier' src/experienceRuntime.ts
           grep -q 'astronaut-campaign.svg' src/App.tsx
           grep -q 'agent-routing.svg' src/App.tsx
-      - name: Verify Cars4Mars evidence honesty
+      - name: Verify Cars4Mars evidence honesty and report delivery
         run: |
           grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
           grep -q 'not concept art' src/App.tsx
           grep -q 'never fabricate the PDF' IMPLEMENTATION_ORDER.md
-          ! grep -q 'reports/KOPANO_LABS.pdf' src/App.tsx || test -f public/reports/KOPANO_LABS.pdf
+          test -f src/components/Cars4MarsMissionControl.tsx
+          grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
+          grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
+          grep -q '"source": "/reports/KOPANO_LABS.pdf"' vercel.json
+          grep -q '1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh' vercel.json
+          grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json
+          ! grep -q 'PUBLIC MIRROR PENDING' src/components/Cars4MarsMissionControl.tsx
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md

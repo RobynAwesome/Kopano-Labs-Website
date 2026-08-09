@@ -24,7 +24,7 @@ const systems: [string, string, string][] = [
 
 const proof = [
   ['FOUNDER AUTHORITY', 'Kholofelo Robyn Rababalela', 'Founder · Sovereign System Engineer · final public-system decision authority'],
-  ['PUBLIC SOURCE', 'Dedicated website repository established', 'RobynAwesome/Kopano-Labs-Website'],
+  ['DEPLOYMENT PROVENANCE', 'Observed in current Vercel metadata', 'RobynAwesome/Kopano-Labs-Website · not canonical source authority'],
   ['SOURCE AUTHORITY', 'Kopano Studio + Schematics lineage preserved', 'Kopano-Labs/Introduction-to-MCP'],
   ['OPERATING PRINCIPLE', 'No claims without evidence', 'Audit twice. Show the artifact.'],
   ['BUILD MODEL', 'Public work moves through visible states', 'idea → experiment → proof → production'],
@@ -95,7 +95,7 @@ export function App() {
           <NavButton id="cars4mars" active={view} onClick={navigate}>Cars4Mars</NavButton>
           <NavButton id="proof" active={view} onClick={navigate}>Proof</NavButton>
         </nav>
-        <a className="source-pill" href="https://github.com/RobynAwesome/Kopano-Labs-Website" target="_blank" rel="noreferrer">Source ↗</a>
+        <a className="source-pill" href="https://github.com/RobynAwesome/Kopano-Labs-Website" target="_blank" rel="noreferrer">Deployment source ↗</a>
       </header>
 
       <main id="main-content">

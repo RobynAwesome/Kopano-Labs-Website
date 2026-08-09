@@ -20,6 +20,7 @@ jobs:
           git diff --exit-code -- public/sitemap.xml public/robots.txt
           test -f src/route-manifest.json
           test -f scripts/generate-crawl-policy.mjs
+          test -f scripts/generate-route-shells.mjs
       - name: Verify public metadata and guided crawler policy
         run: |
           test -f public/robots.txt
@@ -60,6 +61,18 @@ jobs:
           grep -q 'route.description' src/App.tsx
           grep -q 'og:url' src/App.tsx
           grep -q '"description"' src/route-manifest.json
+      - name: Verify route-specific crawl shells
+        run: |
+          test -f dist/Cars4Mars/index.html
+          test -f dist/labs/index.html
+          test -f dist/systems/index.html
+          test -f dist/proof/index.html
+          grep -q '<title>Cars4Mars 2026 — Kopano Labs Rover Evidence</title>' dist/Cars4Mars/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
+          grep -q 'property="og:url" content="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/labs/"' dist/labs/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/systems/"' dist/systems/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/proof/"' dist/proof/index.html
       - name: Verify human adaptive routing uses same registry
         run: |
           grep -q 'routeForIntent' src/App.tsx
@@ -90,11 +103,13 @@ jobs:
           grep -q 'not concept art' src/App.tsx
           grep -q 'never fabricate the PDF' IMPLEMENTATION_ORDER.md
           test -f src/components/Cars4MarsMissionControl.tsx
+          test -f docs/cars4mars/DFR-01.md
           grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
           grep -q '"source": "/reports/KOPANO_LABS.pdf"' vercel.json
           grep -q '1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh' vercel.json
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json
+          grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' docs/cars4mars/DFR-01.md
           ! grep -q 'PUBLIC MIRROR PENDING' src/components/Cars4MarsMissionControl.tsx
       - name: Verify Search Console baseline is preserved
         run: |

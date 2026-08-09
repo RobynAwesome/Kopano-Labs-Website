@@ -1,24 +1,23 @@
-import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
-const sourceDir = join(root, 'source-artifacts', 'cars4mars', 'pdf-v2');
+const sourceDir = join(root, 'source-artifacts', 'cars4mars');
 const target = join(root, 'dist', 'reports', 'KOPANO_LABS.pdf');
 const expectedBase64Length = 117824;
 const expectedBytes = 88367;
 const expectedSha256 = '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855';
+const parts = [
+  'KOPANO_LABS.pdf.b64.00',
+  'KOPANO_LABS.pdf.b64.01',
+];
 
-const parts = (await readdir(sourceDir))
-  .filter((name) => /^part-\d{2}\.b64$/.test(name))
-  .sort();
+const encoded = (await Promise.all(parts.map((name) => readFile(join(sourceDir, name), 'utf8'))))
+  .join('')
+  .replace(/\s+/g, '');
 
-if (parts.length !== 15) {
-  throw new Error(`DFR-01 source is incomplete: expected 15 chunks, found ${parts.length}`);
-}
-
-const encoded = (await Promise.all(parts.map((name) => readFile(join(sourceDir, name), 'utf8')))).join('').replace(/\s+/g, '');
 if (encoded.length !== expectedBase64Length) {
   throw new Error(`DFR-01 base64 length mismatch: expected ${expectedBase64Length}, got ${encoded.length}`);
 }

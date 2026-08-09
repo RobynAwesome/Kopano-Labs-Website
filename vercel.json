@@ -4,18 +4,16 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    {
-      "source": "/reports/KOPANO_LABS.pdf",
-      "destination": "https://drive.usercontent.google.com/download?id=1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh&export=download"
-    },
     { "source": "/((?!robots.txt|sitemap.xml|release.json|humans.txt|reports/).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
       "source": "/reports/KOPANO_LABS.pdf",
       "headers": [
-        { "key": "x-vercel-enable-rewrite-caching", "value": "1" },
-        { "key": "CDN-Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+        { "key": "Content-Type", "value": "application/pdf" },
+        { "key": "Content-Disposition", "value": "inline; filename=\"KOPANO_LABS.pdf\"" },
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" },
+        { "key": "CDN-Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
       ]
     }
   ]

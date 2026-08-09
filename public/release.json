@@ -11,6 +11,16 @@
   "surface": "kopano-studio-public",
   "cars4mars": {
     "state": "BUILD",
-    "evidence_rule": "design claims remain separate from physical proof"
+    "evidence_rule": "design claims remain separate from physical proof",
+    "final_design_report": {
+      "route": "/reports/KOPANO_LABS.pdf",
+      "baseline": "DFR-01",
+      "submitted": "2026-08-02",
+      "bytes": 88367,
+      "sha256": "42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855",
+      "delivery": "external-origin rewrite through Vercel",
+      "source_store": "Google Drive",
+      "physical_validation_state": "NOT_COMPLETE"
+    }
   }
 }

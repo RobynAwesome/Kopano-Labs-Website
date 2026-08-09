@@ -1,7 +1,8 @@
 {
   "site": "Kopano Labs",
   "domain": "https://KopanoLabs.com",
-  "source_repository": "RobynAwesome/Kopano-Labs-Website",
+  "canonical_source_repository": null,
+  "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
   "governance": {
     "machine_manifest": "/governance.json",
@@ -18,16 +19,13 @@
   "cars4mars": {
     "state": "BUILD",
     "evidence_rule": "design claims remain separate from physical proof",
-    "final_design_report": {
-      "route": "/reports/KOPANO_LABS.pdf",
+    "design_submission": {
       "baseline": "DFR-01",
       "submitted": "2026-08-02",
-      "bytes": 88367,
-      "sha256": "42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855",
-      "delivery_state": "REMEDIATION_REQUIRED",
-      "rejected_delivery_path": "Google Drive external-origin rewrite",
-      "required_delivery": "first-party deterministic anonymous production artifact",
-      "physical_validation_state": "NOT_COMPLETE"
-    }
+      "submission_state": "COMPLETE",
+      "website_dependency": false,
+      "public_delivery_gate": false
+    },
+    "physical_validation_state": "NOT_COMPLETE"
   }
 }

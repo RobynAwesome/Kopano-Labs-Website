@@ -1,24 +1,26 @@
 # Kopano Labs Production Agent Entry
 
 > Read this file before modifying, deploying, auditing, or making claims about KopanoLabs.com.
-> This repository is the dedicated production source for the public Kopano Labs website.
+> This repository is currently observed in Vercel deployment metadata. That does not make it canonical source authority.
 
 ## 1. Identity and authority
 
 You are a stateless model/tool instance operating inside a governed production system. Capability does not make you source authority.
 
-Authority order for this repository:
+Authority order for production work:
 
 1. **Owner instruction in the current task** — scope and mission.
 2. **Kopano Labs governance/source authority** — `Kopano-Labs/Introduction-to-MCP`, especially `Schematics/` when governance interpretation is required.
-3. **This repository** — `RobynAwesome/Kopano-Labs-Website`, the dedicated implementation source for KopanoLabs.com.
-4. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — owner/live proof surface.
+3. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — observed production proof surface.
+4. **Current deployment source metadata** — may point to `RobynAwesome/Kopano-Labs-Website`; treat this as observed implementation provenance only until the owner explicitly establishes a canonical GitHub production repository.
 
-`Kopano-Labs/Introduction-to-MCP` is a governance and architecture source authority. It is **not** a runtime or build dependency of this website.
+`Kopano-Labs/Introduction-to-MCP` is a governance and architecture source authority. It is not a runtime/build dependency of the website.
 
-## 2. Production repository boundary
+## 2. Repository boundary
 
-The production implementation repository is:
+Canonical GitHub production source: **UNESTABLISHED** until explicit owner declaration.
+
+Current observed Vercel deployment source:
 
 `RobynAwesome/Kopano-Labs-Website`
 
@@ -37,7 +39,7 @@ Before making a factual claim about a repository, file, route, deployment, artif
 
 1. resolve the exact namespace/object;
 2. read the relevant source or query the relevant production tool;
-3. classify what is known, unknown, healthy, blocked, or retired;
+3. classify what is known, unknown, healthy, blocked, retired, or merely observed;
 4. only then interpret or mutate.
 
 Never convert a lookup failure into a claim of non-existence unless the exact intended namespace/object was queried.
@@ -48,14 +50,26 @@ Use this operating sequence when a task involves uncertainty, drift, failures, o
 
 `Main Brain / source authority → classify → KC review discipline → Cassey teaching/recommendation lane → BlackMask proof gate → change x under fixed y constraints → owner/live proof`
 
-Practical translation for this repository:
+Practical translation:
 
 - **y / fixed:** public evidence integrity, source boundaries, truthful Cars4Mars state, canonical domain, security, owner-visible proof.
 - **x / changeable:** implementation mechanism, route strategy, storage origin, build tooling, component structure, deployment technique.
 
 A blocker is a branch point, not an instruction to retry the same failed mechanism indefinitely.
 
-## 5. Save / Kill / Watch for blockers
+## 5. Blocker explanation law
+
+Before allowing a blocker to stop delivery, state:
+
+1. exactly what is failing;
+2. why that failure matters;
+3. whether the blocked requirement is truly required for the owner's current objective;
+4. what can safely continue without it;
+5. at least one materially different implementation path.
+
+If the requirement is no longer needed, retract it from build, CI, crawl, release, and live-route governance instead of continuing to repair it.
+
+## 6. Save / Kill / Watch
 
 When a solution path fails:
 
@@ -64,16 +78,9 @@ When a solution path fails:
 - **WATCH** unresolved external conditions only when they can materially change later.
 - try a materially different implementation while preserving the fixed requirement.
 
-Example from Cars4Mars report delivery:
+The Cars4Mars Final Design Report delivery path is a completed example: the competition already has the submitted package, so the report is no longer a website dependency or release gate. Do not resurrect the old PDF reconstruction/Drive remediation path unless the owner explicitly changes that decision.
 
-- Fixed requirement: the verified DFR-01 report must be publicly accessible from the Kopano Labs production surface.
-- Failed implementation: missing local artifact returned 404.
-- Alternative tested: Google Drive external rewrite removed the 404 but introduced redirects/authentication.
-- Governance result: kill Drive as anonymous production origin; preserve the verified DFR-01 artifact and use first-party deterministic delivery instead.
-
-Do not call an implementation healthy merely because the original error code changed.
-
-## 6. Owner-proof rule
+## 7. Owner-proof rule
 
 Build success, GitHub commit success, Vercel `READY`, AI inspection, and local rendering are evidence, but they are not sufficient by themselves for an owner-facing claim of complete delivery.
 
@@ -83,18 +90,17 @@ Core production gates:
 
 - `https://KopanoLabs.com/`
 - `https://KopanoLabs.com/Cars4Mars/`
-- `https://KopanoLabs.com/reports/KOPANO_LABS.pdf`
 - `https://KopanoLabs.com/robots.txt`
 - `https://KopanoLabs.com/sitemap.xml`
 - `https://KopanoLabs.com/release.json`
 
-A route is healthy only when its status, content type/behavior, and intended evidence semantics are correct.
+A retired route may intentionally return 404 and should not be treated as unhealthy merely because it no longer exists.
 
-## 7. Cars4Mars evidence law
+## 8. Cars4Mars evidence law
 
 Cars4Mars is an evidence chain, not a promotional fiction layer.
 
-Current baseline: `DFR-01`, submitted 02 August 2026.
+Current design baseline: `DFR-01`, submitted 02 August 2026. Submission is complete and no longer a website dependency.
 
 Never turn design evidence into physical validation. Keep these states separate:
 
@@ -102,9 +108,7 @@ Never turn design evidence into physical validation. Keep these states separate:
 
 A later state advances only when its required evidence exists. Concept art, planned components, AI output, build logs, or funding discussions do not substitute for physical evidence.
 
-The Final Design Report is an authoritative design artifact, not proof that the rover is fabricated or tested.
-
-## 8. Production watch discipline
+## 9. Production watch discipline
 
 Compare against the immediately previous observed production state.
 
@@ -118,7 +122,7 @@ Do not repeatedly notify for an unchanged known defect. Surface only meaningful 
 
 If nothing meaningful changes, remain silent.
 
-## 9. Source and mutation discipline
+## 10. Source and mutation discipline
 
 Before editing:
 
@@ -126,7 +130,7 @@ Before editing:
 - preserve existing architecture unless the task explicitly changes it;
 - do not modify unrelated repositories;
 - do not silently repair unrelated defects;
-- keep production dependencies local to this repository;
+- distinguish observed deployment provenance from canonical source authority;
 - prefer deterministic, inspectable state over model inference.
 
 After editing:
@@ -136,13 +140,11 @@ After editing:
 - verify the newest Vercel production deployment;
 - verify the live public surface before claiming completion.
 
-## 10. First-touch acknowledgement
+## 11. First-touch acknowledgement
 
 The correct mental model is:
 
 `I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY`
-
-Then operate from verified state.
 
 See also:
 

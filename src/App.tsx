@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import './adaptive.css';
-import { Cars4MarsMissionControl } from './components/Cars4MarsMissionControl';
+import { Cars4MarsMissionControl, type Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { KopanoScene } from './components/KopanoScene';
 import { SpatialDirectory } from './components/SpatialDirectory';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
@@ -30,6 +30,16 @@ const proof = [
   ['BUILD MODEL', 'Public work moves through visible states', 'idea → experiment → proof → production'],
 ];
 
+const isCars4MarsView = (view: View) => view === 'cars4mars' || view.startsWith('cars4mars-');
+
+const focusForView = (view: View): Cars4MarsFocus => {
+  if (view === 'cars4mars-ledger') return 'ledger';
+  if (view === 'cars4mars-architecture') return 'architecture';
+  if (view === 'cars4mars-media') return 'media';
+  if (view === 'cars4mars-support') return 'support';
+  return 'overview';
+};
+
 function NavButton({ id, active, onClick, children }: { id: View; active: View; onClick: (id: View) => void; children: React.ReactNode }) {
   return <button className={`nav-button ${active === id ? 'active' : ''}`} onClick={() => onClick(id)}>{children}</button>;
 }
@@ -44,6 +54,7 @@ export function App() {
   const [view, setView] = useState<View>(initial);
   const [query, setQuery] = useState('');
   const [intent, setIntent] = useState('');
+  const primaryView: View = isCars4MarsView(view) ? 'cars4mars' : view;
 
   useEffect(() => {
     const syncFromHistory = () => setView(viewForPath(location.pathname));
@@ -90,10 +101,10 @@ export function App() {
           <span><strong>Kopano Labs</strong><small>South African systems studio</small></span>
         </button>
         <nav aria-label="Primary">
-          <NavButton id="labs" active={view} onClick={navigate}>Labs</NavButton>
-          <NavButton id="systems" active={view} onClick={navigate}>Systems</NavButton>
-          <NavButton id="cars4mars" active={view} onClick={navigate}>Cars4Mars</NavButton>
-          <NavButton id="proof" active={view} onClick={navigate}>Proof</NavButton>
+          <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
+          <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
+          <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
+          <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
         </nav>
         <a className="source-pill" href="https://github.com/RobynAwesome/Kopano-Labs-Website" target="_blank" rel="noreferrer">Deployment source ↗</a>
       </header>
@@ -124,9 +135,9 @@ export function App() {
 
           {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>The lab graduates into systems.</h1><p>Each operational surface has its own context, evidence, constraints and lifecycle.</p></div><SpatialDirectory items={systems} kind="system" /></motion.section>}
 
-          {view === 'cars4mars' && <motion.section key="cars" className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-            <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · PRIMARY EVIDENCE ROUTE</span><h1>From Cape Town<br/>to Mars.</h1><p>A rover programme treated as an engineering evidence chain, not concept art. Design, procurement, assembly and field validation remain visibly separate states.</p><div className="hero-actions"><a className="primary" href="#mission-control">Mission control</a><button className="secondary" onClick={() => navigate('proof')}>Public proof</button></div></div><div className="spatial-stage mars-stage"><KopanoScene /><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars campaign concept artwork, not physical rover evidence" /><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
-            <div id="mission-control"><Cars4MarsMissionControl /></div>
+          {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
+            <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · PRIMARY EVIDENCE ROUTE</span><h1>From Cape Town<br/>to Mars.</h1><p>A rover programme treated as an engineering evidence chain, not concept art. Design, procurement, assembly and field validation remain visibly separate states.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><button className="secondary" onClick={() => navigate('proof')}>Public proof</button></div></div><div className="spatial-stage mars-stage"><KopanoScene /><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars campaign concept artwork, not physical rover evidence" /><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
+            <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)} /></div>
           </motion.section>}
 
           {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Show the lineage. Show the state.</h1><p>Every important claim needs a source, state or artifact — including who owns the final public-system decision.</p></div><div className="ledger">{proof.map(([kind,title,artifact]) => <article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div><div className="source-callout"><div><span className="eyebrow">DISCOVERY WORKFLOW</span><h2>Route manifest → humans + sitemap + robots + CI.</h2></div><p>The website owns one public discovery map. Crawlers receive XML/TXT guidance; humans receive the adaptive interface; CI verifies they remain synchronized.</p></div></motion.section>}

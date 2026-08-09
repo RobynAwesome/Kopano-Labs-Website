@@ -24,9 +24,9 @@
       "submitted": "2026-08-02",
       "bytes": 88367,
       "sha256": "42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855",
-      "delivery_state": "REMEDIATION_REQUIRED",
-      "rejected_delivery_path": "Google Drive external-origin rewrite",
-      "required_delivery": "first-party deterministic anonymous production artifact",
+      "delivery_state": "FIRST_PARTY_VERIFIED",
+      "delivery_method": "build-time materialization from committed base64 source chunks",
+      "external_origin_dependency": false,
       "physical_validation_state": "NOT_COMPLETE"
     }
   }

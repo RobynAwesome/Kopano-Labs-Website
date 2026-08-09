@@ -40,7 +40,7 @@ export function Cars4MarsMissionControl() {
     </section>
 
     <section className="mission-module-grid">
-      <article className="mission-module report-module"><span className="eyebrow">FINAL DESIGN REPORT</span><h3>DFR-01 is verified.</h3><p>The six-page submitted report is preserved as the authoritative design baseline. Its public repository mirror is not advertised until the exact PDF binary is committed.</p><div className="artifact-state"><i /> VERIFIED SOURCE · PUBLIC MIRROR PENDING</div></article>
+      <article className="mission-module report-module"><span className="eyebrow">FINAL DESIGN REPORT</span><h3>DFR-01 · verified public artifact.</h3><p>The six-page report submitted on 02 August 2026 is the authoritative design baseline. Procurement, fabrication, integration and physical testing remain explicitly unverified inside the report.</p><a href="/reports/KOPANO_LABS.pdf" target="_blank" rel="noreferrer">Read the Final Design Report ↗</a><div className="artifact-state"><i /> VERIFIED · SHA-256 42842e59…86840855</div></article>
       <article className="mission-module"><span className="eyebrow">WATCH</span><h3>Video remains an evidence host, not the source of truth.</h3><p>The mission page is canonical. Submission and future test footage belong on the video channel, with each clip tied back to a dated ledger state.</p><a href="https://youtube.com/@kopanolabs" target="_blank" rel="noreferrer">Open Kopano Labs video channel ↗</a></article>
     </section>
 

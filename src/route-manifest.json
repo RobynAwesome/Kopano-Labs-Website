@@ -16,13 +16,57 @@
       "humanPrompt": "I want the Mars rover programme and its evidence."
     },
     {
+      "id": "cars4mars-ledger",
+      "path": "/Cars4Mars/Ledger/",
+      "title": "Cars4Mars Open Build Ledger — Kopano Labs",
+      "description": "Inspect dated Cars4Mars state transitions, verified evidence events and the next physical validation gate.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 2,
+      "intents": ["cars4mars ledger", "ledger", "evidence history", "build proof", "transitions"],
+      "humanPrompt": "I want the Cars4Mars build ledger and evidence history."
+    },
+    {
+      "id": "cars4mars-architecture",
+      "path": "/Cars4Mars/Architecture/",
+      "title": "Cars4Mars Rover Architecture — Kopano Labs",
+      "description": "Inspect the Cars4Mars drive, control, perception, power, communications and bounded-safety architecture.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 3,
+      "intents": ["cars4mars architecture", "rover architecture", "hardware", "safety", "control", "perception"],
+      "humanPrompt": "I want the rover architecture and safety design."
+    },
+    {
+      "id": "cars4mars-media",
+      "path": "/Cars4Mars/Media/",
+      "title": "Cars4Mars Media Control — Kopano Labs",
+      "description": "Open Cars4Mars live, upload and channel media lanes while preserving the mission ledger as the evidence authority.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 4,
+      "intents": ["cars4mars media", "video", "live", "youtube", "uploads", "footage"],
+      "humanPrompt": "I want Cars4Mars video, live streams and uploads."
+    },
+    {
+      "id": "cars4mars-support",
+      "path": "/Cars4Mars/Support/",
+      "title": "Support Cars4Mars — Kopano Labs",
+      "description": "Support Cars4Mars through equipment, funding, engineering, facilities, documentation and education tied to evidence gates.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 5,
+      "intents": ["cars4mars support", "funding", "sponsor", "equipment", "engineering", "collaboration"],
+      "humanPrompt": "I want to support or collaborate on Cars4Mars."
+    },
+    {
       "id": "home",
       "path": "/",
       "title": "Kopano Labs — South African Systems Studio",
       "description": "Kopano Labs is a South African systems studio building experiments, software, games, infrastructure and public proof around real-world problems.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 2,
+      "sitemapOrder": 6,
       "intents": ["explore", "kopano", "south africa", "studio", "official website"],
       "humanPrompt": "I want to understand Kopano Labs."
     },
@@ -33,7 +77,7 @@
       "description": "Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 3,
+      "sitemapOrder": 7,
       "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
       "humanPrompt": "I need an experiment or practical tool."
     },
@@ -44,7 +88,7 @@
       "description": "Inspect Kopano Labs systems including Kopano Context, CrisisConnect, FiveS Arena and Starfall Salvage, each with its own evidence and lifecycle.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 4,
+      "sitemapOrder": 8,
       "intents": ["systems", "crisisconnect", "fives arena", "starfall", "infrastructure"],
       "humanPrompt": "I want to inspect the systems being built."
     },
@@ -55,7 +99,7 @@
       "description": "Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 5,
+      "sitemapOrder": 9,
       "intents": ["proof", "source", "audit", "lineage", "verification"],
       "humanPrompt": "I want evidence, source lineage and verification."
     }

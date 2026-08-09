@@ -6,7 +6,7 @@
   "rewrites": [
     {
       "source": "/reports/KOPANO_LABS.pdf",
-      "destination": "https://drive.google.com/uc?export=download&id=1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh"
+      "destination": "https://drive.usercontent.google.com/download?id=1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh&export=download"
     },
     { "source": "/Cars4Mars/:path*", "destination": "/index.html" },
     { "source": "/((?!robots.txt|sitemap.xml|release.json|humans.txt|reports/).*)", "destination": "/index.html" }

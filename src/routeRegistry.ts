@@ -1,6 +1,15 @@
 import manifest from './route-manifest.json';
 
-export type View = 'home' | 'labs' | 'systems' | 'cars4mars' | 'proof';
+export type View =
+  | 'home'
+  | 'labs'
+  | 'systems'
+  | 'cars4mars'
+  | 'cars4mars-ledger'
+  | 'cars4mars-architecture'
+  | 'cars4mars-media'
+  | 'cars4mars-support'
+  | 'proof';
 
 export type RouteRecord = {
   id: View;
@@ -34,10 +43,12 @@ export const canonicalForView = (view: View) => `${routeManifest.site.origin}${r
 
 export const viewForPath = (pathname: string): View => {
   const normalized = pathname.toLowerCase();
-  const match = routeManifest.routes.find((route) => {
-    if (route.path === '/') return normalized === '/';
-    return normalized.startsWith(route.path.toLowerCase());
-  });
+  const match = [...routeManifest.routes]
+    .sort((a, b) => b.path.length - a.path.length)
+    .find((route) => {
+      if (route.path === '/') return normalized === '/';
+      return normalized.startsWith(route.path.toLowerCase());
+    });
   return match?.id ?? 'home';
 };
 

@@ -13,7 +13,9 @@ const expectedSha256 = '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff
 const parts = (await readdir(sourceDir)).filter((name) => /^part-\d{2}\.b64$/.test(name)).sort();
 if (!parts.length) throw new Error('DFR-01 source missing: no pdf-v2 chunks found');
 
-const encoded = (await Promise.all(parts.map((name) => readFile(join(sourceDir, name), 'utf8')))).join('').replace(/\s+/g, '');
+const partData = await Promise.all(parts.map(async (name) => [name, (await readFile(join(sourceDir, name), 'utf8')).replace(/\s+/g, '')]));
+console.log(`DFR-01 chunk lengths: ${partData.map(([name, data]) => `${name}=${data.length}`).join(', ')}`);
+const encoded = partData.map(([, data]) => data).join('');
 if (encoded.length !== expectedBase64Length) {
   throw new Error(`DFR-01 source incomplete: ${parts.length} chunks produce ${encoded.length}/${expectedBase64Length} base64 characters`);
 }

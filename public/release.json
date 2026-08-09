@@ -3,6 +3,12 @@
   "domain": "https://KopanoLabs.com",
   "source_repository": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "governance": {
+    "machine_manifest": "/governance.json",
+    "agent_entry": "AGENTS.md",
+    "stateless_renter_entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
+    "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY"
+  },
   "production_dependency_policy": {
     "retired_repository": "RobynAwesome/cars4mars-landingpage",
     "retired_repo_is_dependency": false,
@@ -18,8 +24,9 @@
       "submitted": "2026-08-02",
       "bytes": 88367,
       "sha256": "42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855",
-      "delivery": "external-origin rewrite through Vercel",
-      "source_store": "Google Drive",
+      "delivery_state": "REMEDIATION_REQUIRED",
+      "rejected_delivery_path": "Google Drive external-origin rewrite",
+      "required_delivery": "first-party deterministic anonymous production artifact",
       "physical_validation_state": "NOT_COMPLETE"
     }
   }

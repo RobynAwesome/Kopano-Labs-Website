@@ -10,7 +10,6 @@ Allow: /proof/
 Allow: /sitemap.xml
 Allow: /release.json
 Allow: /humans.txt
-Allow: /reports/KOPANO_LABS.pdf
 Disallow: /admin/
 Disallow: /api/
 Disallow: /internal/

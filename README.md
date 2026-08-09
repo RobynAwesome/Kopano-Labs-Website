@@ -3,19 +3,21 @@
 
 # Kopano Labs · Public Systems Studio
 
-**The dedicated production source for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa.**
+**Current Vercel implementation source observed for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa.**
 
 [![Production](https://img.shields.io/badge/production-kopanolabs.com-22c55e?style=for-the-badge&logo=vercel&logoColor=white)](https://kopanolabs.com)
-[![Source](https://img.shields.io/badge/source-RobynAwesome%2FKopano--Labs--Website-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
+[![Deployment Source](https://img.shields.io/badge/deployment%20source-observed-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
 [![Cars4Mars](https://img.shields.io/badge/Cars4Mars-primary%20evidence%20route-f97316?style=for-the-badge)](https://kopanolabs.com/Cars4Mars/)
 
 </div>
+
+> **Source governance:** Vercel currently reports `RobynAwesome/Kopano-Labs-Website` as deployment provenance. This README does not declare a canonical GitHub production repository; that remains unestablished until explicitly set by the owner.
 
 ---
 
 ## Mission
 
-Kopano Labs is not intended to behave like a flat portfolio. The public surface is an **adaptive progressive system**: a visitor states what they need, the interface routes them into the right depth, and the same route registry guides search crawlers, humans and CI.
+Kopano Labs is not a flat portfolio. The public surface is an **adaptive progressive system**: a visitor states what they need, the interface routes them into the right depth, and the same route registry guides search crawlers, humans and CI.
 
 ```text
 Intent
@@ -33,17 +35,21 @@ Labs · Systems · Cars4Mars · Proof
 
 ---
 
-## Visual system
+## Cars4Mars mission control
 
-The rebuild has a fixed design authority rather than inventing a new aesthetic every session:
+Cars4Mars is now treated as a **living build surface**, not a report wrapper.
 
-1. **KRRababalela.com / Portfolio-MBR** — interaction and visual DNA.
-2. **Kopano-Labs/Introduction-to-MCP** — product architecture, Studio lineage and intended evolution.
-3. **Cars4Mars** — cinematic engineering/evidence layer.
-4. **RobynAwesome/three.js + Bookit-5s-Arena** — spatial runtime, R3F/Drei, motion and adaptive implementation patterns.
-5. Flat brochure UI is a fallback, never the default.
+Current public modules:
 
-### Cars4Mars campaign asset
+- mission state: `DESIGNED → FUNDED → ORDERED → ASSEMBLED → TESTED`;
+- next physical gate with explicit acceptance evidence;
+- open build ledger recording verified transitions;
+- rover architecture and safety-authority map;
+- media control linking live, upload and channel lanes on `@kopanolabs`;
+- support lanes for equipment, funding, engineering, facilities, media and education;
+- official Cars4Mars acknowledgement.
+
+The design submission was completed on **02 August 2026**. The submitted package is **not** a website dependency or public release gate. Production must not regenerate, reconstruct or block on `/reports/KOPANO_LABS.pdf` unless that policy is explicitly changed.
 
 <img src="public/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars astronaut campaign artwork" width="760"/>
 
@@ -74,11 +80,11 @@ The rebuild has a fixed design authority rather than inventing a new aesthetic e
 | `/` | Adaptive public entry + spatial Kopano systems map | **Implemented** |
 | `/labs/` | Experiment discovery and focused entry | **Implemented / evolving** |
 | `/systems/` | Operational systems registry | **Implemented / evolving** |
-| `/Cars4Mars/` | Primary rover mission and evidence route | **Implemented / evidence expanding** |
+| `/Cars4Mars/` | Rover mission control, ledger, architecture, media and support | **Implemented / evidence expanding** |
 | `/proof/` | Source lineage, claims and public build state | **Implemented** |
 | `/sitemap.xml` | Generated crawler discovery map | **Implemented** |
 | `/robots.txt` | Guided crawler policy, not a blanket block | **Implemented** |
-| `/release.json` | Machine-readable production lineage | **Implemented** |
+| `/release.json` | Machine-readable production and evidence state | **Implemented** |
 
 ---
 
@@ -100,32 +106,34 @@ The rebuild has a fixed design authority rather than inventing a new aesthetic e
 - Search-oriented intent entry: rover, jobs, experiments, systems, proof.
 - Generated `sitemap.xml`.
 - Guided `robots.txt`.
-- Canonical URLs and route-specific metadata.
+- Canonical web URLs and route-specific metadata.
 - JSON-LD organization metadata.
 - Search Console baseline preserved under `docs/`.
 
 ### Evidence governance
 
-- Dedicated production repository boundary.
-- `Introduction-to-MCP` retained as architecture/source authority rather than production deployment source.
-- Cars4Mars is treated as an evidence chain: **design → procure → build → test → publish proof**.
-- CI validates route/crawler/source consistency.
+- Vercel + live domain are the current production proof surfaces.
+- `Introduction-to-MCP` remains architecture/source authority rather than a runtime dependency.
+- Cars4Mars keeps design evidence separate from physical validation.
+- CI validates route/crawler/release consistency.
+- Retired report delivery is explicitly excluded from crawl and release gates.
 
 ---
 
 ## Evidence state: do not confuse POC with FOC
 
-### POC — currently present in source
+### POC — currently present
 
-- dedicated KopanoLabs.com repository;
 - spatial React/Three runtime;
 - adaptive route registry;
 - public Labs, Systems, Cars4Mars and Proof routes;
+- Cars4Mars mission status, ledger, architecture, media and support surfaces;
 - crawler guidance + generated sitemap;
 - Search Console baseline documentation;
 - source-lineage documentation;
 - branded production assets;
-- GitHub production gate.
+- GitHub production gate;
+- Vercel production deployment receipts.
 
 ### Not yet claimed as fully validated
 
@@ -134,18 +142,16 @@ The rebuild has a fixed design authority rather than inventing a new aesthetic e
 - authenticated public Kopano workspace;
 - production visitor database/telemetry dashboard;
 - completed human-verification layer;
-- all legacy Studio functions migrated into the new public runtime;
+- all legacy Studio functions migrated into the public runtime;
 - final cross-device visual regression report for every target device tier.
 
 ---
 
 ## Implementation order
 
-Priority is deliberately fixed so new ideas cannot jump the queue:
-
 1. **P1 — Rebuild public product/visual surface.**
 2. **P2 — Preserve and migrate KopanoLabs.com lineage from `Introduction-to-MCP`.**
-3. **P3 — Cars4Mars evidence surface + verified report/media.**
+3. **P3 — Cars4Mars evidence, ledger, architecture, media and support surface.**
 4. **P4 — Production, indexing and source-parity gates.**
 5. **P5 — Human verification + first-party telemetry/database.**
 6. **P6 — Workspace: projects, tasks, artifacts, Forge/Cowork, Code, schedules, skills/connectors.**
@@ -160,10 +166,10 @@ See [`IMPLEMENTATION_ORDER.md`](IMPLEMENTATION_ORDER.md) for the governing execu
 |---|---|
 | `public/assets/brand/kopano-mark.svg` | app mark, favicon/PWA identity, spatial node identity |
 | `public/assets/brand/kopano-logo.svg` | institutional wordmark, README/header identity |
-| `public/assets/cars4mars/astronaut-campaign.svg` | Cars4Mars campaign/evidence visual |
+| `public/assets/cars4mars/astronaut-campaign.svg` | Cars4Mars campaign visual; not physical rover evidence |
 | `public/assets/diagrams/agent-routing.svg` | adaptive user → agent → database/API/documents explainer |
 
-Uploaded GIF/MP4 campaign sources are being treated as cinematic source material. Production derivatives should be compressed, labelled by provenance and loaded adaptively rather than forcing multi-megabyte video on every visitor.
+Production media should be compressed, labelled by provenance and loaded adaptively rather than forcing multi-megabyte video on every visitor.
 
 ---
 
@@ -188,16 +194,9 @@ The build regenerates crawler policy before TypeScript/Vite compilation.
 
 ## Source lineage
 
-The public implementation derives from website-facing architecture already created in `Kopano-Labs/Introduction-to-MCP`, especially:
+Website-facing architecture is traced back to `Kopano-Labs/Introduction-to-MCP`, including Studio, strategy, brand and context material. That repository is governance/architecture authority, not a runtime dependency.
 
-- `kopano-core/studio/`
-- `kopano-core/studio/src/pages/LabsPage.tsx`
-- `Schematics/02-Strategy/Kopano Rebrand Plan.md`
-- `Schematics/02-Strategy/Kopano Brand Identity.md`
-- `Schematics/02-Strategy/Kopano Labs Strategy.md`
-- `Schematics/01-Mission/Kopano Context Blueprint.md`
-
-`RobynAwesome/Money-managing-app` is unrelated and must never be used as Kopano Labs production source. `RobynAwesome/cars4mars-landingpage` is retired historical lineage, not a production dependency.
+`RobynAwesome/Money-managing-app` is unrelated and must never be used as Kopano Labs production source. `RobynAwesome/cars4mars-landingpage` is retired historical lineage and is not a production dependency.
 
 ---
 

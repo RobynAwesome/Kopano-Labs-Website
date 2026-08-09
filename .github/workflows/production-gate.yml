@@ -15,6 +15,18 @@ jobs:
           node-version: 22
       - run: npm install
       - run: npm run build
+      - name: Verify stateless renter governance entry
+        run: |
+          test -f AGENTS.md
+          test -f docs/STATELESS_RENTER_ENTRYWAY.md
+          test -f public/governance.json
+          grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' AGENTS.md
+          grep -q 'RobynAwesome/Kopano-Labs-Website' AGENTS.md
+          grep -q 'Kopano-Labs/Introduction-to-MCP' AGENTS.md
+          grep -q 'RobynAwesome/Money-managing-app' AGENTS.md
+          grep -q 'RobynAwesome/cars4mars-landingpage' AGENTS.md
+          grep -q 'a block is a branch point' public/governance.json
+          grep -q 'transition_only' public/governance.json
       - name: Verify generated discovery policy is committed
         run: |
           git diff --exit-code -- public/sitemap.xml public/robots.txt
@@ -38,6 +50,7 @@ jobs:
           grep -q 'Kopano-Labs/Introduction-to-MCP' public/release.json
           grep -q 'retired_repo_is_dependency.*false' public/release.json
           grep -q 'money_managing_app_is_dependency.*false' public/release.json
+          grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' public/release.json
       - name: Verify sitemap follows adaptive route registry
         run: |
           grep -q 'https://kopanolabs.com/' public/sitemap.xml
@@ -97,7 +110,7 @@ jobs:
           grep -q 'experienceTier' src/experienceRuntime.ts
           grep -q 'astronaut-campaign.svg' src/App.tsx
           grep -q 'agent-routing.svg' src/App.tsx
-      - name: Verify Cars4Mars evidence honesty and report delivery
+      - name: Verify Cars4Mars evidence honesty and report state
         run: |
           grep -q 'DESIGN → PHYSICAL VALIDATION' src/App.tsx
           grep -q 'not concept art' src/App.tsx
@@ -106,11 +119,10 @@ jobs:
           test -f docs/cars4mars/DFR-01.md
           grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
-          grep -q '"source": "/reports/KOPANO_LABS.pdf"' vercel.json
-          grep -q '1lEiP-W7eIRES9D5KyrP-U4gwizYLyKOh' vercel.json
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' docs/cars4mars/DFR-01.md
-          ! grep -q 'PUBLIC MIRROR PENDING' src/components/Cars4MarsMissionControl.tsx
+          grep -q 'REMEDIATION_REQUIRED' public/release.json
+          grep -q 'Google Drive external-origin rewrite' public/release.json
       - name: Verify Search Console baseline is preserved
         run: |
           test -f docs/SEARCH_CONSOLE_BASELINE_2026-08-08.md

@@ -8,7 +8,7 @@
       "id": "cars4mars",
       "path": "/Cars4Mars/",
       "title": "Cars4Mars 2026 — Kopano Labs Rover Evidence",
-      "description": "Cars4Mars 2026 by Kopano Labs: rover design, engineering evidence, build state, reports and public validation from Cape Town, South Africa.",
+      "description": "Cars4Mars 2026 by Kopano Labs: rover engineering, build state, physical validation and public progress from Cape Town, South Africa.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 1,
@@ -60,9 +60,7 @@
       "humanPrompt": "I want evidence, source lineage and verification."
     }
   ],
-  "indexArtifacts": [
-    "/reports/KOPANO_LABS.pdf"
-  ],
+  "indexArtifacts": [],
   "protectedPaths": [
     "/admin/",
     "/api/",
@@ -74,7 +72,6 @@
   "publicArtifacts": [
     "/sitemap.xml",
     "/release.json",
-    "/humans.txt",
-    "/reports/KOPANO_LABS.pdf"
+    "/humans.txt"
   ]
 }

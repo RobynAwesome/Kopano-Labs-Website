@@ -7,6 +7,7 @@ Allow: /Cars4Mars/Ledger/
 Allow: /Cars4Mars/Architecture/
 Allow: /Cars4Mars/Media/
 Allow: /Cars4Mars/Support/
+Allow: /FOC/
 Allow: /
 Allow: /labs/
 Allow: /systems/

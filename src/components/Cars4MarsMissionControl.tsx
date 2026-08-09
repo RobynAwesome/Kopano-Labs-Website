@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 
 const states = [
-  ['DESIGNED', 'LOCKED', 'DFR-01 · submitted 02 Aug 2026', 'verified'],
+  ['DESIGNED', 'LOCKED', 'Design submission completed 02 Aug 2026.', 'verified'],
   ['FUNDED', 'PENDING EVIDENCE', 'Funding discussion is not a funding instrument.', 'pending'],
   ['ORDERED', 'NO ORDER EVIDENCE', 'Advance only on PO, invoice or verified donor commitment.', 'blocked'],
   ['ASSEMBLED', 'NOT STARTED', 'Advance on dated assembly record and configuration evidence.', 'blocked'],
@@ -28,14 +28,14 @@ const support = [
 export function Cars4MarsMissionControl() {
   return <div className="mission-control">
     <section className="mission-status" aria-label="Cars4Mars mission status">
-      <div className="mission-section-head"><span className="eyebrow">CURRENT MISSION STATE</span><h2>Design is evidence. Hardware still has to earn the rest.</h2></div>
+      <div className="mission-section-head"><span className="eyebrow">CURRENT MISSION STATE</span><h2>Submission is complete. Hardware still has to earn the rest.</h2></div>
       <div className="mission-state-grid">{states.map(([name, state, evidence, tone], index) => <motion.article key={name} className={`mission-state ${tone}`} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.05}}><span>{String(index + 1).padStart(2,'0')}</span><b>{name}</b><strong>{state}</strong><p>{evidence}</p></motion.article>)}</div>
     </section>
 
-    <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE · DFR-01</span><h2>Funding, orders, frame, drive and protected power.</h2><p>Release evidence: approved orders plus loaded forward/reverse, turn and emergency-stop evidence. Design intent does not advance this gate.</p></div><div className="gate-meta"><span>DUE WINDOW</span><strong>03–10 AUG 2026</strong><span>ACCEPTANCE</span><strong>ORDERS + LOADED DRIVE + TURN + E-STOP</strong></div></section>
+    <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE</span><h2>Funding, orders, frame, drive and protected power.</h2><p>Release evidence: approved orders plus loaded forward/reverse, turn and emergency-stop evidence. Design intent does not advance this gate.</p></div><div className="gate-meta"><span>DUE WINDOW</span><strong>03–10 AUG 2026</strong><span>ACCEPTANCE</span><strong>ORDERS + LOADED DRIVE + TURN + E-STOP</strong></div></section>
 
     <section className="mission-module-grid">
-      <article className="mission-module report-module"><span className="eyebrow">FINAL DESIGN REPORT</span><h3>DFR-01 · verified public artifact.</h3><p>The six-page report submitted on 02 August 2026 is the authoritative design baseline. Procurement, fabrication, integration and physical testing remain explicitly unverified inside the report.</p><a href="/reports/KOPANO_LABS.pdf" target="_blank" rel="noreferrer">Read the Final Design Report ↗</a><div className="artifact-state"><i /> VERIFIED · SHA-256 42842e59…86840855</div></article>
+      <article className="mission-module report-module"><span className="eyebrow">DESIGN SUBMISSION</span><h3>Submitted. Closed. No longer a website dependency.</h3><p>The competition has the submitted design package. KopanoLabs.com now tracks what happens after submission: funding, procurement, assembly, testing, failures and verified physical progress.</p><div className="artifact-state"><i /> SUBMISSION COMPLETE · 02 AUG 2026</div></article>
       <article className="mission-module watch-module"><span className="eyebrow">WATCH</span><a className="video-poster" href="https://youtube.com/@kopanolabs" target="_blank" rel="noreferrer" aria-label="Open Kopano Labs video channel"><img src="/assets/cars4mars/video-mission-poster.svg" alt="Cars4Mars watch the evidence video poster" /><span>Open video channel ↗</span></a><h3>Video is evidence media, not the truth database.</h3><p>The mission page stays canonical. Submission and future test footage open through the verified Kopano Labs channel until a specific embeddable video ID is registered in the evidence ledger.</p></article>
     </section>
 

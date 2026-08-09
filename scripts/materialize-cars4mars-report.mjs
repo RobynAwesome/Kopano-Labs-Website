@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 const root = dirname(dirname(fileURLToPath(import.meta.url)));
 const sourceDir = join(root, 'source-artifacts', 'cars4mars', 'pdf-v2');
 const target = join(root, 'dist', 'reports', 'KOPANO_LABS.pdf');
-const expectedParts = 16;
+const expectedParts = 2;
 const expectedBase64Length = 117824;
 const expectedBytes = 88367;
 const expectedSha256 = '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855';

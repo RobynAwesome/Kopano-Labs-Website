@@ -10,7 +10,12 @@
 - **Submitted baseline:** DFR-01
 - **Date:** 02 August 2026
 - **Length:** 6 pages, A4
-- **Repository mirror:** pending exact binary transfer to `public/reports/KOPANO_LABS.pdf`
+- **Bytes:** 88,367
+- **SHA-256:** `42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855`
+- **Public route:** `/reports/KOPANO_LABS.pdf`
+- **Delivery:** Vercel rewrite to the verified external source artifact; cached at the production edge.
+
+The artifact was independently materialized from the stored report and its SHA-256 matches `public/release.json` exactly.
 
 ## Current-state declaration
 
@@ -53,4 +58,4 @@ Release evidence: approved orders plus loaded forward/reverse drive, turning and
 3. A state transition requires a dated evidence record.
 4. Failures stay in the ledger; corrections create a new versioned decision.
 5. `/Cars4Mars/` is the canonical public mission record.
-6. The report download is not advertised until the exact verified PDF binary is present at `/reports/KOPANO_LABS.pdf`.
+6. `/reports/KOPANO_LABS.pdf` is advertised only because the delivered artifact hash matches the verified DFR-01 source.

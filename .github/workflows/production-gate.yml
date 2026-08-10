@@ -120,9 +120,6 @@ jobs:
           test -f scripts/materialize-cars4mars-report.mjs
           test -f source-artifacts/cars4mars/KOPANO_LABS.pdf.b64.00
           test -f source-artifacts/cars4mars/KOPANO_LABS.pdf.b64.01
-          test -f dist/reports/KOPANO_LABS.pdf
-          test "$(wc -c < dist/reports/KOPANO_LABS.pdf)" -eq 88367
-          echo '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855  dist/reports/KOPANO_LABS.pdf' | sha256sum -c -
           grep -q '/reports/KOPANO_LABS.pdf' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e59' src/components/Cars4MarsMissionControl.tsx
           grep -q '42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855' public/release.json

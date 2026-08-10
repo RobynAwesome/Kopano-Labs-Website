@@ -1,0 +1,21 @@
+# Kopano Labs crawl guide
+# Public discovery is welcome. Follow the public route map; operational surfaces stay out of crawl scope.
+
+User-agent: *
+Allow: /Cars4Mars/
+Allow: /
+Allow: /labs/
+Allow: /systems/
+Allow: /proof/
+Allow: /sitemap.xml
+Allow: /release.json
+Allow: /humans.txt
+Allow: /reports/KOPANO_LABS.pdf
+Disallow: /admin/
+Disallow: /api/
+Disallow: /internal/
+Disallow: /private/
+Disallow: /telemetry/
+Disallow: /debug/
+
+Sitemap: https://kopanolabs.com/sitemap.xml

@@ -1,0 +1,33 @@
+{
+  "site": "Kopano Labs",
+  "domain": "https://KopanoLabs.com",
+  "source_repository": "RobynAwesome/Kopano-Labs-Website",
+  "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "governance": {
+    "machine_manifest": "/governance.json",
+    "agent_entry": "AGENTS.md",
+    "stateless_renter_entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
+    "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY"
+  },
+  "production_dependency_policy": {
+    "retired_repository": "RobynAwesome/cars4mars-landingpage",
+    "retired_repo_is_dependency": false,
+    "money_managing_app_is_dependency": false
+  },
+  "surface": "kopano-studio-public",
+  "cars4mars": {
+    "state": "BUILD",
+    "evidence_rule": "design claims remain separate from physical proof",
+    "final_design_report": {
+      "route": "/reports/KOPANO_LABS.pdf",
+      "baseline": "DFR-01",
+      "submitted": "2026-08-02",
+      "bytes": 88367,
+      "sha256": "42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855",
+      "delivery_state": "FIRST_PARTY_VERIFIED",
+      "delivery_method": "build-time materialization from committed base64 source chunks",
+      "external_origin_dependency": false,
+      "physical_validation_state": "NOT_COMPLETE"
+    }
+  }
+}

@@ -1,0 +1,64 @@
+{
+  "schema": "kopano-labs-production-governance/v1",
+  "site": "https://KopanoLabs.com",
+  "production_repository": "RobynAwesome/Kopano-Labs-Website",
+  "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "stateless_renter": {
+    "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY",
+    "entry_file": "AGENTS.md",
+    "entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
+    "rule": "verify exact namespace and live state before inference or mutation"
+  },
+  "authority_order": [
+    "current owner instruction",
+    "Kopano-Labs/Introduction-to-MCP governance and Schematics",
+    "RobynAwesome/Kopano-Labs-Website deterministic implementation",
+    "Vercel project kopano-labs and live KopanoLabs.com owner-proof"
+  ],
+  "production_exclusions": [
+    {
+      "repository": "RobynAwesome/Money-managing-app",
+      "status": "unrelated",
+      "production_dependency": false,
+      "mutation_allowed_for_kopano_production": false
+    },
+    {
+      "repository": "RobynAwesome/cars4mars-landingpage",
+      "status": "retired",
+      "production_dependency": false,
+      "mutation_allowed_for_kopano_production": false
+    }
+  ],
+  "blocker_protocol": {
+    "sequence": ["observe", "classify", "save", "kill_proven_bad_path", "try_materially_different_implementation", "verify_live", "reveal_actual_state"],
+    "principle": "a block is a branch point, not proof that no other solution exists",
+    "success_rule": "changed error does not equal satisfied requirement"
+  },
+  "proof_order": [
+    "owner-observable live behavior",
+    "current production deployment",
+    "committed deterministic source",
+    "governance/source-authority documentation",
+    "prior session notes",
+    "model inference"
+  ],
+  "live_gates": [
+    "/",
+    "/Cars4Mars/",
+    "/reports/KOPANO_LABS.pdf",
+    "/robots.txt",
+    "/sitemap.xml",
+    "/release.json",
+    "/governance.json"
+  ],
+  "cars4mars": {
+    "baseline": "DFR-01",
+    "submitted": "2026-08-02",
+    "state_model": ["DESIGNED", "FUNDED", "ORDERED", "ASSEMBLED", "TESTED", "VALIDATED"],
+    "truth_rule": "web progress does not imply physical progress"
+  },
+  "monitoring": {
+    "mode": "transition_only",
+    "repeat_unchanged_known_defect": false
+  }
+}

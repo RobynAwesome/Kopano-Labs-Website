@@ -1,0 +1,21 @@
+/* KOPANO LABS */
+
+Studio: Kopano Labs
+Location: Cape Town, South Africa
+Website: https://KopanoLabs.com
+GitHub: https://github.com/RobynAwesome/Kopano-Labs-Website
+
+/* BUILD PRINCIPLE */
+
+Reality -> Experiment -> Proof -> Production
+Public claims should remain tied to visible evidence.
+
+/* SOURCE LINEAGE */
+
+Website implementation: RobynAwesome/Kopano-Labs-Website
+Ecosystem/specification authority: Kopano-Labs/Introduction-to-MCP
+
+/* ACCESS */
+
+Public site: crawlable and accessible without a global CAPTCHA wall.
+Sensitive actions may use human verification and first-party telemetry.

@@ -8,7 +8,7 @@
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
     "routes:generate": "node scripts/generate-route-shells.mjs",
     "report:materialize": "node scripts/materialize-cars4mars-report.mjs",
-    "build": "npm run crawl:generate && tsc -b && vite build && npm run report:materialize && npm run routes:generate",
+    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,13 +1,14 @@
 {
   "name": "kopano-labs-website",
   "private": true,
-  "version": "1.3.0",
+  "version": "1.3.1",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
     "routes:generate": "node scripts/generate-route-shells.mjs",
-    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate",
+    "convergence:verify": "node scripts/verify-convergence.mjs",
+    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate && npm run convergence:verify",
     "preview": "vite preview"
   },
   "dependencies": {

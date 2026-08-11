@@ -117,6 +117,7 @@
   ],
   "indexArtifacts": [],
   "protectedPaths": [
+    "/reports/",
     "/admin/",
     "/api/",
     "/internal/",
@@ -125,8 +126,10 @@
     "/debug/"
   ],
   "publicArtifacts": [
+    "/robots.txt",
     "/sitemap.xml",
     "/release.json",
+    "/governance.json",
     "/humans.txt"
   ]
 }

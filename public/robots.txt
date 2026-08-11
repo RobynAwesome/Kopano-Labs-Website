@@ -12,15 +12,17 @@ Allow: /
 Allow: /labs/
 Allow: /systems/
 Allow: /proof/
+Allow: /robots.txt
 Allow: /sitemap.xml
 Allow: /release.json
+Allow: /governance.json
 Allow: /humans.txt
+Disallow: /reports/
 Disallow: /admin/
 Disallow: /api/
 Disallow: /internal/
 Disallow: /private/
 Disallow: /telemetry/
 Disallow: /debug/
-Disallow: /reports/
 
 Sitemap: https://kopanolabs.com/sitemap.xml

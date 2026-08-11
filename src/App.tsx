@@ -125,6 +125,11 @@ export function App() {
             <motion.div className="spatial-stage" initial={{opacity:0,scale:.94}} animate={{opacity:1,scale:1}} transition={{duration:.9}}><KopanoScene/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="rover, backing, proof…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
           </div>
 
+          <motion.section className="home-film" aria-label="Cars4Mars one-minute submission film" initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
+            <div className="home-film-copy"><span className="eyebrow">CARS4MARS · ONE-MINUTE FILM</span><h2>Watch the mission.</h2><p>The homepage carries one submission film only. The full Cars4Mars media set stays inside Mission Control.</p><button className="secondary" onClick={() => navigate('cars4mars')}>Open Cars4Mars</button></div>
+            <div className="home-film-frame"><iframe src="https://www.youtube-nocookie.com/embed/01exG-aWj6g?rel=0" title="Cars4Mars one-minute submission film" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>
+          </motion.section>
+
           <section className="now-surface" aria-label="Current Kopano Labs work">
             {now.map((item,index)=><motion.a key={item.id} className={`now-card ${item.tone}`} href={item.href} target={item.href.startsWith('http')?'_blank':undefined} rel={item.href.startsWith('http')?'noreferrer':undefined} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.05}}>
               {item.id==='cars4mars'?<RoverVisual className="now-rover"/>:<strong className="now-mark">{item.mark}</strong>}

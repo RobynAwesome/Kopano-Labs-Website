@@ -4,129 +4,18 @@
     "defaultIntent": "explore"
   },
   "routes": [
-    {
-      "id": "cars4mars",
-      "path": "/Cars4Mars/",
-      "title": "Cars4Mars 2026 — Kopano Labs Rover Evidence",
-      "description": "Cars4Mars 2026 by Kopano Labs: rover engineering, build state, physical validation and public progress from Cape Town, South Africa.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 1,
-      "intents": ["mars", "rover", "engineering", "evidence", "competition", "build", "cars4mars"],
-      "humanPrompt": "I want the Mars rover programme and its evidence."
-    },
-    {
-      "id": "cars4mars-ledger",
-      "path": "/Cars4Mars/Ledger/",
-      "title": "Cars4Mars Open Build Ledger — Kopano Labs",
-      "description": "Inspect dated Cars4Mars state transitions, verified evidence events and the next physical validation gate.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 2,
-      "intents": ["cars4mars ledger", "ledger", "evidence history", "build proof", "transitions"],
-      "humanPrompt": "I want the Cars4Mars build ledger and evidence history."
-    },
-    {
-      "id": "cars4mars-architecture",
-      "path": "/Cars4Mars/Architecture/",
-      "title": "Cars4Mars Rover Architecture — Kopano Labs",
-      "description": "Inspect the Cars4Mars drive, control, perception, power, communications and bounded-safety architecture.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 3,
-      "intents": ["cars4mars architecture", "rover architecture", "hardware", "safety", "control", "perception"],
-      "humanPrompt": "I want the rover architecture and safety design."
-    },
-    {
-      "id": "cars4mars-media",
-      "path": "/Cars4Mars/Media/",
-      "title": "Cars4Mars Media Control — Kopano Labs",
-      "description": "Open Cars4Mars live, upload and channel media lanes while preserving the mission ledger as the evidence authority.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 4,
-      "intents": ["cars4mars media", "video", "live", "youtube", "uploads", "footage"],
-      "humanPrompt": "I want Cars4Mars video, live streams and uploads."
-    },
-    {
-      "id": "cars4mars-support",
-      "path": "/Cars4Mars/Support/",
-      "title": "Support Cars4Mars — Kopano Labs",
-      "description": "Support Cars4Mars through equipment, funding, engineering, facilities, documentation and education tied to evidence gates.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 5,
-      "intents": ["cars4mars support", "funding", "sponsor", "equipment", "engineering", "collaboration"],
-      "humanPrompt": "I want to support or collaborate on Cars4Mars."
-    },
-    {
-      "id": "foc",
-      "path": "/FOC/",
-      "title": "FOC Validation — Kopano Labs",
-      "description": "Kopano Labs FOC validation matrix: working state, public visibility, backing and recency across active MVPs.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 6,
-      "intents": ["foc", "fake of concept", "freedom of concept", "validation", "backing", "mvp state"],
-      "humanPrompt": "I want to inspect FOC validation across the MVP portfolio."
-    },
-    {
-      "id": "home",
-      "path": "/",
-      "title": "Kopano Labs — What We Are Building Now",
-      "description": "Current Kopano Labs work: Cars4Mars, FiveS Arena, KasiLink, Cape Campus, Starfall Salvage and active validation work from South Africa.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 7,
-      "intents": ["explore", "kopano", "south africa", "now", "current work", "official website"],
-      "humanPrompt": "I want to see what Kopano Labs is doing now."
-    },
-    {
-      "id": "labs",
-      "path": "/labs/",
-      "title": "Experiments — Kopano Labs",
-      "description": "Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 8,
-      "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
-      "humanPrompt": "I need an experiment or practical tool."
-    },
-    {
-      "id": "systems",
-      "path": "/systems/",
-      "title": "Systems — Kopano Labs",
-      "description": "Inspect Kopano Labs systems including Kopano Context, CrisisConnect, FiveS Arena and Starfall Salvage, each with its own evidence and lifecycle.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 9,
-      "intents": ["systems", "crisisconnect", "fives arena", "starfall", "infrastructure"],
-      "humanPrompt": "I want to inspect the systems being built."
-    },
-    {
-      "id": "proof",
-      "path": "/proof/",
-      "title": "Proof & Lineage — Kopano Labs",
-      "description": "Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.",
-      "index": true,
-      "crawl": true,
-      "sitemapOrder": 10,
-      "intents": ["proof", "source", "audit", "lineage", "verification"],
-      "humanPrompt": "I want evidence, source lineage and verification."
-    }
+    {"id":"cars4mars","path":"/Cars4Mars/","title":"Cars4Mars 2026 — Kopano Labs Rover Evidence","description":"Cars4Mars 2026 by Kopano Labs: rover engineering, build state, physical validation and public progress from Cape Town, South Africa.","index":true,"crawl":true,"sitemapOrder":1,"intents":["mars","rover","engineering","evidence","competition","build","cars4mars"],"humanPrompt":"I want the Mars rover programme and its evidence."},
+    {"id":"cars4mars-ledger","path":"/Cars4Mars/Ledger/","title":"Cars4Mars Open Build Ledger — Kopano Labs","description":"Inspect dated Cars4Mars state transitions, verified evidence events and the next physical validation gate.","index":true,"crawl":true,"sitemapOrder":2,"intents":["cars4mars ledger","ledger","evidence history","build proof","transitions"],"humanPrompt":"I want the Cars4Mars build ledger and evidence history."},
+    {"id":"cars4mars-architecture","path":"/Cars4Mars/Architecture/","title":"Cars4Mars Rover Architecture — Kopano Labs","description":"Inspect the Cars4Mars drive, control, perception, power, communications and bounded-safety architecture.","index":true,"crawl":true,"sitemapOrder":3,"intents":["cars4mars architecture","rover architecture","hardware","safety","control","perception"],"humanPrompt":"I want the rover architecture and safety design."},
+    {"id":"cars4mars-media","path":"/Cars4Mars/Media/","title":"Cars4Mars Media Control — Kopano Labs","description":"Open Cars4Mars live, upload and channel media lanes while preserving the mission ledger as the evidence authority.","index":true,"crawl":true,"sitemapOrder":4,"intents":["cars4mars media","video","live","youtube","uploads","footage"],"humanPrompt":"I want Cars4Mars video, live streams and uploads."},
+    {"id":"cars4mars-support","path":"/Cars4Mars/Support/","title":"Support Cars4Mars — Kopano Labs","description":"Support Cars4Mars through equipment, funding, engineering, facilities, documentation and education tied to evidence gates.","index":true,"crawl":true,"sitemapOrder":5,"intents":["cars4mars support","funding","sponsor","equipment","engineering","collaboration"],"humanPrompt":"I want to support or collaborate on Cars4Mars."},
+    {"id":"foc","path":"/FOC/","title":"FOC Validation — Kopano Labs","description":"Kopano Labs FOC validation matrix: working state, public visibility, backing and recency across active MVPs.","index":true,"crawl":true,"sitemapOrder":6,"intents":["foc","fake of concept","freedom of concept","validation","backing","mvp state"],"humanPrompt":"I want to inspect FOC validation across the MVP portfolio."},
+    {"id":"home","path":"/","title":"Kopano Labs — What We Are Building Now","description":"Current Kopano Labs work: Cars4Mars, FiveS Arena, KasiLink, Cape Campus, Starfall Salvage and active validation work from South Africa.","index":true,"crawl":true,"sitemapOrder":7,"intents":["explore","kopano","south africa","now","current work","official website"],"humanPrompt":"I want to see what Kopano Labs is doing now."},
+    {"id":"labs","path":"/labs/","title":"Experiments — Kopano Labs","description":"Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.","index":true,"crawl":true,"sitemapOrder":8,"intents":["experiments","jobs","youth","language","sme","tools"],"humanPrompt":"I need an experiment or practical tool."},
+    {"id":"systems","path":"/systems/","title":"Systems — Kopano Labs","description":"Inspect Kopano Labs systems including Kopano Context, CrisisConnect, FiveS Arena and Starfall Salvage, each with its own evidence and lifecycle.","index":true,"crawl":true,"sitemapOrder":9,"intents":["systems","crisisconnect","fives arena","starfall","infrastructure"],"humanPrompt":"I want to inspect the systems being built."},
+    {"id":"proof","path":"/proof/","title":"Proof & Lineage — Kopano Labs","description":"Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.","index":true,"crawl":true,"sitemapOrder":10,"intents":["proof","source","audit","lineage","verification"],"humanPrompt":"I want evidence, source lineage and verification."}
   ],
   "indexArtifacts": [],
-  "protectedPaths": [
-    "/admin/",
-    "/api/",
-    "/internal/",
-    "/private/",
-    "/telemetry/",
-    "/debug/"
-  ],
-  "publicArtifacts": [
-    "/sitemap.xml",
-    "/release.json",
-    "/humans.txt"
-  ]
+  "protectedPaths": ["/reports/","/admin/","/api/","/internal/","/private/","/telemetry/","/debug/"],
+  "publicArtifacts": ["/robots.txt","/sitemap.xml","/release.json","/governance.json","/humans.txt"]
 }

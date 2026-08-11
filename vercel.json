@@ -4,6 +4,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/((?!robots.txt|sitemap.xml|release.json|humans.txt|reports/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!robots\\.txt$|sitemap\\.xml$|release\\.json$|governance\\.json$|humans\\.txt$|reports(?:/|$)).*)",
+      "destination": "/index.html"
+    }
   ]
 }

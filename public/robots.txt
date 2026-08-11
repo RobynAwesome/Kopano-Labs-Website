@@ -21,5 +21,6 @@ Disallow: /internal/
 Disallow: /private/
 Disallow: /telemetry/
 Disallow: /debug/
+Disallow: /reports/
 
 Sitemap: https://kopanolabs.com/sitemap.xml

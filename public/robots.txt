@@ -9,8 +9,9 @@ Allow: /Cars4Mars/Media/
 Allow: /Cars4Mars/Support/
 Allow: /FOC/
 Allow: /
-Allow: /labs/
 Allow: /systems/
+Allow: /labs/
+Allow: /content/
 Allow: /proof/
 Allow: /robots.txt
 Allow: /sitemap.xml

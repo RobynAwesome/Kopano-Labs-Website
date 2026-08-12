@@ -25,11 +25,11 @@ const systems: [string, string, string][] = [
 ];
 
 const now = [
-  { id:'cars4mars', mark:'MARS', title:'Cars4Mars', state:'BUILD', detail:'Rover programme · physical validation next', href:'/Cars4Mars/', tone:'mars' },
-  { id:'fives', mark:'5S', title:'FiveS Arena', state:'BACKED', detail:'Hellenic FC · active external backing', href:'https://fivesarena.com', tone:'green' },
-  { id:'kasilink', mark:'KL', title:'KasiLink', state:'BACKING TARGET', detail:'Government-facing opportunity surface', href:'https://kasilink.com', tone:'blue' },
-  { id:'campus', mark:'CC', title:'Cape Campus', state:'BACKING TARGET', detail:'Tourism-facing opportunity surface', href:'#', tone:'gold' },
-  { id:'starfall', mark:'SS', title:'Starfall Salvage', state:'REWORK', detail:'Playable · operations need redesign', href:'https://starfallsalvage.kopanolabs.com', tone:'violet' },
+  { id:'cars4mars', mark:'MARS', title:'Cars4Mars', state:'BUILD', detail:'Rover design submitted. Hardware build and physical validation next.', href:'/Cars4Mars/', tone:'mars' },
+  { id:'fives', mark:'5S', title:'FiveS Arena', state:'BACKED', detail:'Community football infrastructure with Hellenic FC backing.', href:'https://fivesarena.com', tone:'green' },
+  { id:'kasilink', mark:'KL', title:'KasiLink', state:'BACKING TARGET', detail:'Local opportunity and service routing. Government backing remains a target.', href:'https://kasilink.com', tone:'blue' },
+  { id:'campus', mark:'CC', title:'Cape Campus', state:'BACKING TARGET', detail:'Tourism-facing discovery concept. Partnership validation is still in progress.', href:'#', tone:'gold' },
+  { id:'starfall', mark:'SS', title:'Starfall Salvage', state:'REWORK', detail:'Playable systems lab. Product flow and operations are being reworked.', href:'https://starfallsalvage.kopanolabs.com', tone:'violet' },
 ] as const;
 
 const proof = [
@@ -102,8 +102,10 @@ export function App() {
     <a className="skip-link" href="#main-content">Skip to content</a>
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/>
     <header className="topbar">
-      <button className="brand" onClick={() => navigate('home')}><span className="brand-mark"><img src="/assets/brand/kopano-mark.svg" alt=""/></span><span><strong>Kopano Labs</strong><small>NOW · AUGUST 2026</small></span></button>
+      <button className="brand" onClick={() => navigate('home')}><span className="brand-mark"><img src="/assets/brand/kopano-mark.svg" alt=""/></span><span><strong>Kopano Labs</strong><small>SOUTH AFRICAN SYSTEMS STUDIO</small></span></button>
       <nav aria-label="Primary">
+        <NavButton id="home" active={primaryView} onClick={navigate}>Now</NavButton>
+        <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
         <NavButton id="foc" active={primaryView} onClick={navigate}>FOC</NavButton>
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
@@ -116,22 +118,28 @@ export function App() {
       <AnimatePresence mode="wait">
         {view === 'home' && <motion.section key="home" className="page home" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
           <div className="hero-grid spatial-hero now-hero">
-            <motion.div className="hero-copy" initial={{opacity:0,x:-70}} animate={{opacity:1,x:0}} transition={{duration:.7}}>
-              <span className="eyebrow">WHAT WE'RE UP TO</span>
-              <h1>Builds.<br/><em>Backers. Proof.</em></h1>
-              <p>Current work only. Watch what moves.</p>
-              <div className="hero-actions"><button className="primary" onClick={() => navigate('foc')}>Open FOC matrix</button><button className="secondary" onClick={() => navigate('cars4mars')}>Cars4Mars</button></div>
+            <motion.div className="hero-copy" initial={{opacity:0,x:-70,filter:'blur(8px)'}} animate={{opacity:1,x:0,filter:'blur(0px)'}} transition={{duration:.8,ease:[.23,1,.32,1]}}>
+              <span className="eyebrow">KOPANO LABS · BUILT IN SOUTH AFRICA</span>
+              <h1>Realism.<br/><em>Sovereignty. Proof.</em></h1>
+              <p>Offline-first, proof-gated systems built to stay useful when the grid and the cloud do not.</p>
+              <p className="studio-principle">Realism accommodates aesthetics; sovereignty accommodates both.</p>
+              <div className="hero-actions"><button className="primary" onClick={() => navigate('labs')}>Explore the labs</button><button className="secondary" onClick={() => navigate('cars4mars')}>Cars4Mars</button></div>
             </motion.div>
-            <motion.div className="spatial-stage" initial={{opacity:0,scale:.94}} animate={{opacity:1,scale:1}} transition={{duration:.9}}><KopanoScene/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="rover, backing, proof…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
+            <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><KopanoScene/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="jobs, rover, crisis, football, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
           </div>
 
           <motion.section className="home-film" aria-label="Cars4Mars one-minute submission film" initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
-            <div className="home-film-copy"><span className="eyebrow">CARS4MARS · ONE-MINUTE FILM</span><h2>Watch the mission.</h2><p>The homepage carries one submission film only. The full Cars4Mars media set stays inside Mission Control.</p><button className="secondary" onClick={() => navigate('cars4mars')}>Open Cars4Mars</button></div>
+            <div className="home-film-copy"><span className="eyebrow">CARS4MARS · 60 SECOND MISSION</span><h2>From Cape Town to Mars.</h2><p>Rover design submitted. Hardware build and physical validation come next.</p><button className="secondary" onClick={() => navigate('cars4mars')}>Open Cars4Mars</button></div>
             <div className="home-film-frame"><iframe src="https://www.youtube-nocookie.com/embed/01exG-aWj6g?rel=0" title="Cars4Mars one-minute submission film" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen/></div>
           </motion.section>
 
+          <motion.div className="studio-intro" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
+            <div><span className="eyebrow">KOPANO ECOSYSTEM</span><h2>Different problems. One engineering discipline.</h2></div>
+            <p>Kopano Labs connects orchestration, public-interest software, community infrastructure and cyber-physical builds without pretending they are the same product.</p>
+          </motion.div>
+
           <section className="now-surface" aria-label="Current Kopano Labs work">
-            {now.map((item,index)=><motion.a key={item.id} className={`now-card ${item.tone}`} href={item.href} target={item.href.startsWith('http')?'_blank':undefined} rel={item.href.startsWith('http')?'noreferrer':undefined} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.05}}>
+            {now.map((item,index)=><motion.a key={item.id} className={`now-card ${item.tone}`} href={item.href} target={item.href.startsWith('http')?'_blank':undefined} rel={item.href.startsWith('http')?'noreferrer':undefined} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} whileHover={{y:-6,scale:1.01}} viewport={{once:true}} transition={{delay:index*.05}}>
               {item.id==='cars4mars'?<RoverVisual className="now-rover"/>:<strong className="now-mark">{item.mark}</strong>}
               <div><span>{item.state}</span><h2>{item.title}</h2><p>{item.detail}</p></div>
             </motion.a>)}
@@ -142,19 +150,19 @@ export function App() {
 
         {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><FOCMatrix/></motion.section>}
 
-        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">LABS</span><h1>Experiments in motion.</h1></div><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
+        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
 
-        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Live surfaces.</h1></div><SpatialDirectory items={systems} kind="system"/></motion.section>}
+        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints and evidence.</p></div><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
         {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
           <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><KopanoScene/><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars campaign concept artwork"/><RoverVisual className="mars-rover-visual"/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
           <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)}/></div>
         </motion.section>}
 
-        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Receipts.</h1></div><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
+        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
       </AnimatePresence>
     </main>
 
-    <footer><span>Kopano Labs · Cape Town</span><span>Current work → visible state → backing → proof</span></footer>
+    <footer><span>Kopano Labs · Cape Town, South Africa</span><span>Realism · Aesthetics · Sovereignty · Proof</span></footer>
   </div>;
 }

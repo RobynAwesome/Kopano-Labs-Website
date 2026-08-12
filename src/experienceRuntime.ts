@@ -4,8 +4,30 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 type Connection = { saveData?: boolean; effectiveType?: string };
 type NavigatorWithConnection = Navigator & { connection?: Connection; deviceMemory?: number };
 
-export function startExperienceRuntime() {
-  if (typeof window === 'undefined') return () => undefined;
+export type ExperienceTier = 'lite' | 'balanced' | 'full';
+
+export type ExperienceProfile = {
+  tier: ExperienceTier;
+  reducedMotion: boolean;
+  saveData: boolean;
+  effectiveType: string;
+  cores: number;
+  memory: number;
+  narrow: boolean;
+};
+
+export function getExperienceProfile(): ExperienceProfile {
+  if (typeof window === 'undefined') {
+    return {
+      tier: 'balanced',
+      reducedMotion: false,
+      saveData: false,
+      effectiveType: 'unknown',
+      cores: 4,
+      memory: 4,
+      narrow: false,
+    };
+  }
 
   const nav = navigator as NavigatorWithConnection;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -15,19 +37,26 @@ export function startExperienceRuntime() {
   const narrow = window.matchMedia('(max-width: 720px)').matches;
   const effectiveType = nav.connection?.effectiveType ?? 'unknown';
 
-  const tier = saveData || cores <= 2 || memory <= 2 || /2g/.test(effectiveType)
+  const tier: ExperienceTier = saveData || cores <= 2 || memory <= 2 || /2g/.test(effectiveType)
     ? 'lite'
     : narrow || cores <= 4 || memory <= 4 || effectiveType === '3g'
       ? 'balanced'
       : 'full';
 
-  const root = document.documentElement;
-  root.dataset.experienceTier = tier;
-  root.dataset.motion = reducedMotion ? 'reduced' : 'full';
-  root.dataset.saveData = saveData ? 'true' : 'false';
-  root.dataset.network = effectiveType;
+  return { tier, reducedMotion, saveData, effectiveType, cores, memory, narrow };
+}
 
-  if (reducedMotion || saveData) return () => undefined;
+export function startExperienceRuntime() {
+  if (typeof window === 'undefined') return () => undefined;
+
+  const profile = getExperienceProfile();
+  const root = document.documentElement;
+  root.dataset.experienceTier = profile.tier;
+  root.dataset.motion = profile.reducedMotion ? 'reduced' : 'full';
+  root.dataset.saveData = profile.saveData ? 'true' : 'false';
+  root.dataset.network = profile.effectiveType;
+
+  if (profile.reducedMotion || profile.saveData) return () => undefined;
 
   gsap.registerPlugin(ScrollTrigger);
   const context = gsap.context(() => {
@@ -38,7 +67,7 @@ export function startExperienceRuntime() {
 
     gsap.utils.toArray<HTMLElement>('.directory-rail button').forEach((item, index) => {
       gsap.fromTo(item,
-        { x: tier === 'full' ? -28 : -12, opacity: 0 },
+        { x: profile.tier === 'full' ? -28 : -12, opacity: 0 },
         { x: 0, opacity: 1, duration: .55, delay: Math.min(index * .045, .24), ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 94%', once: true } },
       );
     });

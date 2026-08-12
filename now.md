@@ -37,6 +37,8 @@ After any change:
 - Main Brain / governance authority: `Kopano-Labs/Introduction-to-MCP`.
 - Last website evolution commit observed before this ledger: `6a02b10cf6e6835c6fd5fe1a12da6425ddd9bf63` — `evolve studio into interactive systems atlas`.
 - Canonical renter law added: `b484507abb2f191e3a6784606d3f70cbc46e06f6`.
+- Living cross-window ledger added: `33275e54eb786306fd5f7e458f322f7f9622fc44`.
+- `AGENTS.md` now requires Main Brain -> `canonical.md` -> `now.md` -> latest target-file grounding before mutation: `8fc30a9e26d886b16843cba4a9e1cbe4f7c341f3`.
 - Runtime stack: React 19 + Vite 8 + TypeScript 7 + Three.js + React Three Fiber + Drei + Framer Motion + GSAP.
 - Current spatial surfaces include `KopanoScene`, `SystemAtlas`, Cars4Mars rover visuals, FOC, estate navigation, Light/Dark/Crazy modes and adaptive runtime logic.
 
@@ -55,12 +57,18 @@ These are foundations to evolve, not placeholders to delete and replace.
 ### Current known blockers / drift
 
 - [ ] **Canonical repository contradiction:** some files say canonical GitHub production source is unestablished/null while `docs/SOURCE_AUTHORITY.md` calls `RobynAwesome/Kopano-Labs-Website` the dedicated production website source. Do not resolve by model inference; owner authority must establish final wording.
-- [ ] **Generated discovery drift:** `/content/` exists in `src/route-manifest.json`, but committed `public/robots.txt` and `public/sitemap.xml` were behind the generator output at commit `6a02b10...`, causing the latest GitHub production gate to fail after the actual application build passed.
+- [x] **Generated discovery drift repaired:** `/content/` is synchronized through committed `public/robots.txt` and `public/sitemap.xml`. Receipts: `4d91f5b611048aaf44887dc9a57b58dd2596e484`, `99ad7c939b197493dc0e6ae09055ae64142d5b43`.
 - [ ] **Dependency determinism:** no committed npm lockfile observed; CI uses `npm install`; package ranges use carets.
 - [ ] **Documentation parity:** README still advertises TypeScript 5.9 while `package.json` uses TypeScript 7.0.2; public route documentation does not yet fully reflect `/content/`.
-- [ ] **Adaptive 3D parity:** `experienceRuntime.ts` defines `lite/balanced/full`, but `SystemAtlas` still creates the same Canvas/scene path instead of truly lowering spatial complexity per tier.
+- [x] **Initial adaptive 3D parity:** `experienceRuntime.ts` now exports one governed experience profile and `SystemAtlas` consumes it to reduce geometry, particles, lighting intensity, DPR and continuous animation across `full/balanced/lite`, Save-Data and reduced-motion states. Receipts: `d853ead8e0151695bdef1bc8006802cabfe1ab1d`, `4ad28b66da7e458e1432566a504eb5be4fbce5ff`.
 - [ ] **Rendered validation:** production CI strongly validates machine artifacts and source strings but has no committed rendered visual-regression/browser test lane yet.
-- [ ] **Bundle size:** latest successful build phase reported a ~1.41 MB JS bundle (~409 KB gzip) and a >500 KB chunk warning; richer 3D evolution must improve code-splitting rather than simply stacking more runtime weight.
+- [ ] **Bundle size:** latest validated build still reports ~1.41 MB JS (~410 KB gzip) and a >500 KB chunk warning; richer 3D evolution must improve code-splitting rather than simply stacking more runtime weight.
+
+### Cross-window telemetry — context only, not repository truth
+
+- Personalized Intelligence/project context confirms other Forge windows are working on the same website lineage and carrying the same instruction: preserve the existing React/Three.js/Framer Motion runtime; improve rather than replace.
+- Another active context has discussed a future `/Google-Startups/` presentation route inside the existing site rather than a separate Three.js application. That route is **not present in current `main`** at this ledger update, so treat it as WATCH/context until a real repository mutation and receipt exists.
+- Cross-window memory is not allowed to override `main`; every arriving Forge must reconcile memory against this file and the current repository before mutation.
 
 ---
 
@@ -92,10 +100,14 @@ Never:
 
 - [x] Add root `canonical.md` establishing Main Brain-first renter law.  
   Receipt: `b484507abb2f191e3a6784606d3f70cbc46e06f6`
-- [x] Add root `now.md` as living cross-window checklist / coordination ledger.
-- [ ] Make `AGENTS.md` explicitly require `canonical.md` + `now.md` before any mutation.
-- [ ] Synchronize generated `/content/` discovery state into `robots.txt` + `sitemap.xml`.
-- [ ] Re-run/verify the complete production gate after synchronization.
+- [x] Add root `now.md` as living cross-window checklist / coordination ledger.  
+  Receipt: `33275e54eb786306fd5f7e458f322f7f9622fc44`
+- [x] Make `AGENTS.md` explicitly require `canonical.md` + `now.md` before any mutation.  
+  Receipt: `8fc30a9e26d886b16843cba4a9e1cbe4f7c341f3`
+- [x] Synchronize generated `/content/` discovery state into `robots.txt` + `sitemap.xml`.  
+  Receipts: `4d91f5b611048aaf44887dc9a57b58dd2596e484`, `99ad7c939b197493dc0e6ae09055ae64142d5b43`
+- [x] Re-run/verify the complete production gate after synchronization and spatial-runtime evolution.  
+  Gate: GitHub Actions `production-gate` run `31590971907` on `ec00091bd7b25566bf5fd2d2849acaa126a25065` -> **SUCCESS**.
 - [ ] Resolve canonical GitHub production-source wording only through explicit owner authority; then propagate atomically across governance/release/source documents.
 - [ ] Introduce deterministic dependency install path (`package-lock.json`/equivalent + locked CI) only after validating it against the current TypeScript 7/Vite stack.
 - [ ] Bring README runtime/version/route claims back into parity with actual source.
@@ -110,17 +122,18 @@ Goal: stop treating Three.js as decorative canvases inside pages and evolve it i
 - [ ] Route state drives camera state rather than remounting unrelated scenes.
 - [ ] System selection morphs/transitions the world instead of simply replacing a page card.
 - [ ] Keep semantic HTML/content underneath/alongside the spatial layer for crawlability and accessibility.
-- [ ] Framer Motion owns UI choreography.
-- [ ] GSAP owns cinematic scroll/camera timelines where justified.
-- [ ] React/R3F owns stateful world objects.
-- [ ] Preserve direct canonical routes (`/`, `/systems/`, `/labs/`, `/Cars4Mars/`, `/FOC/`, `/proof/`, `/content/`).
+- [x] Framer Motion owns UI choreography in the current implementation.
+- [x] GSAP owns existing scroll choreography; future camera timelines remain proof-gated.
+- [x] React/R3F owns current stateful world objects.
+- [x] Preserve direct canonical routes (`/`, `/systems/`, `/labs/`, `/Cars4Mars/`, `/FOC/`, `/proof/`, `/content/`).
 
 ### Device tiers
 
-- [ ] `full` -> cinematic world, richer geometry, particles, lighting, camera movement.
-- [ ] `balanced` -> reduced particle count, lower-detail meshes, restrained camera effects.
-- [ ] `lite` / Save-Data -> minimal geometry/static or sprite fallback, no expensive decorative effects.
-- [ ] `prefers-reduced-motion` -> preserve interaction/information without continuous motion.
+- [x] `full` -> richer geometry, particles, lighting and continuous world motion in `SystemAtlas`.
+- [x] `balanced` -> reduced particle count/DPR/lighting pressure in `SystemAtlas`.
+- [x] `lite` / Save-Data -> reduced geometry/DPR, no decorative sparkles, and no continuous scene animation where Save-Data is active.
+- [x] `prefers-reduced-motion` -> `SystemAtlas` preserves the scene and manual interaction without continuous animation.
+- [ ] Apply the same governed profile consistently to every future persistent-world/route scene so no new subsystem bypasses the tier law.
 - [ ] Do not hide core content or evidence in WebGL-only surfaces.
 
 ---
@@ -131,7 +144,7 @@ Goal: stop treating Three.js as decorative canvases inside pages and evolve it i
 
 Existing POC: procedural 3D pitch + players + moving ball + `FivesArenaFeed`.
 
-- [ ] Preserve the current pitch.
+- [x] Preserve the current pitch.
 - [ ] Evolve pitch into a miniature navigable arena rather than a card illustration.
 - [ ] Bind visual state to real/minimal fixture data where an existing API is available.
 - [ ] Animate fixture/score/team state as visual state, not decorative random motion.
@@ -142,7 +155,7 @@ Existing POC: procedural 3D pitch + players + moving ball + `FivesArenaFeed`.
 
 Existing POC: radar rings + sweep + alert marker.
 
-- [ ] Preserve radar language.
+- [x] Preserve radar language.
 - [ ] Evolve toward geospatial/terrain crisis visualization.
 - [ ] Severity controls pulse/radius/altitude/camera urgency.
 - [ ] GPS/report telemetry creates visual events rather than explanatory cards.
@@ -152,7 +165,7 @@ Existing POC: radar rings + sweep + alert marker.
 
 Existing POC: connected spatial nodes/blocks.
 
-- [ ] Preserve network metaphor.
+- [x] Preserve network metaphor.
 - [ ] Evolve into people/business/service/opportunity nodes.
 - [ ] Show opportunity packets/routes moving through the mesh when backed by real state.
 - [ ] Low-data lane remains useful without WebGL dependence.
@@ -161,7 +174,7 @@ Existing POC: connected spatial nodes/blocks.
 
 Existing POC: rotating asteroid/salvage field.
 
-- [ ] Preserve asteroid field.
+- [x] Preserve asteroid field.
 - [ ] Add one bounded playable interaction inside KopanoLabs.com.
 - [ ] Pointer/touch movement influences craft/field state.
 - [ ] Salvage target interaction routes to the actual Starfall product.
@@ -171,8 +184,8 @@ Existing POC: rotating asteroid/salvage field.
 
 Existing POC: procedural rover rig + mission UI + evidence routes.
 
-- [ ] Preserve current evidence model and mission-control architecture.
-- [ ] Preserve procedural rover as low-detail fallback/LOD.
+- [x] Preserve current evidence model and mission-control architecture.
+- [x] Preserve procedural rover as low-detail fallback/LOD foundation.
 - [ ] Full mode: richer rover model/rig.
 - [ ] Terrain + wheel articulation + path planning visualization.
 - [ ] Sensor/perception rays only when explicitly represented as design/simulation, never physical test evidence.
@@ -183,7 +196,7 @@ Existing POC: procedural rover rig + mission UI + evidence routes.
 
 Existing POC: rotating connected mesh.
 
-- [ ] Preserve orchestration mesh.
+- [x] Preserve orchestration mesh.
 - [ ] Visualize context packets entering the system.
 - [ ] Show classification/routing/node activation.
 - [ ] Make POC/FOC/BlackMask-style governance visually legible without turning internal claims into fake runtime evidence.
@@ -224,10 +237,10 @@ Rule: **find -> inspect -> reuse/adapt -> only then generate if genuinely missin
 - [ ] Establish budgets for JS, scene draw calls/triangles, texture sizes and initial route payload.
 - [ ] Add browser-rendered smoke tests for all public routes.
 - [ ] Add screenshot/visual regression baselines for desktop + representative mobile widths.
-- [ ] Test `full`, `balanced`, `lite`, Save-Data and reduced-motion states.
+- [ ] Test `full`, `balanced`, `lite`, Save-Data and reduced-motion states in rendered-browser CI.
 - [ ] Validate no horizontal overflow/orientation regressions.
-- [ ] Validate SEO/canonical/robots/sitemap/release artifacts after every route evolution.
-- [ ] Validate Cars4Mars evidence labels remain truthful after every cinematic change.
+- [x] Validate SEO/canonical/robots/sitemap artifacts after the first evolution tranche; run `31590971907` passed all discovery/canonical gates.
+- [x] Validate Cars4Mars evidence source checks remain truthful after the first evolution tranche; run `31590971907` passed the Cars4Mars evidence gate.
 
 ---
 
@@ -262,7 +275,12 @@ Format:
 | Date | Window/actor | Mutation | Receipt | Validation |
 |---|---|---|---|---|
 | 2026-08-12 | Forge checker | Added Main Brain-first `canonical.md` | `b484507abb2f191e3a6784606d3f70cbc46e06f6` | GitHub create-file success |
-| 2026-08-12 | Forge checker | Added living `now.md` evolution/checklist ledger | pending-this-commit | GitHub create-file success |
+| 2026-08-12 | Forge checker | Added living `now.md` evolution/checklist ledger | `33275e54eb786306fd5f7e458f322f7f9622fc44` | GitHub create-file success |
+| 2026-08-12 | Forge checker | Bound `AGENTS.md` startup to Main Brain + canonical + now | `8fc30a9e26d886b16843cba4a9e1cbe4f7c341f3` | Source check later GREEN in run `31590971907` |
+| 2026-08-12 | Forge checker | Synchronized `/content/` robots + sitemap discovery artifacts | `4d91f5b611048aaf44887dc9a57b58dd2596e484`, `99ad7c939b197493dc0e6ae09055ae64142d5b43` | Generated-discovery checks GREEN |
+| 2026-08-12 | Forge checker | Exported one governed adaptive experience profile | `d853ead8e0151695bdef1bc8006802cabfe1ab1d` | TypeScript/Vite build GREEN |
+| 2026-08-12 | Forge checker | Made `SystemAtlas` respect full/balanced/lite, Save-Data and reduced-motion tiers | `4ad28b66da7e458e1432566a504eb5be4fbce5ff` | TypeScript/Vite build GREEN |
+| 2026-08-12 | Forge checker | Removed stale CI assertion and expanded current route/spatial governance gates | `ec00091bd7b25566bf5fd2d2849acaa126a25065` | `production-gate` run `31590971907` SUCCESS |
 
 ## Handoff rule
 

@@ -19,10 +19,14 @@ jobs:
       - name: Verify August execution directive and source boundaries
         run: |
           test -f AGENTS.md
+          test -f canonical.md
+          test -f now.md
           test -f docs/AUGUST_2026_EXECUTION_DIRECTIVE.md
           test -f public/governance.json
           grep -q 'I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY' AGENTS.md
           grep -q 'Kopano-Labs/Introduction-to-MCP' AGENTS.md
+          grep -q 'canonical.md' AGENTS.md
+          grep -q 'now.md' AGENTS.md
           grep -q 'RobynAwesome/Money-managing-app' AGENTS.md
           grep -q 'RobynAwesome/cars4mars-landingpage' AGENTS.md
           grep -q 'WORKING → CONNECTED → CURRENT → VISIBLE → EVIDENCED → BACKABLE' docs/AUGUST_2026_EXECUTION_DIRECTIVE.md
@@ -47,6 +51,7 @@ jobs:
           grep -q 'Allow: /Cars4Mars/Media/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Support/' public/robots.txt
           grep -q 'Allow: /FOC/' public/robots.txt
+          grep -q 'Allow: /content/' public/robots.txt
           ! grep -q 'KOPANO_LABS.pdf' public/robots.txt
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
           grep -q '"canonical_source_repository": null' public/release.json
@@ -55,16 +60,18 @@ jobs:
 
       - name: Verify sitemap follows route registry
         run: |
-          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC labs systems proof; do grep -q "https://kopanolabs.com/$route/" public/sitemap.xml; done
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC systems labs content proof; do grep -q "https://kopanolabs.com/$route/" public/sitemap.xml; done
           ! grep -q 'KOPANO_LABS.pdf' public/sitemap.xml
           grep -q '"id": "foc"' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
+          grep -q '"id": "content"' src/route-manifest.json
 
       - name: Verify crawl shells and canonical metadata
         run: |
-          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC labs systems proof; do test -f "dist/$route/index.html"; done
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC systems labs content proof; do test -f "dist/$route/index.html"; done
           grep -q 'rel="canonical" href="https://kopanolabs.com/FOC/"' dist/FOC/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/content/"' dist/content/index.html
 
       - name: Verify FOC implementation is functional
         run: |
@@ -81,8 +88,10 @@ jobs:
       - name: Verify current-work visual surface
         run: |
           test -f src/components/RoverVisual.tsx
+          test -f src/components/SystemAtlas.tsx
           test -f src/now.css
-          grep -q "WHAT WE'RE UP TO" src/App.tsx
+          grep -q 'Current Kopano Labs work' src/App.tsx
+          grep -q 'SystemAtlas' src/App.tsx
           grep -q 'RoverVisual' src/App.tsx
           grep -q 'Falling Walls Lab collaboration page' src/App.tsx
           grep -q 'NICIS founder-in-action page' src/App.tsx
@@ -104,10 +113,13 @@ jobs:
           grep -q 'routeForIntent' src/App.tsx
           grep -q 'route-manifest.json' src/routeRegistry.ts
           test -f src/components/KopanoScene.tsx
+          test -f src/components/SystemAtlas.tsx
           test -f src/experienceRuntime.ts
           grep -q '@react-three/fiber' package.json
           grep -q 'gsap' package.json
           grep -q 'saveData' src/experienceRuntime.ts
+          grep -q 'getExperienceProfile' src/experienceRuntime.ts
+          grep -q 'data-experience-tier' src/components/SystemAtlas.tsx
 
       - name: Verify Search Console baseline is preserved
         run: |

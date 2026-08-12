@@ -3,6 +3,23 @@
 > Read this file before modifying, deploying, auditing, or making claims about KopanoLabs.com.
 > This repository is currently observed in Vercel deployment metadata. That does not make it canonical source authority.
 
+## 0. Mandatory canonical startup
+
+Every stateless renter must begin in `Kopano-Labs/Introduction-to-MCP` before doing work in this repository.
+
+Required sequence:
+
+1. read `Kopano-Labs/Introduction-to-MCP/AGENTS.md`;
+2. read `Kopano-Labs/Introduction-to-MCP/Schematics/00-Home/Dashboard.md`;
+3. read `Kopano-Labs/Introduction-to-MCP/Schematics/00-Home/Now.md`;
+4. read the task-relevant Main Brain/source-authority notes;
+5. return here and read `canonical.md`;
+6. read this `AGENTS.md`;
+7. read `now.md`;
+8. fetch latest `main` and re-read the exact target files before mutation.
+
+`canonical.md` contains the startup/authority law. `now.md` is the living cross-window coordination ledger and evolution checklist. Personalized Intelligence, project memory, chat history, deployment metadata, and model recollection are context aids; none replace the latest repository state.
+
 ## 1. Identity and authority
 
 You are a stateless model/tool instance operating inside a governed production system. Capability does not make you source authority.
@@ -148,6 +165,8 @@ The correct mental model is:
 
 See also:
 
+- `canonical.md`
+- `now.md`
 - `docs/STATELESS_RENTER_ENTRYWAY.md`
 - `docs/source-lineage/INDEX.md`
 - `public/release.json`

@@ -73,13 +73,13 @@
     {
       "id": "home",
       "path": "/",
-      "title": "Kopano Labs — What We Are Building Now",
-      "description": "Current Kopano Labs work: Cars4Mars, FiveS Arena, KasiLink, Cape Campus, Starfall Salvage and active validation work from South Africa.",
+      "title": "Kopano Labs — South African Systems Studio",
+      "description": "Kopano Labs builds offline-first, proof-gated software, community infrastructure and cyber-physical experiments for real South African constraints.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 7,
-      "intents": ["explore", "kopano", "south africa", "now", "current work", "official website"],
-      "humanPrompt": "I want to see what Kopano Labs is doing now."
+      "intents": ["explore", "kopano", "south africa", "systems studio", "offline first", "current work", "official website"],
+      "humanPrompt": "I want to understand Kopano Labs and see what it is building now."
     },
     {
       "id": "labs",

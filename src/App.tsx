@@ -119,7 +119,7 @@ export function App() {
         {view === 'home' && <motion.section key="home" className="page home" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
           <div className="hero-grid spatial-hero now-hero">
             <motion.div className="hero-copy" initial={{opacity:0,x:-70,filter:'blur(8px)'}} animate={{opacity:1,x:0,filter:'blur(0px)'}} transition={{duration:.8,ease:[.23,1,.32,1]}}>
-              <span className="eyebrow">KOPANO LABS · BUILT IN SOUTH AFRICA</span>
+              <span className="eyebrow">WHAT WE'RE UP TO · KOPANO LABS · BUILT IN SOUTH AFRICA</span>
               <h1>Realism.<br/><em>Sovereignty. Proof.</em></h1>
               <p>Offline-first, proof-gated systems built to stay useful when the grid and the cloud do not.</p>
               <p className="studio-principle">Realism accommodates aesthetics; sovereignty accommodates both.</p>

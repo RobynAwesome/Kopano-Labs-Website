@@ -4,25 +4,25 @@ import { AnimatePresence, motion } from 'framer-motion';
 type ThemeMode = 'light' | 'dark' | 'crazy';
 
 const estate = [
-  { title: 'Kopano Labs', kind: 'Primary studio', href: 'https://KopanoLabs.com', repo: 'RobynAwesome/Kopano-Labs-Website', image: '/assets/brand/kopano-mark.svg', note: 'Systems studio, proof surfaces, Cars4Mars and public experiments.' },
-  { title: 'Cars4Mars', kind: 'Rover programme', href: '/Cars4Mars/', repo: 'Kopano-Labs website surface', image: '/assets/cars4mars/astronaut-campaign.svg', note: 'Mission control, architecture, media, ledger and support.' },
-  { title: 'FiveS Arena', kind: 'Community infrastructure', href: 'https://FivesArena.com', repo: 'RobynAwesome/Bookit-5s-Arena', image: '/assets/brand/kopano-mark.svg', note: 'Football booking, competition and participation infrastructure.' },
-  { title: 'KasiLink', kind: 'Opportunity network', href: 'https://KasiLink.com', repo: 'Kopano ecosystem', image: '/assets/brand/kopano-mark.svg', note: 'Local opportunity and service routing.' },
-  { title: 'CrisisConnect', kind: 'Field intelligence', href: 'https://crisisconnect.kopanolabs.com', repo: 'RobynAwesome/crisis-connect', image: '/assets/brand/kopano-mark.svg', note: 'Mobile-first crisis reporting and telemetry.' },
-  { title: 'Starfall Salvage', kind: 'Interactive systems lab', href: 'https://starfallsalvage.kopanolabs.com', repo: 'Kopano ecosystem', image: '/assets/brand/kopano-mark.svg', note: 'Playable systems, interfaces, telemetry and governance.' },
-  { title: 'Introduction to MCP', kind: 'Main Brain / governance', href: 'https://github.com/Kopano-Labs/Introduction-to-MCP', repo: 'Kopano-Labs/Introduction-to-MCP', image: '/assets/brand/kopano-mark.svg', note: 'Schematics, KPGS governance, stateless-renter entryway and source authority.' },
-  { title: 'Project Jennifer', kind: 'Game / research', href: 'https://github.com/RobynAwesome/Project-Jennifer', repo: 'RobynAwesome/Project-Jennifer', image: '/assets/brand/kopano-mark.svg', note: 'Interactive AI/game systems research.' },
+  { title: 'Kopano Labs', kind: 'Primary studio', href: 'https://KopanoLabs.com', repo: 'Canonical production repository: not yet established', image: '/assets/brand/kopano-mark.svg', note: 'Systems studio, proof surfaces, public experiments and the shared interactive atlas.' },
+  { title: 'FiveS Arena', kind: 'Community infrastructure', href: 'https://FivesArena.com', repo: 'RobynAwesome/Bookit-5s-Arena', image: '/assets/brand/kopano-mark.svg', note: 'Football booking, live fixture APIs, competition and participation infrastructure.' },
+  { title: 'KasiLink', kind: 'Opportunity network', href: 'https://KasiLink.com', repo: 'Production source is governed separately', image: '/assets/brand/kopano-mark.svg', note: 'Local opportunity and service routing with a lower-data discovery lane.' },
+  { title: 'CrisisConnect', kind: 'Field intelligence', href: 'https://crisisconnect.kopanolabs.com', repo: 'RobynAwesome/crisis-connect', image: '/assets/brand/kopano-mark.svg', note: 'Mobile-first crisis reporting, GPS evidence and telemetry.' },
+  { title: 'Starfall Salvage', kind: 'Interactive systems lab', href: 'https://starfallsalvage.kopanolabs.com', repo: 'Production source is governed separately', image: '/assets/brand/kopano-mark.svg', note: 'Playable systems, interfaces, telemetry and governance.' },
+  { title: 'Cars4Mars', kind: 'Cyber-physical programme', href: '/Cars4Mars/', repo: 'Kopano Labs public production surface', image: '/assets/cars4mars/astronaut-campaign.svg', note: 'Mission control, rover architecture, media, ledger and support. The submitted design PDF remains retired from the website.' },
+  { title: 'Kopano Context', kind: 'Orchestration', href: 'https://kopanocontext.kopanolabs.com', repo: 'Main Brain owner-gated lane', image: '/assets/diagrams/agent-routing.svg', note: 'Canonical interface target for the orchestration and audit system; owner delivery remains proof-gated.' },
+  { title: 'Introduction to MCP', kind: 'Main Brain / governance', href: 'https://github.com/Kopano-Labs/Introduction-to-MCP', repo: 'Kopano-Labs/Introduction-to-MCP', image: '/assets/brand/kopano-mark.svg', note: 'Schematics, KPGS/KPEFS governance, stateless-renter entryway and constitutional source authority.' },
+  { title: 'Project Jennifer', kind: 'Game / research', href: 'https://github.com/RobynAwesome/Project-Jennifer', repo: 'RobynAwesome/Project-Jennifer', image: '/assets/brand/kopano-mark.svg', note: 'Interactive AI and game systems research.' },
   { title: 'AMA-PHU App', kind: 'Entertainment platform', href: 'https://github.com/RobynAwesome/amaphu-app', repo: 'RobynAwesome/amaphu-app', image: '/assets/brand/kopano-mark.svg', note: 'Manga, game, anime and music distribution surface.' },
-  { title: 'RobynAwesome GitHub', kind: 'Repository estate', href: 'https://github.com/RobynAwesome?tab=repositories', repo: 'All public repositories', image: '/assets/brand/kopano-mark.svg', note: 'Full public source portfolio and project archive.' },
 ] as const;
 
 const links = [
   ['Now', '/'],
-  ['Labs', '/labs/'],
-  ['Cars4Mars', '/Cars4Mars/'],
-  ['Content', '/content/'],
-  ['FOC', '/FOC/'],
   ['Systems', '/systems/'],
+  ['Labs', '/labs/'],
+  ['Content', '/content/'],
+  ['Cars4Mars', '/Cars4Mars/'],
+  ['FOC', '/FOC/'],
   ['Proof', '/proof/'],
 ] as const;
 
@@ -55,18 +55,18 @@ export function SiteExperience() {
       {menuOpen && <motion.aside id="estate-menu" className="estate-menu" initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0,x:40}}>
         <div className="estate-menu-head"><img src="/assets/brand/kopano-mark.svg" alt=""/><div><strong>Kopano Labs</strong><small>Navigate the estate</small></div></div>
         <nav>{links.map(([label, href], index) => <motion.a key={href} href={href} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:index*.035}}>{label}<b>↗</b></motion.a>)}</nav>
-        <a className="estate-source" href="https://github.com/RobynAwesome?tab=repositories" target="_blank" rel="noreferrer">Repository estate ↗</a>
+        <a className="estate-source" href="https://github.com/Kopano-Labs/Introduction-to-MCP" target="_blank" rel="noreferrer">Main Brain governance ↗</a>
       </motion.aside>}
     </AnimatePresence>
 
     {contentRoute && <div className="content-estate-page">
-      <header className="content-estate-head"><a href="/" className="content-back">← Kopano Labs</a><span className="eyebrow">CONTENT + REPOSITORY ESTATE</span><h1>Everything connects.<br/><em>Nothing gets flattened.</em></h1><p>Projects, systems, experiments, public surfaces and source repositories—kept distinct, visual and directly reachable.</p></header>
+      <header className="content-estate-head"><a href="/" className="content-back">← Kopano Labs</a><span className="eyebrow">CONTENT + PUBLIC ESTATE</span><h1>Everything connects.<br/><em>Nothing gets flattened.</em></h1><p>Projects, systems, experiments and public surfaces stay distinct. Repository labels are shown only where they are explicitly established; Kopano Labs production source authority is not inferred.</p></header>
       <main className="content-estate-grid">
         {estate.map((item, index) => <motion.a key={item.title} className="content-estate-card" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined} initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:index*.045}} whileHover={{y:-8,scale:1.01}}>
           <div className="content-estate-image"><img src={item.image} alt=""/></div><div className="content-estate-copy"><span>{item.kind}</span><h2>{item.title}</h2><p>{item.note}</p><code>{item.repo}</code></div><b className="content-estate-arrow">↗</b>
         </motion.a>)}
       </main>
-      <footer className="content-estate-footer">Kopano Labs · source lineage before synthesis · edit, do not erase.</footer>
+      <footer className="content-estate-footer">Kopano Labs · Main Brain before mutation · source lineage before synthesis · edit, do not erase.</footer>
     </div>}
   </>;
 }

@@ -4,6 +4,7 @@ export type View =
   | 'home'
   | 'labs'
   | 'systems'
+  | 'content'
   | 'foc'
   | 'cars4mars'
   | 'cars4mars-ledger'

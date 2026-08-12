@@ -82,26 +82,37 @@
       "humanPrompt": "I want to understand Kopano Labs and see what it is building now."
     },
     {
+      "id": "systems",
+      "path": "/systems/",
+      "title": "Interactive Systems Atlas — Kopano Labs",
+      "description": "Explore Kopano Labs systems through interactive spatial representations of FiveS Arena, KasiLink, CrisisConnect, Kopano Context, Starfall Salvage and Cars4Mars.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 8,
+      "intents": ["systems", "crisisconnect", "fives arena", "football", "fixtures", "kasilink", "starfall", "infrastructure", "threejs", "interactive"],
+      "humanPrompt": "I want to interact with the systems being built."
+    },
+    {
       "id": "labs",
       "path": "/labs/",
       "title": "Experiments — Kopano Labs",
       "description": "Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 8,
+      "sitemapOrder": 9,
       "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
       "humanPrompt": "I need an experiment or practical tool."
     },
     {
-      "id": "systems",
-      "path": "/systems/",
-      "title": "Systems — Kopano Labs",
-      "description": "Inspect Kopano Labs systems including Kopano Context, CrisisConnect, FiveS Arena and Starfall Salvage, each with its own evidence and lifecycle.",
+      "id": "content",
+      "path": "/content/",
+      "title": "Content & Public Estate — Kopano Labs",
+      "description": "Navigate the Kopano Labs public estate: systems, projects, experiments, public domains and explicitly identified repository surfaces without inventing production source authority.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 9,
-      "intents": ["systems", "crisisconnect", "fives arena", "starfall", "infrastructure"],
-      "humanPrompt": "I want to inspect the systems being built."
+      "sitemapOrder": 10,
+      "intents": ["content", "projects", "portfolio", "repositories", "repos", "estate", "domains", "apps"],
+      "humanPrompt": "I want the full public project and content estate."
     },
     {
       "id": "proof",
@@ -110,7 +121,7 @@
       "description": "Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 10,
+      "sitemapOrder": 11,
       "intents": ["proof", "source", "audit", "lineage", "verification"],
       "humanPrompt": "I want evidence, source lineage and verification."
     }

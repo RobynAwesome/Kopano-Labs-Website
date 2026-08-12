@@ -10,13 +10,13 @@ const nodes: [number, number, number][] = [
 
 function World() {
   const mesh = useRef<THREE.Group>(null);
-  const mars = useRef<THREE.Mesh>(null);
+  const core = useRef<THREE.Mesh>(null);
   const reduced = useMemo(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches, []);
   const saveData = useMemo(() => Boolean((navigator as Navigator & { connection?: { saveData?: boolean } }).connection?.saveData), []);
 
   useFrame((state, delta) => {
     if (reduced || saveData) return;
-    if (mars.current) mars.current.rotation.y += delta * .11;
+    if (core.current) core.current.rotation.y += delta * .11;
     if (mesh.current) {
       mesh.current.rotation.y = THREE.MathUtils.lerp(mesh.current.rotation.y, state.pointer.x * .18, .035);
       mesh.current.rotation.x = THREE.MathUtils.lerp(mesh.current.rotation.x, -state.pointer.y * .1, .035);
@@ -28,9 +28,9 @@ function World() {
     <directionalLight position={[4, 3, 5]} intensity={3.2} color="#ffc37a" />
     <pointLight position={[-3, -1.5, 2.5]} intensity={16} distance={9} color="#00e676" />
     <Float speed={reduced ? 0 : .75} rotationIntensity={.08} floatIntensity={.22}>
-      <mesh ref={mars} position={[1.15, .25, 0]}>
-        <sphereGeometry args={[1.28, saveData ? 24 : 64, saveData ? 24 : 64]} />
-        <meshStandardMaterial color="#c74627" roughness={.84} metalness={.04} emissive="#2b0804" emissiveIntensity={.35} />
+      <mesh ref={core} position={[1.15, .25, 0]}>
+        <icosahedronGeometry args={[1.18, saveData ? 1 : 3]} />
+        <meshStandardMaterial color="#173b50" roughness={.48} metalness={.42} emissive="#062b32" emissiveIntensity={.46} />
       </mesh>
     </Float>
     <mesh position={[-1.1, -.15, -.5]} rotation={[.1, .2, 0]}>
@@ -50,12 +50,12 @@ function World() {
 
 export function KopanoScene() {
   return <div className="kopano-scene" aria-label="Interactive Kopano spatial systems map">
-    <Canvas dpr={[1, 1.6]} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}>
+    <Canvas dpr={[1, 1.45]} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: true, alpha: true, powerPreference: 'high-performance' }}>
       <World />
       <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI * .36} maxPolarAngle={Math.PI * .64} rotateSpeed={.25} />
     </Canvas>
     <div className="scene-label scene-label-a">KOPANO MESH · LIVE</div>
-    <div className="scene-label scene-label-b">CARS4MARS · BUILD</div>
+    <div className="scene-label scene-label-b">FIVES · KASILINK · CRISIS</div>
     <div className="scene-label scene-label-c">REALITY → PROOF</div>
   </div>;
 }

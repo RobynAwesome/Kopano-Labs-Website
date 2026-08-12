@@ -1,7 +1,7 @@
 # Kopano Labs Production Agent Entry
 
 > Read this file before modifying, deploying, auditing, or making claims about KopanoLabs.com.
-> This repository is currently observed in Vercel deployment metadata. That does not make it canonical source authority.
+> `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production repository for KopanoLabs.com.
 
 ## 0. Mandatory canonical startup
 
@@ -28,18 +28,18 @@ Authority order for production work:
 
 1. **Owner instruction in the current task** — scope and mission.
 2. **Kopano Labs governance/source authority** — `Kopano-Labs/Introduction-to-MCP`, especially `Schematics/` when governance interpretation is required.
-3. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — observed production proof surface.
-4. **Current deployment source metadata** — may point to `RobynAwesome/Kopano-Labs-Website`; treat this as observed implementation provenance only until the owner explicitly establishes a canonical GitHub production repository.
+3. **Canonical GitHub production source** — `RobynAwesome/Kopano-Labs-Website`.
+4. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — deployment and public proof surfaces.
 
-`Kopano-Labs/Introduction-to-MCP` is a governance and architecture source authority. It is not a runtime/build dependency of the website.
+`Kopano-Labs/Introduction-to-MCP` is governance and architecture authority. It is not a runtime/build dependency of the website.
 
 ## 2. Repository boundary
 
-Canonical GitHub production source: **UNESTABLISHED** until explicit owner declaration.
-
-Current observed Vercel deployment source:
+Canonical GitHub production source:
 
 `RobynAwesome/Kopano-Labs-Website`
+
+This owner declaration is established as of 2026-08-12 and must remain synchronized across `canonical.md`, `now.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
 
 Do not infer or substitute another repository because names look similar.
 
@@ -147,15 +147,15 @@ Before editing:
 - preserve existing architecture unless the task explicitly changes it;
 - do not modify unrelated repositories;
 - do not silently repair unrelated defects;
-- distinguish observed deployment provenance from canonical source authority;
+- verify canonical source and current deployment provenance separately;
 - prefer deterministic, inspectable state over model inference.
 
 After editing:
 
 - verify source consistency;
 - verify CI/build gates where available;
-- verify the newest Vercel production deployment;
-- verify the live public surface before claiming completion.
+- verify the newest production deployment when deployment is in scope;
+- verify the live public surface before claiming live completion.
 
 ## 11. First-touch acknowledgement
 

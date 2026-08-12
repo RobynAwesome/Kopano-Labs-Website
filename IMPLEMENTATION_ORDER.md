@@ -3,22 +3,22 @@
 This file is the execution ladder for https://KopanoLabs.com. New ideas are appended behind existing work unless the owner explicitly changes priority.
 
 ## P0 — Production boundary ✅
-- Live authority: Vercel project `kopano-labs` + `https://KopanoLabs.com`.
-- Current Vercel deployment metadata observes `RobynAwesome/Kopano-Labs-Website` as the implementation source. This is not a declaration of canonical GitHub source authority.
-- Canonical GitHub production source remains **UNESTABLISHED** until explicitly established by the owner.
-- Ecosystem/specification authority: `Kopano-Labs/Introduction-to-MCP`.
+- Canonical GitHub production source: `RobynAwesome/Kopano-Labs-Website`.
+- Governance/specification authority: `Kopano-Labs/Introduction-to-MCP`.
+- Deployment/public proof surfaces: Vercel project `kopano-labs` + `https://KopanoLabs.com`.
 - `RobynAwesome/Money-managing-app` is unrelated and must never be used for Kopano Labs website work.
 - `RobynAwesome/cars4mars-landingpage` is retired and is not a production dependency.
 
-## P1 — Rebuild the website as a product surface — ACTIVE
-- Rebuild around the actual Kopano Labs / Kopano Studio architecture.
+## P1 — Evolve the website as a product surface — ACTIVE
+- Evolve the existing Kopano Labs / Kopano Studio architecture; do not replace it with a parallel redesign.
 - Preserve the strongest implementation lineage from `Introduction-to-MCP` without copying unrelated MCP internals.
 - Public surface must expose Labs, Systems, Cars4Mars, Proof/ledger, and workspace-oriented interaction.
-- Mobile-first, accessible, crawlable, adaptive by hardware/network tier, and visually stronger than the old static surfaces.
+- Mobile-first, accessible, crawlable, adaptive by hardware/network tier, and visually stronger through meaningful spatial interaction.
 
 ## P2 — Source-lineage extraction — ACTIVE
 - Extract and preserve website-relevant strategy, brand, Studio, deployment, and public-surface references from `Kopano-Labs/Introduction-to-MCP`.
 - Keep a source map in `docs/source-lineage/` so future agents can trace where major website concepts came from.
+- Mine `RobynAwesome/Portfolio-MBR`, `RobynAwesome/three.js`, Cars4Mars, Starfall, FiveS, and other visual/artifact repositories before generating substitutes.
 
 ## P3 — Cars4Mars evidence surface — ACTIVE
 - Preserve `/Cars4Mars/` as a first-class route.
@@ -51,4 +51,4 @@ This file is the execution ladder for https://KopanoLabs.com. New ideas are appe
 2. A lower-priority implementation may be scaffolded but must not displace higher-priority delivery.
 3. No implementation claim without a repository, build, deployment, route, or runtime receipt.
 4. A blocker must state what is blocked, why it matters, whether it is actually required, and at least one materially different path forward before it stops delivery.
-5. Any change to this ordering requires an explicit owner instruction.
+5. Any change to this ordering or canonical production repository requires an explicit owner instruction.

@@ -1,14 +1,16 @@
 {
-  "schema": "kopano-labs-production-governance/v2",
+  "schema": "kopano-labs-production-governance/v3",
   "site": "https://KopanoLabs.com",
-  "canonical_source_repository": null,
+  "canonical_source_repository": "RobynAwesome/Kopano-Labs-Website",
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
   "stateless_renter": {
     "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY",
     "entry_file": "AGENTS.md",
+    "canonical_entry": "canonical.md",
+    "living_ledger": "now.md",
     "entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
-    "rule": "verify exact namespace and live state before inference or mutation"
+    "rule": "Main Brain first; verify latest canonical repository state before inference or mutation"
   },
   "production_exclusions": [
     {"repository":"RobynAwesome/Money-managing-app","status":"unrelated","production_dependency":false,"mutation_allowed_for_kopano_production":false},
@@ -26,7 +28,7 @@
     "principle": "a block is a branch point, not proof that no other solution exists",
     "success_rule": "changed error does not equal satisfied requirement"
   },
-  "live_gates": ["/","/Cars4Mars/","/FOC/","/systems/","/proof/","/robots.txt","/sitemap.xml","/release.json","/governance.json"],
+  "live_gates": ["/","/Cars4Mars/","/FOC/","/systems/","/labs/","/content/","/proof/","/robots.txt","/sitemap.xml","/release.json","/governance.json"],
   "retired_routes": {
     "/reports/KOPANO_LABS.pdf": {"expected_status":404,"website_dependency":false,"release_gate":false,"reactivation_requires_owner_instruction":true}
   },

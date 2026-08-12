@@ -1,5 +1,4 @@
 import { access, readFile, readdir, stat } from 'node:fs/promises';
-import path from 'node:path';
 
 const root = new URL('../dist/', import.meta.url);
 const mustExist = [
@@ -28,7 +27,10 @@ const sitemap = await readFile(new URL('sitemap.xml', root), 'utf8');
 if (sitemap.includes('/reports/')) throw new Error('Convergence gate: retired reports route leaked into sitemap.xml');
 
 const release = JSON.parse(await readFile(new URL('release.json', root), 'utf8'));
-if (release.canonical_source_repository !== null) throw new Error('Convergence gate: canonical source must remain null until owner establishes it');
+const governance = JSON.parse(await readFile(new URL('governance.json', root), 'utf8'));
+const canonicalRepository = 'RobynAwesome/Kopano-Labs-Website';
+if (release.canonical_source_repository !== canonicalRepository) throw new Error('Convergence gate: release canonical source drifted');
+if (governance.canonical_source_repository !== canonicalRepository) throw new Error('Convergence gate: governance canonical source drifted');
 if (release.cars4mars?.design_submission?.website_dependency !== false) throw new Error('Convergence gate: Cars4Mars PDF must not become a website dependency');
 
 try {
@@ -39,4 +41,4 @@ try {
   if (error?.code !== 'ENOENT') throw error;
 }
 
-console.log('Convergence gate passed: rich runtime + machine artifacts coexist; reports remain retired.');
+console.log('Convergence gate passed: canonical source + rich runtime + machine artifacts coexist; reports remain retired.');

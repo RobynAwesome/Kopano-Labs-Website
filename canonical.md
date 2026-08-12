@@ -3,6 +3,7 @@
 **Status:** ACTIVE  
 **Owner:** Kholofelo Robyn Rababalela  
 **Target repository:** `RobynAwesome/Kopano-Labs-Website`  
+**Canonical GitHub production source:** `RobynAwesome/Kopano-Labs-Website`  
 **Governance authority:** `Kopano-Labs/Introduction-to-MCP`
 
 > This file is a startup law, not a design brief. It exists so every stateless renter begins from the same governed state before reading, editing, auditing, fixing, deploying, or claiming anything about KopanoLabs.com.
@@ -13,7 +14,7 @@ Every stateless renter MUST begin in:
 
 `Kopano-Labs/Introduction-to-MCP`
 
-Do not begin from chat memory, model memory, Personalized Intelligence, a Vercel deployment, a similarly named repository, a fork, a screenshot, or an inferred implementation path.
+Do not begin from chat memory, model memory, Personalized Intelligence, a deployment, a similarly named repository, a fork, a screenshot, or an inferred implementation path.
 
 Minimum Main Brain grounding sequence before mutation:
 
@@ -37,10 +38,11 @@ For KopanoLabs.com work, use this order:
 
 1. owner instruction in the current task
 2. `Kopano-Labs/Introduction-to-MCP` Main Brain / Schematics governance and architecture
-3. this repository's `canonical.md` and `now.md`
-4. target-repository source files and their explicit design/source authority files
-5. current production evidence and deployment receipts
-6. model inference only where the above sources are silent
+3. `RobynAwesome/Kopano-Labs-Website` as the canonical GitHub production repository
+4. this repository's `canonical.md` and `now.md`
+5. target-repository source files and their explicit design/source authority files
+6. current production evidence and deployment receipts
+7. model inference only where the above sources are silent
 
 Model confidence never outranks an existing governed artifact.
 
@@ -110,11 +112,17 @@ Do not use:
 
 A failed CI gate must identify the responsible artifact. A persistent defect requires mutation of that artifact, not repeated description.
 
-## 6. Canonical-source boundary
+## 6. Canonical-source lock
 
-This file establishes `Kopano-Labs/Introduction-to-MCP` as the mandatory governance starting point for every stateless renter working on KopanoLabs.com.
+Owner authority established on 2026-08-12:
 
-It does **not** silently resolve any separate unresolved owner decision about which GitHub repository is the canonical production source. That status must be explicitly established by the owner and then propagated consistently through `AGENTS.md`, `now.md`, `release.json`, `governance.json`, source-authority documentation, and deployment metadata.
+`RobynAwesome/Kopano-Labs-Website` **is the canonical GitHub production repository for KopanoLabs.com.**
+
+`Kopano-Labs/Introduction-to-MCP` remains the mandatory governance/architecture starting point and source authority. It is not the website deployment repository or runtime dependency.
+
+This lock must remain consistent across `AGENTS.md`, `now.md`, `README.md`, `IMPLEMENTATION_ORDER.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
+
+Any future change to the canonical production repository requires an explicit owner instruction and an atomic governance migration.
 
 ## 7. Startup acknowledgement
 

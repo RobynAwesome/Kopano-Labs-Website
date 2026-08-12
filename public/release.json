@@ -1,12 +1,14 @@
 {
   "site": "Kopano Labs",
   "domain": "https://KopanoLabs.com",
-  "canonical_source_repository": null,
+  "canonical_source_repository": "RobynAwesome/Kopano-Labs-Website",
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
   "governance": {
     "machine_manifest": "/governance.json",
     "agent_entry": "AGENTS.md",
+    "canonical_entry": "canonical.md",
+    "living_ledger": "now.md",
     "stateless_renter_entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
     "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY"
   },

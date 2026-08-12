@@ -3,15 +3,15 @@
 
 # Kopano Labs · Public Systems Studio
 
-**Current Vercel implementation source observed for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa.**
+**Canonical production source for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa.**
 
 [![Production](https://img.shields.io/badge/production-kopanolabs.com-22c55e?style=for-the-badge&logo=vercel&logoColor=white)](https://kopanolabs.com)
-[![Deployment Source](https://img.shields.io/badge/deployment%20source-observed-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
+[![Canonical Source](https://img.shields.io/badge/canonical%20source-RobynAwesome%2FKopano--Labs--Website-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
 [![Cars4Mars](https://img.shields.io/badge/Cars4Mars-primary%20evidence%20route-f97316?style=for-the-badge)](https://kopanolabs.com/Cars4Mars/)
 
 </div>
 
-> **Source governance:** Vercel currently reports `RobynAwesome/Kopano-Labs-Website` as deployment provenance. This README does not declare a canonical GitHub production repository; that remains unestablished until explicitly set by the owner.
+> **Source governance:** `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production repository for KopanoLabs.com. `Kopano-Labs/Introduction-to-MCP` remains the Main Brain governance/architecture authority and is not a runtime dependency.
 
 ---
 
@@ -28,7 +28,7 @@ Adaptive route registry
   ├── robots.txt
   └── CI production gates
         ↓
-Labs · Systems · Cars4Mars · Proof
+Labs · Systems · Content · Cars4Mars · FOC · Proof
 ```
 
 ![Adaptive agent routing](public/assets/diagrams/agent-routing.svg)
@@ -60,7 +60,7 @@ The design submission was completed on **02 August 2026**. The submitted package
 <div align="center">
 
 ![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=111827)
-![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-7.0.2-3178C6?style=for-the-badge&logo=typescript&logoColor=white)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)
 ![Three.js](https://img.shields.io/badge/Three.js-0.184-000000?style=for-the-badge&logo=threedotjs&logoColor=white)
 ![React Three Fiber](https://img.shields.io/badge/React_Three_Fiber-spatial-111827?style=for-the-badge)
@@ -78,9 +78,11 @@ The design submission was completed on **02 August 2026**. The submitted package
 | Route | Purpose | State |
 |---|---|---|
 | `/` | Adaptive public entry + spatial Kopano systems map | **Implemented** |
-| `/labs/` | Experiment discovery and focused entry | **Implemented / evolving** |
 | `/systems/` | Operational systems registry | **Implemented / evolving** |
+| `/labs/` | Experiment discovery and focused entry | **Implemented / evolving** |
+| `/content/` | Public estate / connected project surface | **Implemented / evolving** |
 | `/Cars4Mars/` | Rover mission control, ledger, architecture, media and support | **Implemented / evidence expanding** |
+| `/FOC/` | POC/FOC classification and product-state surface | **Implemented / evolving** |
 | `/proof/` | Source lineage, claims and public build state | **Implemented** |
 | `/sitemap.xml` | Generated crawler discovery map | **Implemented** |
 | `/robots.txt` | Guided crawler policy, not a blanket block | **Implemented** |
@@ -93,10 +95,11 @@ The design submission was completed on **02 August 2026**. The submitted package
 ### Spatial + motion runtime
 
 - React Three Fiber / Drei 3D scene.
-- Mars sphere, orbital geometry, node mesh and live system lines.
+- Spatial Kopano systems atlas with distinct product worlds.
 - Pointer-responsive spatial movement.
 - Framer Motion page transitions and interaction choreography.
-- GSAP available for scroll/camera timelines and complex sequences.
+- GSAP scroll choreography.
+- `full` / `balanced` / `lite` experience tiers.
 - `prefers-reduced-motion` handling.
 - Save-Data degradation for constrained devices.
 
@@ -112,7 +115,7 @@ The design submission was completed on **02 August 2026**. The submitted package
 
 ### Evidence governance
 
-- Vercel + live domain are the current production proof surfaces.
+- `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production source.
 - `Introduction-to-MCP` remains architecture/source authority rather than a runtime dependency.
 - Cars4Mars keeps design evidence separate from physical validation.
 - CI validates route/crawler/release consistency.
@@ -126,14 +129,14 @@ The design submission was completed on **02 August 2026**. The submitted package
 
 - spatial React/Three runtime;
 - adaptive route registry;
-- public Labs, Systems, Cars4Mars and Proof routes;
+- public Labs, Systems, Content, Cars4Mars, FOC and Proof routes;
 - Cars4Mars mission status, ledger, architecture, media and support surfaces;
 - crawler guidance + generated sitemap;
 - Search Console baseline documentation;
 - source-lineage documentation;
 - branded production assets;
 - GitHub production gate;
-- Vercel production deployment receipts.
+- production deployment receipts.
 
 ### Not yet claimed as fully validated
 
@@ -149,8 +152,8 @@ The design submission was completed on **02 August 2026**. The submitted package
 
 ## Implementation order
 
-1. **P1 — Rebuild public product/visual surface.**
-2. **P2 — Preserve and migrate KopanoLabs.com lineage from `Introduction-to-MCP`.**
+1. **P1 — Evolve public product/visual surface.**
+2. **P2 — Preserve and migrate KopanoLabs.com lineage from `Introduction-to-MCP` and owned visual/artifact repositories.**
 3. **P3 — Cars4Mars evidence, ledger, architecture, media and support surface.**
 4. **P4 — Production, indexing and source-parity gates.**
 5. **P5 — Human verification + first-party telemetry/database.**
@@ -195,6 +198,8 @@ The build regenerates crawler policy before TypeScript/Vite compilation.
 ## Source lineage
 
 Website-facing architecture is traced back to `Kopano-Labs/Introduction-to-MCP`, including Studio, strategy, brand and context material. That repository is governance/architecture authority, not a runtime dependency.
+
+Visual evolution must also inspect owned donor repositories such as `RobynAwesome/Portfolio-MBR` and `RobynAwesome/three.js` before generating substitutes.
 
 `RobynAwesome/Money-managing-app` is unrelated and must never be used as Kopano Labs production source. `RobynAwesome/cars4mars-landingpage` is retired historical lineage and is not a production dependency.
 

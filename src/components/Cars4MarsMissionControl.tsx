@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { RoverMechanismExplorer } from './RoverMechanismExplorer';
 import { RoverVisual } from './RoverVisual';
 
 export type Cars4MarsFocus = 'overview' | 'ledger' | 'architecture' | 'media' | 'support';
@@ -84,6 +85,8 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
         <div className="competition-rover"><RoverVisual/></div>
         <div><span className="eyebrow">THE CHALLENGE · ON THIS PAGE</span><h2>What the rover must actually do.</h2><div className="competition-facts">{competitionFacts.map(([label,value])=><article key={label}><span>{label}</span><strong>{value}</strong></article>)}</div></div>
       </section>
+
+      <RoverMechanismExplorer />
 
       <section className="visual-reference-section" aria-label="Cars4Mars design reference visuals">
         <div className="mission-section-head"><span className="eyebrow">DESIGN REFERENCE · NOT VALIDATION EVIDENCE</span><h2>Keep the target rover visible.</h2><p>These supplied concept visuals keep the intended rover shape present while the ledger stays honest: they are design references, not proof of assembly or testing.</p></div>

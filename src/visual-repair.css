@@ -1,0 +1,115 @@
+/* 2026-08-15 visual repair: preserve proof boundaries while making the UI legible and interactive. */
+
+/* Cars4Mars hero: one Three.js rover world, no stacked campaign image + schematic + generic mesh. */
+.mars-stage{position:relative;isolation:isolate;background:radial-gradient(circle at 68% 22%,rgba(255,137,76,.15),transparent 30%),radial-gradient(circle at 20% 82%,rgba(99,213,255,.08),transparent 34%),linear-gradient(155deg,#190b08,#080b0f 72%)}
+.mars-stage .kopano-scene,.mars-stage .mars-campaign-figure,.mars-stage .mars-rover-visual{display:none!important}
+.mars-rover-scene{position:absolute;inset:0;z-index:1;overflow:hidden;touch-action:none}
+.mars-rover-scene canvas{position:absolute!important;inset:0;width:100%!important;height:100%!important;display:block;filter:saturate(1.08) contrast(1.03)}
+.mars-sim-badge,.mars-sim-telemetry,.mars-sim-controls,.mars-sim-proof-note{position:absolute;z-index:4}
+.mars-sim-badge{top:5%;left:5%;display:grid;gap:4px;padding:10px 12px;border:1px solid rgba(255,189,130,.22);border-radius:14px;background:rgba(18,8,6,.66);backdrop-filter:blur(16px);box-shadow:0 16px 44px rgba(0,0,0,.28)}
+.mars-sim-badge span{font:800 8px 'DM Mono',monospace;letter-spacing:.14em;color:#ffbd82}.mars-sim-badge b{font:700 11px 'Space Grotesk';letter-spacing:.04em;color:#fff3e8}
+.mars-sim-telemetry{left:5%;bottom:7%;display:flex;gap:8px;flex-wrap:wrap;max-width:58%;pointer-events:none}.mars-sim-telemetry span{padding:8px 10px;border:1px solid rgba(255,255,255,.11);border-radius:999px;background:rgba(6,10,14,.62);backdrop-filter:blur(14px);font:700 8px 'DM Mono',monospace;letter-spacing:.06em;color:#94aab7}.mars-sim-telemetry b{color:#eaf8ff;margin-right:4px;font-size:9px}
+.mars-sim-controls{right:4%;bottom:7%;width:min(250px,42%);padding:11px;border:1px solid rgba(255,255,255,.12);border-radius:18px;background:rgba(7,11,15,.68);backdrop-filter:blur(18px);box-shadow:0 18px 60px rgba(0,0,0,.3)}.mars-control-hint{margin-bottom:8px;font:700 7px 'DM Mono',monospace;letter-spacing:.07em;color:#869aa5}.mars-drive-pad{display:grid;grid-template-columns:repeat(4,1fr) auto;gap:6px}.mars-drive-pad button{min-width:0;height:36px;border:1px solid rgba(99,213,255,.18);border-radius:10px;background:rgba(99,213,255,.06);color:#dff7ff;font:800 15px 'Space Grotesk';cursor:pointer;user-select:none;touch-action:none;transition:transform .12s ease,background .12s ease,border-color .12s ease}.mars-drive-pad button:hover,.mars-drive-pad button:focus-visible{border-color:rgba(99,213,255,.42);background:rgba(99,213,255,.13)}.mars-drive-pad button:active{transform:scale(.94)}.mars-drive-pad button.reset{width:auto;padding:0 9px;font:800 7px 'DM Mono',monospace;letter-spacing:.08em;border-color:rgba(255,189,130,.22);color:#ffd0a7;background:rgba(255,137,76,.07)}
+.mars-sim-proof-note{right:5%;top:15%;max-width:230px;text-align:right;font:700 7px/1.45 'DM Mono',monospace;letter-spacing:.07em;color:rgba(230,239,244,.56);pointer-events:none}
+.mars-stage .mission-chip{top:5%;right:4%;bottom:auto;background:rgba(37,9,7,.82);border-color:rgba(255,122,89,.36);box-shadow:0 16px 50px rgba(0,0,0,.22)}
+
+/* Interactive rover mechanism explorer. */
+.mechanism-explorer{padding:30px;border:1px solid rgba(99,213,255,.14);border-radius:30px;background:radial-gradient(circle at 88% 8%,rgba(99,213,255,.07),transparent 32%),linear-gradient(145deg,rgba(255,255,255,.032),rgba(255,255,255,.012));overflow:hidden}.mechanism-heading{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(260px,.9fr);gap:34px;align-items:end;margin-bottom:22px}.mechanism-heading h2{font-size:clamp(32px,5vw,58px);line-height:.95;letter-spacing:-.045em;margin:10px 0 0}.mechanism-heading p{margin:0;color:#93a6b0;font-size:13px;line-height:1.65}.mechanism-shell{display:grid;gap:12px}.mechanism-tabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.mechanism-tabs button{display:grid;grid-template-columns:auto 1fr;gap:10px;align-items:center;padding:13px 14px;border:1px solid rgba(255,255,255,.075);border-radius:16px;background:rgba(255,255,255,.024);color:inherit;text-align:left;cursor:pointer}.mechanism-tabs button span{font:800 8px 'DM Mono',monospace;letter-spacing:.08em;color:#6f8794}.mechanism-tabs button strong{font-size:12px;line-height:1.2}.mechanism-tabs button.active{border-color:rgba(99,213,255,.34);background:linear-gradient(135deg,rgba(99,213,255,.1),rgba(255,137,76,.045));box-shadow:inset 0 0 30px rgba(99,213,255,.035)}.mechanism-tabs button.active span{color:#8fe8ff}
+.mechanism-stage{position:relative;min-height:510px;border:1px solid rgba(255,255,255,.09);border-radius:24px;overflow:hidden;background:radial-gradient(circle at 74% 22%,rgba(0,102,255,.12),transparent 32%),linear-gradient(145deg,#071019,#05080c)}.mechanism-stage:after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,transparent 64%,rgba(3,6,9,.74));z-index:1}.mechanism-diagram{position:absolute;inset:0;padding:24px 24px 118px;display:grid;place-items:center}.mechanism-diagram svg{width:100%;height:100%;max-height:390px;overflow:visible}.mechanism-diagram text{fill:#d9e7ed;font:700 11px 'DM Mono',monospace;letter-spacing:.04em}.mechanism-diagram .construct-callout{fill:#88a2af;font-size:9px;letter-spacing:.08em}.construct-grid{stroke:rgba(255,255,255,.035);stroke-width:1;fill:none}.construct-body{fill:#162535;stroke:#4e91bd;stroke-width:2}.construct-battery{fill:#08111c;stroke:#ff9d57;stroke-width:2}.construct-tray{fill:#22384a;stroke:#8db6cf;stroke-width:2}.construct-rail{fill:none;stroke:#ff9d57;stroke-width:3;stroke-linecap:round}.construct-payload{fill:#8f5c27;stroke:#ffc078;stroke-width:2}.construct-wheel{fill:#0a1016;stroke:#4d7895;stroke-width:3}.construct-hub{fill:#2b4659;stroke:#75bff0;stroke-width:2}.construct-arrow{fill:none;stroke:#63d5ff;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}.construct-cog{fill:none;stroke:#00e676;stroke-width:2}.construct-terrain{fill:none;stroke:#b25f3d;stroke-width:4;stroke-linecap:round}.construct-link{fill:none;stroke:#77a4bf;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.construct-contact{fill:none;stroke:#00e676;stroke-width:4;stroke-linecap:round}.construct-sensor{fill:#243848;stroke:#63d5ff;stroke-width:2}.construct-lidar{fill:none;stroke:#63d5ff;stroke-width:2;opacity:.45}.construct-fov{fill:rgba(99,213,255,.06);stroke:#63d5ff;stroke-width:2;stroke-dasharray:6 6}.construct-target{fill:#172531;stroke:#f5a623;stroke-width:2}.construct-block{fill:#142330;stroke:#5c8daa;stroke-width:2}.construct-power{fill:none;stroke:#ff9d57;stroke-width:4;stroke-linecap:round}.construct-stop{fill:#6d1914;stroke:#ff7866;stroke-width:3}
+.mechanism-copy{position:absolute;z-index:2;left:20px;right:20px;bottom:18px;display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.8fr);gap:18px;align-items:end;padding-top:16px;border-top:1px solid rgba(255,255,255,.09)}.mechanism-copy>span{grid-column:1/-1;font:800 8px 'DM Mono',monospace;letter-spacing:.12em;color:#63d5ff}.mechanism-copy h3{font-size:26px;margin:0}.mechanism-copy p{margin:0;color:#9cb0ba;font-size:11px;line-height:1.55}.mechanism-copy>div{grid-column:1/-1;display:flex;gap:6px;flex-wrap:wrap}.mechanism-copy b{padding:6px 8px;border:1px solid rgba(255,255,255,.08);border-radius:999px;background:rgba(255,255,255,.035);font:700 7px 'DM Mono',monospace;color:#bbcad2;letter-spacing:.04em}
+
+/* Small Three.js / spatial polish: distinct interactive islands and cleaner feedback. */
+.system-atlas,.spatial-stage,.directory-stage{transform:translateZ(0)}.atlas-selector button,.directory-rail button,.mechanism-tabs button{transition:transform .18s ease,border-color .18s ease,background .18s ease,box-shadow .18s ease}.atlas-selector button:hover,.mechanism-tabs button:hover{transform:translateX(3px)}.atlas-stage{box-shadow:inset 0 1px rgba(255,255,255,.04),0 22px 70px rgba(0,0,0,.18)}
+
+/* Light mode is a real theme, not dark-theme text painted onto white. */
+html[data-theme='light']{--bg:#f3f6f8;--surface:#ffffff;--surface2:#edf2f6;--line:#c9d3dc;--text:#111820;--muted:#586874;--gold:#935d00;--mint:#08794c;--cyan:#006b93;--coral:#a7472f;--paper:#111820}
+html[data-theme='light'] .app-shell{background:radial-gradient(circle at 14% 8%,rgba(0,121,76,.075),transparent 30%),radial-gradient(circle at 86% 6%,rgba(0,107,147,.08),transparent 30%),#f3f6f8}
+html[data-theme='light'] .ambient{opacity:.1;filter:blur(110px)}
+html[data-theme='light'] .topbar{background:rgba(250,252,253,.9);box-shadow:0 8px 30px rgba(20,34,45,.06)}
+html[data-theme='light'] .brand small,html[data-theme='light'] .nav-button{color:#586874}
+html[data-theme='light'] .nav-button:hover,html[data-theme='light'] .nav-button.active{color:#111820;border-color:rgba(17,24,32,.14);background:rgba(17,24,32,.045)}
+html[data-theme='light'] .source-pill{color:#111820;border-color:rgba(17,24,32,.16);background:#fff}
+html[data-theme='light'] .eyebrow{color:#935d00}
+html[data-theme='light'] .hero-copy h1,html[data-theme='light'] .page-head h1,html[data-theme='light'] .mars-hero h1,html[data-theme='light'] h2,html[data-theme='light'] h3{color:#111820}
+html[data-theme='light'] .hero-copy h1 em{color:rgba(17,24,32,.025);-webkit-text-stroke:1.35px rgba(17,24,32,.62)}
+html[data-theme='light'] .hero-copy p,html[data-theme='light'] .page-head p,html[data-theme='light'] .mars-hero p,html[data-theme='light'] .now-hero .hero-copy p,html[data-theme='light'] .studio-intro p,html[data-theme='light'] .home-film-copy p{color:#53636f}
+html[data-theme='light'] .studio-principle{color:#715018!important;border-left-color:rgba(147,93,0,.5)}
+html[data-theme='light'] .primary{background:#111820;color:#fff;border-color:#111820;box-shadow:0 8px 22px rgba(17,24,32,.12)}
+html[data-theme='light'] .secondary{background:#fff;color:#111820;border-color:rgba(17,24,32,.15)}
+html[data-theme='light'] .page-head,html[data-theme='light'] .studio-intro{border-color:rgba(17,24,32,.12)}
+html[data-theme='light'] .search-row input{background:#fff;color:#111820;border-color:rgba(17,24,32,.16);box-shadow:inset 0 1px rgba(255,255,255,.7)}
+html[data-theme='light'] .search-row input::placeholder{color:#82919b}
+html[data-theme='light'] .search-row span{color:#657681}
+
+/* Keep 3D canvases as high-contrast instrument panels inside the light page. */
+html[data-theme='light'] .spatial-stage{border-color:rgba(17,24,32,.12);background:radial-gradient(circle at 68% 24%,rgba(255,98,56,.13),transparent 28%),radial-gradient(circle at 24% 72%,rgba(0,230,118,.09),transparent 28%),linear-gradient(145deg,#101820,#071019);box-shadow:0 30px 80px rgba(26,43,56,.18)}
+html[data-theme='light'] .scene-label{color:#d7e5eb;background:rgba(7,12,17,.68);border-color:rgba(255,255,255,.14)}
+html[data-theme='light'] .spatial-panel{color:#edf4f6;background:rgba(7,12,17,.78);border-color:rgba(255,255,255,.14)}
+html[data-theme='light'] .spatial-panel .eyebrow{color:#f5a623}
+html[data-theme='light'] .spatial-panel input{color:#edf4f6;background:#081017;border-color:rgba(255,255,255,.13)}
+html[data-theme='light'] .spatial-panel button{color:#111820;background:#f4f0e7}
+html[data-theme='light'] .mars-stage{background:radial-gradient(circle at 68% 22%,rgba(255,137,76,.16),transparent 30%),radial-gradient(circle at 20% 82%,rgba(99,213,255,.08),transparent 34%),linear-gradient(155deg,#190b08,#080b0f 72%)}
+html[data-theme='light'] .mission-chip b,html[data-theme='light'] .mission-chip span{color:inherit}
+
+/* Homepage information surfaces. Dark project tiles intentionally remain dark visual islands. */
+html[data-theme='light'] .home-film{border-color:rgba(17,24,32,.11);background:radial-gradient(circle at 88% 18%,rgba(199,70,39,.09),transparent 30%),linear-gradient(135deg,#fff,#f7f9fb);box-shadow:0 20px 60px rgba(26,43,56,.09)}
+html[data-theme='light'] .next-public-strip{border-color:rgba(17,24,32,.11);background:#fff}
+html[data-theme='light'] .next-public-strip strong{background:#edf2f6;color:#273541}
+html[data-theme='light'] footer{color:#60717d;border-color:rgba(17,24,32,.12)}
+
+/* Systems / Labs rail text. The spatial stage itself stays dark by design. */
+html[data-theme='light'] .directory-rail button{border-color:rgba(17,24,32,.11);background:#fff;color:#111820;box-shadow:0 8px 24px rgba(26,43,56,.035)}
+html[data-theme='light'] .directory-rail small{color:#627480}
+html[data-theme='light'] .directory-rail button.selected{border-color:rgba(0,107,147,.25);background:linear-gradient(90deg,rgba(0,107,147,.07),rgba(8,121,76,.035));box-shadow:0 14px 34px rgba(26,43,56,.08)}
+html[data-theme='light'] .context-workbench{border-color:rgba(0,107,147,.16);background:linear-gradient(145deg,#fff,#f5f9fb);box-shadow:0 18px 48px rgba(26,43,56,.08)}
+html[data-theme='light'] .context-workbench-head p,html[data-theme='light'] .context-actions span{color:#5d6e79}
+html[data-theme='light'] .context-chips button,html[data-theme='light'] .context-actions a,html[data-theme='light'] .context-actions button{color:#24323d;border-color:rgba(17,24,32,.11);background:#fff}
+html[data-theme='light'] .context-chips button.active{color:#704800;border-color:rgba(147,93,0,.3);background:rgba(147,93,0,.07)}
+html[data-theme='light'] .context-form label{color:#293842}
+html[data-theme='light'] .context-form input{background:#fff;color:#111820;border-color:rgba(17,24,32,.14)}
+html[data-theme='light'] .context-result{color:#1f4e38;background:rgba(8,121,76,.07)}
+html[data-theme='light'] .directory-empty{color:#647681;border-color:rgba(17,24,32,.16)}
+
+/* Cars4Mars mission surfaces. */
+html[data-theme='light'] .mission-nav{background:rgba(255,255,255,.88);border-color:rgba(17,24,32,.12);box-shadow:0 12px 34px rgba(26,43,56,.07)}
+html[data-theme='light'] .mission-nav a{color:#50616d}
+html[data-theme='light'] .mission-nav a:hover,html[data-theme='light'] .mission-nav a:focus-visible{color:#111820;border-color:rgba(0,107,147,.22);background:rgba(0,107,147,.055)}
+html[data-theme='light'] .mission-nav a.active{color:#075f3d;border-color:rgba(8,121,76,.24);background:linear-gradient(135deg,rgba(8,121,76,.08),rgba(0,107,147,.04))}
+html[data-theme='light'] .mission-section-head p{color:#5b6c77}
+html[data-theme='light'] .mission-state{background:#fff;border-color:rgba(17,24,32,.1);box-shadow:0 10px 30px rgba(26,43,56,.035)}
+html[data-theme='light'] .mission-state>span,html[data-theme='light'] .gate-meta span,html[data-theme='light'] .cars-ledger-entry time,html[data-theme='light'] .cars-ledger-entry>span{color:#657983}
+html[data-theme='light'] .mission-state strong{color:#596a75}
+html[data-theme='light'] .mission-state p,html[data-theme='light'] .architecture-grid p,html[data-theme='light'] .support-grid p,html[data-theme='light'] .cars-ledger-entry p,html[data-theme='light'] .media-featured p{color:#5d6e79}
+html[data-theme='light'] .mission-state.verified strong{color:#08794c}html[data-theme='light'] .mission-state.pending strong{color:#8a5700}html[data-theme='light'] .mission-state.blocked strong{color:#62737d}
+html[data-theme='light'] .competition-brief{border-color:rgba(0,107,147,.17);background:radial-gradient(circle at 18% 34%,rgba(0,107,147,.09),transparent 34%),#fff;box-shadow:0 14px 42px rgba(26,43,56,.05)}
+html[data-theme='light'] .competition-facts article{background:#101820;border-color:rgba(255,255,255,.08)}
+html[data-theme='light'] .competition-facts strong{color:#e7f0f4}html[data-theme='light'] .competition-facts span{color:#8fe8ff}
+html[data-theme='light'] .visual-reference-card{border-color:rgba(17,24,32,.11);background:#fff;box-shadow:0 12px 32px rgba(26,43,56,.05)}
+html[data-theme='light'] .visual-reference-card span{color:#5d6e79}
+html[data-theme='light'] .next-gate-panel{border-color:rgba(147,93,0,.18);background:radial-gradient(circle at 78% 20%,rgba(147,93,0,.07),transparent 30%),linear-gradient(135deg,#fff,#f8fafb);box-shadow:0 18px 52px rgba(26,43,56,.07)}
+html[data-theme='light'] .gate-meta{border-color:rgba(17,24,32,.11)}html[data-theme='light'] .gate-meta strong{color:#283842}
+html[data-theme='light'] .cars-ledger-entry,html[data-theme='light'] .architecture-grid article,html[data-theme='light'] .support-grid article,html[data-theme='light'] .media-control-card,html[data-theme='light'] .media-featured,html[data-theme='light'] .official-acknowledgement{border-color:rgba(17,24,32,.1);background:#fff;box-shadow:0 10px 30px rgba(26,43,56,.035)}
+html[data-theme='light'] .architecture-grid strong,html[data-theme='light'] .support-grid h3,html[data-theme='light'] .media-control-card strong,html[data-theme='light'] .media-control-card b,html[data-theme='light'] .cars-ledger-entry h3{color:#111820}
+html[data-theme='light'] .architecture-grid span,html[data-theme='light'] .support-grid span,html[data-theme='light'] .media-control-card>span{color:#006b93}
+html[data-theme='light'] .official-acknowledgement p{color:#354650}html[data-theme='light'] .official-acknowledgement small{color:#63757f}
+
+/* Explorer tabs become light while the diagram remains a dark instrument panel. */
+html[data-theme='light'] .mechanism-explorer{border-color:rgba(0,107,147,.13);background:radial-gradient(circle at 88% 8%,rgba(0,107,147,.055),transparent 32%),#fff;box-shadow:0 16px 48px rgba(26,43,56,.06)}
+html[data-theme='light'] .mechanism-heading p{color:#5b6d78}
+html[data-theme='light'] .mechanism-tabs button{border-color:rgba(17,24,32,.1);background:#f8fafb;color:#111820}
+html[data-theme='light'] .mechanism-tabs button.active{border-color:rgba(0,107,147,.25);background:linear-gradient(135deg,rgba(0,107,147,.08),rgba(167,71,47,.035))}
+html[data-theme='light'] .mechanism-stage h3{color:#eef6fa}
+
+/* Theme controls themselves remain visible against both the header and canvas. */
+html[data-theme='light'] .theme-switcher{border-color:rgba(17,24,32,.12);background:rgba(255,255,255,.88);box-shadow:0 8px 24px rgba(26,43,56,.08)}
+html[data-theme='light'] .theme-switcher button.active{background:#edf2f6;color:#111820}
+html[data-theme='light'] .hamburger span{color:#111820}
+html[data-theme='light'] .estate-menu nav a:hover{background:rgba(17,24,32,.045);border-color:rgba(17,24,32,.08)}
+html[data-theme='light'] .content-estate-card{border-color:rgba(17,24,32,.1);background:#fff;box-shadow:0 12px 36px rgba(26,43,56,.05)}
+html[data-theme='light'] .content-estate-image{background:#edf2f6}
+html[data-theme='light'] .content-estate-footer{border-color:rgba(17,24,32,.11)}
+
+@media(max-width:980px){.mechanism-heading{grid-template-columns:1fr;gap:10px}.mechanism-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}.mechanism-stage{min-height:530px}.mechanism-copy{grid-template-columns:1fr}.mechanism-copy p{max-width:70ch}.mars-sim-telemetry{max-width:62%}}
+@media(max-width:700px){.mars-stage{min-height:590px!important}.mars-sim-badge{top:4%;left:4%}.mars-stage .mission-chip{top:4%;right:4%;max-width:46%}.mars-sim-proof-note{display:none}.mars-sim-telemetry{left:4%;bottom:23%;max-width:92%;gap:5px}.mars-sim-telemetry span{padding:6px 8px}.mars-sim-controls{left:4%;right:4%;bottom:4%;width:auto}.mars-control-hint{font-size:6px}.mars-drive-pad{grid-template-columns:repeat(4,1fr) auto}.mechanism-explorer{padding:18px;border-radius:24px}.mechanism-tabs{grid-template-columns:1fr 1fr}.mechanism-tabs button{padding:11px}.mechanism-stage{min-height:560px}.mechanism-diagram{padding:12px 8px 180px}.mechanism-copy{left:14px;right:14px;bottom:14px}.mechanism-copy h3{font-size:23px}.mechanism-copy>div{gap:4px}.mechanism-copy b{font-size:6px}.mechanism-diagram .construct-callout{font-size:8px}}
+@media(max-width:480px){.mars-stage{min-height:620px!important}.mars-sim-telemetry{bottom:25%}.mars-drive-pad{grid-template-columns:repeat(4,1fr)}.mars-drive-pad button.reset{grid-column:1/-1}.mechanism-tabs{grid-template-columns:1fr}.mechanism-stage{min-height:600px}.mechanism-copy>div{display:grid;grid-template-columns:1fr 1fr}.mechanism-copy b{text-align:center}.mechanism-diagram{padding-bottom:210px}}
+@media(prefers-reduced-motion:reduce){.mars-drive-pad button,.atlas-selector button,.directory-rail button,.mechanism-tabs button{transition:none!important}.atlas-selector button:hover,.mechanism-tabs button:hover{transform:none}}

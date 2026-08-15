@@ -11,6 +11,7 @@ import './now.css';
 import './foc.css';
 import './site-experience.css';
 import './system-atlas.css';
+import './visual-repair.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

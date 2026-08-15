@@ -1,0 +1,26 @@
+{
+  "schema": "cars4mars.sim.source.v1",
+  "baseline": "DFR-01",
+  "visualization_repository": "RobynAwesome/Kopano-Labs-Website",
+  "engineering_repository": "RobynAwesome/cars4mars-project",
+  "engineering_branch": "engineering/evidence-spine",
+  "engineering_commit": "88c7f37115b78df276756425600944abe36d649d",
+  "scenario_contract_path": "engineering/simulation_scenarios.json",
+  "engineering_model_path": "cars4mars/simulation.py",
+  "engineering_ci_run": 31900861521,
+  "engineering_ci_conclusion": "success",
+  "browser_model_path": "src/cars4marsSimulation.ts",
+  "browser_contract_path": "public/cars4mars/simulation-scenarios.json",
+  "truth_boundary": "The website is a visual/browser execution surface for the DFR-01 model. It is not physical rover telemetry or physical validation evidence.",
+  "provenance_chain": [
+    "PROMPT / HYPOTHESIS",
+    "AI PROPOSAL",
+    "HUMAN DECISION",
+    "ENGINEERING ARTIFACT",
+    "COMMIT",
+    "TEST",
+    "MEASUREMENT",
+    "PASS / FAIL"
+  ],
+  "physical_measurement_state": "NOT_COMPLETE"
+}

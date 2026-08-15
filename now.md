@@ -186,11 +186,18 @@ Existing POC: procedural rover rig + mission UI + evidence routes.
 
 - [x] Preserve current evidence model and mission-control architecture.
 - [x] Preserve procedural rover as low-detail fallback/LOD foundation.
+- [x] Preserve and expose the human-in-the-loop phone/laptop command-interface POC alongside engineering test modes.  
+  Receipt: website PR #10, `src/components/MarsRoverScene.tsx`.
+- [x] Add deterministic DFR-01 grade, traction, heartbeat-loss and parameter-sensitivity simulation modes to the existing Three.js rover.  
+  Engineering source: `RobynAwesome/cars4mars-project@88c7f37115b78df276756425600944abe36d649d`; engineering gate `31900861521` SUCCESS.
+- [x] Expose model assumptions and fail states visually while preserving the permanent `MODEL EVIDENCE ≠ PHYSICAL VALIDATION` boundary.  
+  Website proof gate: `production-gate` run `31901071476` SUCCESS.
 - [ ] Full mode: richer rover model/rig.
-- [ ] Terrain + wheel articulation + path planning visualization.
+- [ ] Terrain + wheel articulation + path planning visualization.  
+  Current partial state: terrain/manual articulation already exists and the 45° grade test ramp is now visualized; path-planning visualization remains open.
 - [ ] Sensor/perception rays only when explicitly represented as design/simulation, never physical test evidence.
 - [ ] Dust/lighting/camera choreography tied to mission state.
-- [ ] Keep `DESIGNED -> FUNDED -> ORDERED -> ASSEMBLED -> TESTED -> VALIDATED` evidence transitions separate from visual simulation.
+- [x] Keep `DESIGNED -> FUNDED -> ORDERED -> ASSEMBLED -> TESTED -> VALIDATED` evidence transitions separate from visual simulation.
 
 ### Kopano Context — spatial Main Brain
 
@@ -283,6 +290,7 @@ Format:
 | 2026-08-12 | Forge checker | Removed stale CI assertion and expanded current route/spatial governance gates | `ec00091bd7b25566bf5fd2d2849acaa126a25065` | `production-gate` run `31590971907` SUCCESS |
 
 | 2026-08-15 | Codex | Added bounded Cars4Mars concept references, FOC CONNECTED signal and deterministic POC contract | PR #8 / preview branch `fix/cars4mars-poc-validation-2026-08-15` | Production-gate run `31874454665` SUCCESS; Vercel preview READY |
+| 2026-08-15 | Forge | Added auditable DFR-01 simulations to the existing Three.js rover while preserving human-drive mode and evidence boundaries | PR #10 / source head `5f7a334c84116ee7f4ce8a406940e9c10499ace1` / engineering source `88c7f37115b78df276756425600944abe36d649d` | Website production-gate `31901071476` SUCCESS; engineering evidence gate `31900861521` SUCCESS |
 
 ## Handoff rule
 

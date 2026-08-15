@@ -1,0 +1,49 @@
+{
+  "schema": "cars4mars.sim.scenarios.v1",
+  "baseline": "DFR-01",
+  "truth_boundary": "Simulation scenarios are model evidence only. Hypothetical parameters remain assumptions until replaced by source-backed or measured values.",
+  "model": "constant_force_grade_v1 + heartbeat_loss_stop_envelope_v1",
+  "scenarios": [
+    {
+      "id": "grade45-ideal-lower-bound",
+      "label": "45° ideal lower bound",
+      "kind": "grade",
+      "visual_status": "IDEAL HOLD — ZERO CLIMB MARGIN",
+      "parameters": {"mass_kg":30.0,"slope_deg":45.0,"wheel_radius_m":0.125,"total_drive_torque_nm":26.012690712900116,"drivetrain_efficiency":1.0,"rolling_resistance_coeff":0.0,"traction_mu":1.0,"initial_speed_mps":0.0,"duration_s":3.0,"dt_ms":100},
+      "purpose": "Demonstrate that the published 26.01 N·m figure is only the ideal gravity-balancing lower bound at 30 kg and 45 degrees, not a climb-performance margin."
+    },
+    {
+      "id": "grade45-lossy-hypothesis",
+      "label": "45° lossy hypothesis",
+      "kind": "grade",
+      "visual_status": "INSUFFICIENT FORCE",
+      "parameters": {"mass_kg":30.0,"slope_deg":45.0,"wheel_radius_m":0.125,"total_drive_torque_nm":26.012690712900116,"drivetrain_efficiency":0.8,"rolling_resistance_coeff":0.03,"traction_mu":1.0,"initial_speed_mps":0.0,"duration_s":3.0,"dt_ms":100},
+      "purpose": "Show that the same ideal lower-bound torque becomes insufficient as soon as hypothetical drivetrain and rolling losses are introduced."
+    },
+    {
+      "id": "grade45-traction-limited",
+      "label": "45° traction-limited hypothesis",
+      "kind": "grade",
+      "visual_status": "TRACTION-LIMITED",
+      "parameters": {"mass_kg":30.0,"slope_deg":45.0,"wheel_radius_m":0.125,"total_drive_torque_nm":45.0,"drivetrain_efficiency":0.9,"rolling_resistance_coeff":0.02,"traction_mu":0.65,"initial_speed_mps":0.0,"duration_s":3.0,"dt_ms":100},
+      "purpose": "Show that increasing available wheel torque does not guarantee a climb when the tyre/surface traction ceiling is lower than requested drive force."
+    },
+    {
+      "id": "heartbeat-loss-stop-envelope",
+      "label": "Heartbeat-loss stopping envelope",
+      "kind": "heartbeat_loss",
+      "visual_status": "COMMAND LOST → MOTOR DISABLE → STOP",
+      "parameters": {"initial_speed_mps":0.5,"command_timeout_ms":500,"assumed_braking_deceleration_mps2":0.8,"dt_ms":50},
+      "purpose": "Visualize the known 500 ms software command timeout separately from the still-hypothetical physical deceleration after motor enable is removed."
+    },
+    {
+      "id": "grade45-sensitivity",
+      "label": "45° parameter sensitivity",
+      "kind": "grade_sensitivity",
+      "visual_status": "EXPLORE ASSUMPTIONS",
+      "parameters": {"mass_kg":30.0,"slope_deg":45.0,"wheel_radius_m":0.125,"rolling_resistance_coeff":0.02,"torques_nm":[26.012690712900116,32.5,40.0,50.0],"efficiencies":[0.7,0.8,0.9],"traction_coefficients":[0.6,0.8,1.0,1.2]},
+      "purpose": "Expose how torque, efficiency and traction assumptions change the 45-degree force balance rather than presenting one polished number as universal truth."
+    }
+  ],
+  "unknowns_to_replace": ["Rhino IG52 torque-speed curve","stall current and controller current limiting","gearbox/drivetrain efficiency","measured tyre/surface traction","rolling and skid-steer scrub resistance","rocker-bogie load transfer","centre of mass","battery sag and branch current","contactor opening time","physical wheel deceleration and stopping distance","thermal behaviour"]
+}

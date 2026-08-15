@@ -9,7 +9,8 @@
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
     "routes:generate": "node scripts/generate-route-shells.mjs",
     "convergence:verify": "node scripts/verify-convergence.mjs",
-    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate && npm run convergence:verify",
+    "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
+    "build": "npm run crawl:generate && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify",
     "preview": "vite preview"
   },
   "dependencies": {

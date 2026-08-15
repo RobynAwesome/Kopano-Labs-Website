@@ -37,6 +37,13 @@ const competitionFacts = [
   ['BALLOONS', 'Black → white → pink → yellow → blue'],
 ] as const;
 
+const visualReferences = [
+  ['/assets/cars4mars/rover-open-concept.png', 'OPEN SYSTEMS VIEW', 'Supplied concept visualisation of the rover with the electronics bay exposed.', 'Design reference · not physical build evidence.'],
+  ['/assets/cars4mars/rover-field-concept.png', 'FIELD CONCEPT', 'Supplied concept visualisation of the rover in a Mars-like field setting.', 'Design reference · not physical build evidence.'],
+] as const;
+
+const featuredVideo = '01exG-aWj6g';
+
 const support = [
   ['EQUIPMENT', 'Fund or supply a named BOM item', 'Contribution → verification → logistics → dated ledger credit.'],
   ['FUNDING', 'Fund a complete physical gate', 'Amount and scope stay tied to purchase evidence and the resulting validation state.'],
@@ -78,6 +85,11 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
         <div><span className="eyebrow">THE CHALLENGE · ON THIS PAGE</span><h2>What the rover must actually do.</h2><div className="competition-facts">{competitionFacts.map(([label,value])=><article key={label}><span>{label}</span><strong>{value}</strong></article>)}</div></div>
       </section>
 
+      <section className="visual-reference-section" aria-label="Cars4Mars design reference visuals">
+        <div className="mission-section-head"><span className="eyebrow">DESIGN REFERENCE · NOT VALIDATION EVIDENCE</span><h2>Keep the target rover visible.</h2><p>These supplied concept visuals keep the intended rover shape present while the ledger stays honest: they are design references, not proof of assembly or testing.</p></div>
+        <div className="visual-reference-grid">{visualReferences.map(([src, label, alt, note]) => <figure key={src} className="visual-reference-card"><img src={src} alt={alt} loading="lazy" decoding="async" /><figcaption><strong>{label}</strong><span>{note}</span></figcaption></figure>)}</div>
+      </section>
+
       <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE</span><h2>Funding → orders → frame → drive → protected power.</h2></div><div className="gate-meta"><span>ACCEPTANCE</span><strong>ORDERS + LOADED DRIVE + TURN + E-STOP</strong></div></section>
     </>}
 
@@ -94,6 +106,10 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
         <a className="media-control-card live" href={`${channel}/live`} target="_blank" rel="noreferrer"><span>LIVE</span><strong>Kopano Labs live</strong><b>OPEN ↗</b></a>
         <a className="media-control-card" href={`${channel}/videos`} target="_blank" rel="noreferrer"><span>UPLOADS</span><strong>Build footage</strong><b>OPEN ↗</b></a>
         <a className="media-control-card" href={`${channel}/shorts`} target="_blank" rel="noreferrer"><span>SHORTS</span><strong>Fast updates</strong><b>OPEN ↗</b></a>
+      </div>
+      <div className="media-featured">
+        <div><span className="eyebrow">VERIFIED RECORDED PROOF · DESIGN / DEMO</span><h3>Watch the current mission film.</h3><p>This confirmed channel upload makes the public media POC observable. It remains recorded design/demo material and does not advance the physical validation state.</p></div>
+        <div className="media-video-frame"><iframe src={`https://www.youtube-nocookie.com/embed/${featuredVideo}?rel=0`} title="Cars4Mars demo video of Kopano Labs team's rover" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen /></div>
       </div>
     </section>}
 

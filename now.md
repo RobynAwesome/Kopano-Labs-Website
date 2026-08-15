@@ -282,6 +282,8 @@ Format:
 | 2026-08-12 | Forge checker | Made `SystemAtlas` respect full/balanced/lite, Save-Data and reduced-motion tiers | `4ad28b66da7e458e1432566a504eb5be4fbce5ff` | TypeScript/Vite build GREEN |
 | 2026-08-12 | Forge checker | Removed stale CI assertion and expanded current route/spatial governance gates | `ec00091bd7b25566bf5fd2d2849acaa126a25065` | `production-gate` run `31590971907` SUCCESS |
 
+| 2026-08-15 | Codex | Added bounded Cars4Mars concept references, FOC CONNECTED signal and deterministic POC contract | PR #8 / preview branch `fix/cars4mars-poc-validation-2026-08-15` | Production-gate run `31874454665` SUCCESS; Vercel preview READY |
+
 ## Handoff rule
 
 Any Forge/window arriving after this point must:

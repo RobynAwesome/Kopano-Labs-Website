@@ -9,21 +9,22 @@ type Product = {
   visible: Signal;
   backing: Signal;
   current: Signal;
+  connected: Signal;
   backingLabel: string;
 };
 
 const products: Product[] = [
-  { name: 'FiveS Arena', route: 'https://fivesarena.com', works: 'yes', visible: 'yes', backing: 'yes', current: 'yes', backingLabel: 'Hellenic FC backing' },
-  { name: 'KasiLink', route: 'https://kasilink.com', works: 'partial', visible: 'yes', backing: 'target', current: 'partial', backingLabel: 'Government backing target' },
-  { name: 'Cape Campus', route: '#', works: 'partial', visible: 'partial', backing: 'target', current: 'partial', backingLabel: 'Tourism backing target' },
-  { name: 'Starfall Salvage', route: 'https://starfallsalvage.kopanolabs.com', works: 'partial', visible: 'yes', backing: 'no', current: 'partial', backingLabel: 'Operations rework before investor push' },
-  { name: 'Cars4Mars', route: '/Cars4Mars/', works: 'partial', visible: 'yes', backing: 'partial', current: 'yes', backingLabel: 'Competition programme + physical build phase' },
+  { name: 'FiveS Arena', route: 'https://fivesarena.com', works: 'yes', visible: 'yes', backing: 'yes', current: 'yes', connected: 'yes', backingLabel: 'Hellenic FC backing' },
+  { name: 'KasiLink', route: 'https://kasilink.com', works: 'partial', visible: 'yes', backing: 'target', current: 'partial', connected: 'partial', backingLabel: 'Government backing target' },
+  { name: 'Cape Campus', route: '#', works: 'partial', visible: 'partial', backing: 'target', current: 'partial', connected: 'target', backingLabel: 'Tourism backing target' },
+  { name: 'Starfall Salvage', route: 'https://starfallsalvage.kopanolabs.com', works: 'partial', visible: 'yes', backing: 'no', current: 'partial', connected: 'yes', backingLabel: 'Operations rework before investor push' },
+  { name: 'Cars4Mars', route: '/Cars4Mars/', works: 'partial', visible: 'yes', backing: 'partial', current: 'yes', connected: 'yes', backingLabel: 'Competition programme + physical build phase' },
 ];
 
 const score = (value: Signal) => value === 'yes' ? 2 : value === 'partial' ? 1 : 0;
 
 function classify(product: Product) {
-  const evidence = score(product.works) + score(product.visible) + score(product.backing) + score(product.current);
+  const evidence = score(product.works) + score(product.visible) + score(product.backing) + score(product.current) + score(product.connected);
   if (product.backing === 'yes' && product.works === 'yes' && product.visible === 'yes') return ['BACKED', 'validated'];
   if (product.works === 'partial' && product.current === 'partial') return ['REWORK', 'warning'];
   if (product.backing === 'target') return ['NEEDS BACKING', 'target'];
@@ -41,7 +42,7 @@ export function FOCMatrix() {
     <div className="foc-head">
       <span className="eyebrow">POC ↔ FOC</span>
       <h1>Validate the thing.<br/><em>Then amplify it.</em></h1>
-      <p>Working state, visibility, backing and recency are separate signals. No MVP gets promoted by presentation alone.</p>
+      <p>Working state, visibility, backing, recency and connectedness are separate signals. No MVP gets promoted by presentation alone.</p>
     </div>
 
     <div className="foc-groups">
@@ -51,7 +52,7 @@ export function FOCMatrix() {
     </div>
 
     <div className="foc-matrix" role="table" aria-label="Kopano Labs MVP FOC validation matrix">
-      <div className="foc-row foc-row-head" role="row"><b>PRODUCT</b><b>WORKS</b><b>VISIBLE</b><b>BACKING</b><b>CURRENT</b><b>STATE</b></div>
+      <div className="foc-row foc-row-head" role="row"><b>PRODUCT</b><b>WORKS</b><b>VISIBLE</b><b>BACKING</b><b>CURRENT</b><b>CONNECTED</b><b>STATE</b></div>
       {products.map((product) => {
         const [state, tone] = classify(product);
         return <a key={product.name} className={`foc-row ${tone}`} href={product.route} target={product.route.startsWith('http') ? '_blank' : undefined} rel={product.route.startsWith('http') ? 'noreferrer' : undefined} role="row">
@@ -60,6 +61,7 @@ export function FOCMatrix() {
           <i data-signal={product.visible}>{product.visible}</i>
           <i data-signal={product.backing}>{product.backing}</i>
           <i data-signal={product.current}>{product.current}</i>
+          <i data-signal={product.connected}>{product.connected}</i>
           <span>{state}</span>
         </a>;
       })}

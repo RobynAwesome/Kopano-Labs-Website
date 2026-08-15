@@ -16,6 +16,9 @@ jobs:
       - run: npm install
       - run: npm run build
 
+      - name: Verify Cars4Mars POC contract
+        run: npm run poc:verify
+
       - name: Verify August execution directive and source boundaries
         run: |
           test -f AGENTS.md

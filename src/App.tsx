@@ -4,6 +4,7 @@ import './adaptive.css';
 import { Cars4MarsMissionControl, type Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { FOCMatrix } from './components/FOCMatrix';
 import { KopanoScene } from './components/KopanoScene';
+import { MarsRoverScene } from './components/MarsRoverScene';
 import { RoverVisual } from './components/RoverVisual';
 import { SpatialDirectory } from './components/SpatialDirectory';
 import { SystemAtlas } from './components/SystemAtlas';
@@ -160,7 +161,7 @@ export function App() {
         {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><SystemAtlas/><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
         {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><KopanoScene/><img className="mars-campaign-figure" src="/assets/cars4mars/astronaut-campaign.svg" alt="Cars4Mars campaign concept artwork"/><RoverVisual className="mars-rover-visual"/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
+          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><MarsRoverScene/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
           <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)}/></div>
         </motion.section>}
 

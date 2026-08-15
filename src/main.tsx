@@ -12,6 +12,7 @@ import './foc.css';
 import './site-experience.css';
 import './system-atlas.css';
 import './visual-repair.css';
+import './cars4mars-simulation.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { getExperienceProfile } from '../experienceRuntime';
 import { createKPGSSceneContract, emitKPGSReceipt } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
+import { useKPGSVisibility } from '../useKPGSVisibility';
 import {
   evaluateGrade,
   evaluateScenario,
@@ -290,6 +291,7 @@ export function MarsRoverScene({ view = 'cars4mars' }: { view?: View }) {
   const sceneContract = useMemo(() => createKPGSSceneContract(view, profile, 'mars'), [profile, view]);
   const lite = sceneContract.runtime.tier === 'lite';
   const animate = sceneContract.runtime.animate;
+  const visible = useKPGSVisibility();
   const controls = useRef<DriveInput>({ throttle: 0, steer: 0, reset: 0 });
   const [telemetry, setTelemetry] = useState<Telemetry>({ speed: 0, heading: 344, suspension: 0 });
   const [contract, setContract] = useState<SimulationContract | null>(null);
@@ -340,7 +342,7 @@ export function MarsRoverScene({ view = 'cars4mars' }: { view?: View }) {
   const currentState = evaluation?.frame.state ?? (selectedId === 'manual' ? 'human_operator_ready' : 'loading_model');
 
   return <div className="mars-rover-scene" data-kpgs-scene={sceneContract.scene.id} data-kpgs-tier={sceneContract.runtime.tier} data-kpgs-budget={sceneContract.budget.maxDrawCalls} aria-label="Interactive Cars4Mars rover engineering simulation">
-    <Canvas dpr={sceneContract.budget.dpr} shadows={!lite} frameloop={sceneContract.runtime.animate ? 'always' : 'demand'} camera={{ position: [4.8, 3.25, 6.35], fov: 42, near: 0.1, far: 40 }} gl={{ antialias: !lite, alpha: true, powerPreference: sceneContract.runtime.tier === 'full' ? 'high-performance' : 'default' }} onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.08; }}>
+    <Canvas dpr={sceneContract.budget.dpr} shadows={!lite} frameloop={sceneContract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [4.8, 3.25, 6.35], fov: 42, near: 0.1, far: 40 }} gl={{ antialias: !lite, alpha: true, powerPreference: sceneContract.runtime.tier === 'full' ? 'high-performance' : 'default' }} onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.08; }}>
       <fog attach="fog" args={['#230d09', 7, 17]} />
       <hemisphereLight intensity={1.2} color="#ffe2bb" groundColor="#32120b" />
       <directionalLight position={[4.5, 7, 3]} intensity={3.4} color="#ffd39b" castShadow={!lite} />

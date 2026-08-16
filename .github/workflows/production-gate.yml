@@ -35,12 +35,12 @@ jobs:
           grep -q 'RobynAwesome/cars4mars-landingpage' AGENTS.md
           grep -q 'WORKING → CONNECTED → CURRENT → VISIBLE → EVIDENCED → BACKABLE' docs/AUGUST_2026_EXECUTION_DIRECTIVE.md
 
-      - name: Verify canonical production source
+      - name: Verify canonical production source remains owner-gated
         run: |
-          node -e "const r=require('./public/release.json'); if(r.canonical_source_repository!=='RobynAwesome/Kopano-Labs-Website') process.exit(1)"
-          node -e "const g=require('./public/governance.json'); if(g.canonical_source_repository!=='RobynAwesome/Kopano-Labs-Website') process.exit(1)"
-          grep -q 'Canonical GitHub production source' IMPLEMENTATION_ORDER.md
-          grep -q 'canonical GitHub production repository' canonical.md
+          node -e "const r=require('./public/release.json'); if(r.canonical_source_repository!==null) process.exit(1); if(r.deployment_source_observed!=='RobynAwesome/Kopano-Labs-Website') process.exit(1)"
+          node -e "const g=require('./public/governance.json'); if(g.canonical_source_repository!==null) process.exit(1); if(g.deployment_source_observed!=='RobynAwesome/Kopano-Labs-Website') process.exit(1)"
+          grep -q 'Canonical GitHub production source: owner-gated / not yet established' IMPLEMENTATION_ORDER.md
+          grep -q 'Canonical GitHub production source: owner-gated / not yet established' canonical.md
 
       - name: Verify TypeScript 7 toolchain
         run: |

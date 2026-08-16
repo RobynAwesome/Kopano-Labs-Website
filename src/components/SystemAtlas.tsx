@@ -1,9 +1,12 @@
 import { Float, Line, OrbitControls, Sparkles } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { getExperienceProfile, type ExperienceProfile } from '../experienceRuntime';
+import { getExperienceProfile } from '../experienceRuntime';
+import { createKPGSSceneContract, emitKPGSReceipt, type KPGSSceneContract } from '../kpgsSceneContract';
+import type { View } from '../routeRegistry';
+import { useKPGSVisibility } from '../useKPGSVisibility';
 import { FivesArenaFeed } from './FivesArenaFeed';
 
 export type SystemSceneId = 'context' | 'fives' | 'kasilink' | 'crisis' | 'starfall' | 'mars';
@@ -84,22 +87,27 @@ function MarsRig({ animate, lite }: SceneMotionProps) {
   return <group ref={rover} rotation={[0,-.35,0]}><mesh position={[0,.15,0]}><boxGeometry args={[1.65,.38,1]}/><meshStandardMaterial color="#d6a84c" metalness={.52} roughness={.4}/></mesh>{[-.72,0,.72].flatMap((x)=>[-.62,.62].map((z)=><mesh key={`${x}-${z}`} position={[x,-.12,z]} rotation={[Math.PI/2,0,0]}><cylinderGeometry args={[.22,.22,.15,lite ? 10 : 18]}/><meshStandardMaterial color="#1c2228" roughness={.8}/></mesh>))}<mesh position={[0,.72,0]}><cylinderGeometry args={[.08,.08,.85,lite ? 8 : 12]}/><meshStandardMaterial color="#b9c6ce" metalness={.72}/></mesh><mesh position={[0,1.15,0]}><boxGeometry args={[.48,.24,.18]}/><meshStandardMaterial color="#242f38" metalness={.58}/></mesh></group>;
 }
 
-function World({ id, profile }: { id: SystemSceneId; profile: ExperienceProfile }) {
-  const animate = !profile.reducedMotion && !profile.saveData;
-  const lite = profile.tier === 'lite';
+function World({ id, contract }: { id: SystemSceneId; contract: KPGSSceneContract }) {
+  const animate = contract.runtime.animate;
+  const lite = contract.runtime.tier === 'lite';
   const sceneProps = { animate, lite };
-  const sparkles = profile.tier === 'full' ? 28 : profile.tier === 'balanced' ? 12 : 0;
-  return <><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={profile.tier === 'full' ? 2.8 : 2.1} color="#ffd38b"/><pointLight position={[-4,-2,3]} intensity={profile.tier === 'full' ? 13 : 8} distance={10} color="#63d5ff"/>{id === 'fives' && <FootballField {...sceneProps}/>}{id === 'context' && <ContextMesh {...sceneProps}/>}{id === 'kasilink' && <KasiNetwork {...sceneProps}/>}{id === 'crisis' && <CrisisRadar {...sceneProps}/>}{id === 'starfall' && <StarfallField {...sceneProps}/>}{id === 'mars' && <MarsRig {...sceneProps}/>} {animate && sparkles > 0 && <Sparkles count={sparkles} scale={[6,4,3]} size={1.1} speed={profile.tier === 'full' ? .16 : .08} color="#bfefff"/>}</>;
+  const sparkles = contract.budget.sparkles;
+  return <><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={contract.runtime.tier === 'full' ? 2.8 : 2.1} color="#ffd38b"/><pointLight position={[-4,-2,3]} intensity={contract.runtime.tier === 'full' ? 13 : 8} distance={10} color="#63d5ff"/>{id === 'fives' && <FootballField {...sceneProps}/>}{id === 'context' && <ContextMesh {...sceneProps}/>}{id === 'kasilink' && <KasiNetwork {...sceneProps}/>}{id === 'crisis' && <CrisisRadar {...sceneProps}/>}{id === 'starfall' && <StarfallField {...sceneProps}/>}{id === 'mars' && <MarsRig {...sceneProps}/>} {animate && sparkles > 0 && <Sparkles count={sparkles} scale={[6,4,3]} size={1.1} speed={contract.runtime.tier === 'full' ? .16 : .08} color="#bfefff"/>}</>;
 }
 
-export function SystemAtlas({ compact = false }: { compact?: boolean }) {
+export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: boolean; view?: View }) {
   const [active, setActive] = useState<SystemSceneId>('fives');
   const profile = useMemo(() => getExperienceProfile(), []);
   const selected = systems.find((system)=>system.id === active) ?? systems[0];
-  const dpr: number | [number, number] = profile.tier === 'full' ? [1,1.45] : profile.tier === 'balanced' ? [1,1.2] : 1;
-  return <section className={`system-atlas ${compact ? 'compact' : ''}`} data-experience-tier={profile.tier} aria-label="Interactive Kopano Labs systems atlas">
+  const contract = useMemo(() => createKPGSSceneContract(view, profile, active), [active, profile, view]);
+  const visible = useKPGSVisibility();
+
+  useEffect(() => {
+    emitKPGSReceipt(contract, 'scene_selected', { particle_count: contract.budget.particleCount });
+  }, [contract]);
+  return <section className={`system-atlas ${compact ? 'compact' : ''}`} data-experience-tier={contract.runtime.tier} data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} data-kpgs-budget={contract.budget.maxDrawCalls} aria-label="Interactive Kopano Labs systems atlas">
     <div className="atlas-heading"><div><span className="eyebrow">SPATIAL SYSTEMS ATLAS · INTERACTIVE</span><h2>Every system gets a world.</h2></div><p>Tap a live lane to change the scene. The visual form follows the product: pitch, network, radar, mesh, salvage field or rover.</p></div>
-    <div className="atlas-shell"><div className="atlas-stage" data-system={active}><Canvas dpr={dpr} frameloop={profile.reducedMotion || profile.saveData ? 'demand' : 'always'} camera={{position:[0,.4,5.6],fov:47}} gl={{antialias:profile.tier !== 'lite',alpha:true,powerPreference:profile.tier === 'full' ? 'high-performance' : 'default'}}><World id={active} profile={profile}/><OrbitControls enablePan={false} enableZoom={false} rotateSpeed={profile.tier === 'lite' ? .18 : .3} minPolarAngle={Math.PI*.28} maxPolarAngle={Math.PI*.72}/></Canvas><div className="atlas-stage-copy"><span>{selected.kicker}</span><h3>{selected.label}</h3><p>{selected.detail}</p><a href={selected.href} target={selected.href.startsWith('http')?'_blank':undefined} rel={selected.href.startsWith('http')?'noreferrer':undefined}>Open system ↗</a></div></div><div className="atlas-selector" role="list" aria-label="Choose a system scene">{systems.map((system,index)=><motion.button type="button" role="listitem" key={system.id} className={active===system.id?'active':''} onClick={()=>setActive(system.id)} whileHover={{x:4}}><span>{String(index+1).padStart(2,'0')}</span><div><strong>{system.label}</strong><small>{system.state}</small></div><b>↗</b></motion.button>)}</div></div>
+    <div className="atlas-shell"><div className="atlas-stage" data-system={active} data-kpgs-intent={contract.route.intentClass}><Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{position:[0,.4,5.6],fov:47}} gl={{antialias:contract.runtime.tier !== 'lite',alpha:true,powerPreference:contract.runtime.tier === 'full' ? 'high-performance' : 'default'}}><World id={active} contract={contract}/><OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} rotateSpeed={contract.runtime.tier === 'lite' ? .18 : .3} minPolarAngle={Math.PI*.28} maxPolarAngle={Math.PI*.72}/></Canvas><div className="atlas-stage-copy"><span>{selected.kicker}</span><h3>{selected.label}</h3><p>{selected.detail}</p><a href={selected.href} target={selected.href.startsWith('http')?'_blank':undefined} rel={selected.href.startsWith('http')?'noreferrer':undefined}>Open system ↗</a></div></div><div className="atlas-selector" role="list" aria-label="Choose a system scene">{systems.map((system,index)=><motion.button type="button" role="listitem" key={system.id} className={active===system.id?'active':''} onClick={()=>setActive(system.id)} whileHover={{x:4}}><span>{String(index+1).padStart(2,'0')}</span><div><strong>{system.label}</strong><small>{system.state}</small></div><b>↗</b></motion.button>)}</div></div>
     {active === 'fives' && <FivesArenaFeed/>}
   </section>;
 }

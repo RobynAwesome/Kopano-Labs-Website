@@ -1,5 +1,7 @@
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { applyKPGSRootAttributes, createKPGSSceneContract } from './kpgsSceneContract';
+import { viewForPath, type View } from './routeRegistry';
 
 type Connection = { saveData?: boolean; effectiveType?: string };
 type NavigatorWithConnection = Navigator & { connection?: Connection; deviceMemory?: number };
@@ -46,6 +48,12 @@ export function getExperienceProfile(): ExperienceProfile {
   return { tier, reducedMotion, saveData, effectiveType, cores, memory, narrow };
 }
 
+export function syncKPGSRuntime(view: View, profile = getExperienceProfile()) {
+  const contract = createKPGSSceneContract(view, profile);
+  applyKPGSRootAttributes(contract);
+  return contract;
+}
+
 export function startExperienceRuntime() {
   if (typeof window === 'undefined') return () => undefined;
 
@@ -56,7 +64,14 @@ export function startExperienceRuntime() {
   root.dataset.saveData = profile.saveData ? 'true' : 'false';
   root.dataset.network = profile.effectiveType;
 
-  if (profile.reducedMotion || profile.saveData) return () => undefined;
+  const syncRoute = () => {
+    syncKPGSRuntime(viewForPath(location.pathname), profile);
+  };
+  syncRoute();
+  window.addEventListener('popstate', syncRoute);
+
+  const cleanupRoute = () => window.removeEventListener('popstate', syncRoute);
+  if (profile.reducedMotion || profile.saveData) return cleanupRoute;
 
   gsap.registerPlugin(ScrollTrigger);
   const context = gsap.context(() => {
@@ -81,6 +96,7 @@ export function startExperienceRuntime() {
   });
 
   return () => {
+    cleanupRoute();
     context.revert();
     ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
   };

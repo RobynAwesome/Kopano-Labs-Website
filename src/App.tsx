@@ -1,6 +1,8 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import './adaptive.css';
+import { emitKPGSReceipt } from './kpgsSceneContract';
+import { syncKPGSRuntime } from './experienceRuntime';
 import { Cars4MarsMissionControl, type Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { FOCMatrix } from './components/FOCMatrix';
 import { KopanoScene } from './components/KopanoScene';
@@ -77,6 +79,8 @@ export function App() {
 
   useEffect(() => {
     const route = routeForView(view);
+    const contract = syncKPGSRuntime(view);
+    emitKPGSReceipt(contract, 'route_activated', { path: route.path });
     const canonical = canonicalForView(view);
     document.title = route.title;
     setMeta('meta[name="description"]', 'content', route.description);
@@ -102,7 +106,7 @@ export function App() {
 
   const filteredExperiments = experiments.filter((item) => item.join(' ').toLowerCase().includes(query.toLowerCase()));
 
-  return <div className="app-shell">
+  return <div className="app-shell" data-kpgs-route={view}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/>
     <header className="topbar">
@@ -129,10 +133,10 @@ export function App() {
               <p className="studio-principle">Realism accommodates aesthetics; sovereignty accommodates both.</p>
               <div className="hero-actions"><button className="primary" onClick={() => navigate('systems')}>Enter the systems</button><button className="secondary" onClick={() => navigate('labs')}>Explore the labs</button></div>
             </motion.div>
-            <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><KopanoScene/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="football, jobs, crisis, rover, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
+            <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><KopanoScene view={view}/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="football, jobs, crisis, rover, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
           </div>
 
-          <SystemAtlas compact/>
+          <SystemAtlas compact view={view}/>
 
           <motion.div className="studio-intro" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
             <div><span className="eyebrow">KOPANO ECOSYSTEM</span><h2>Different problems. One engineering discipline.</h2></div>
@@ -158,10 +162,10 @@ export function App() {
 
         {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
 
-        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><SystemAtlas/><SpatialDirectory items={systems} kind="system"/></motion.section>}
+        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><SystemAtlas view={view}/><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
         {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><MarsRoverScene/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
+          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><MarsRoverScene view={view}/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
           <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)}/></div>
         </motion.section>}
 

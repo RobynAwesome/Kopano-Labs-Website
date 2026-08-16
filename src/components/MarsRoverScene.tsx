@@ -3,6 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { getExperienceProfile } from '../experienceRuntime';
+import { createKPGSSceneContract, emitKPGSReceipt } from '../kpgsSceneContract';
+import type { View } from '../routeRegistry';
+import { useKPGSVisibility } from '../useKPGSVisibility';
 import {
   evaluateGrade,
   evaluateScenario,
@@ -283,10 +286,12 @@ function sensitivityAsGrade(scenario: SimulationScenario, torque: number, effici
   return { ...scenario, id: `${scenario.id}:${torque}:${efficiency}:${traction}`, kind: 'grade', visual_status: summary.traction_limited ? 'TRACTION-LIMITED' : summary.status.toUpperCase().replaceAll('_', ' '), parameters };
 }
 
-export function MarsRoverScene() {
+export function MarsRoverScene({ view = 'cars4mars' }: { view?: View }) {
   const profile = useMemo(() => getExperienceProfile(), []);
-  const lite = profile.tier === 'lite';
-  const animate = !profile.reducedMotion && !profile.saveData;
+  const sceneContract = useMemo(() => createKPGSSceneContract(view, profile, 'mars'), [profile, view]);
+  const lite = sceneContract.runtime.tier === 'lite';
+  const animate = sceneContract.runtime.animate;
+  const visible = useKPGSVisibility();
   const controls = useRef<DriveInput>({ throttle: 0, steer: 0, reset: 0 });
   const [telemetry, setTelemetry] = useState<Telemetry>({ speed: 0, heading: 344, suspension: 0 });
   const [contract, setContract] = useState<SimulationContract | null>(null);
@@ -295,8 +300,6 @@ export function MarsRoverScene() {
   const [scenarioRevision, setScenarioRevision] = useState(0);
   const [evaluation, setEvaluation] = useState<SimulationEvaluation | null>(null);
   const [sensitivity, setSensitivity] = useState({ torque: 32.5, efficiency: 0.8, traction: 0.8 });
-  const dpr: number | [number, number] = profile.tier === 'full' ? [1, 1.5] : profile.tier === 'balanced' ? [1, 1.2] : 1;
-
   useEffect(() => {
     const controller = new AbortController();
     loadSimulationContract(controller.signal).then(setContract).catch((error: unknown) => {
@@ -304,6 +307,10 @@ export function MarsRoverScene() {
     });
     return () => controller.abort();
   }, []);
+
+  useEffect(() => {
+    emitKPGSReceipt(sceneContract, 'scene_mounted', { particle_count: sceneContract.budget.particleCount });
+  }, [sceneContract]);
 
   const selectedScenario = useMemo(() => contract?.scenarios.find((scenario) => scenario.id === selectedId) ?? null, [contract, selectedId]);
   const activeScenario = useMemo(() => {
@@ -334,8 +341,8 @@ export function MarsRoverScene() {
   const motorEnabled = evaluation?.frame.motor_enable ?? false;
   const currentState = evaluation?.frame.state ?? (selectedId === 'manual' ? 'human_operator_ready' : 'loading_model');
 
-  return <div className="mars-rover-scene" aria-label="Interactive Cars4Mars rover engineering simulation">
-    <Canvas dpr={dpr} shadows={!lite} frameloop={profile.reducedMotion || profile.saveData ? 'demand' : 'always'} camera={{ position: [4.8, 3.25, 6.35], fov: 42, near: 0.1, far: 40 }} gl={{ antialias: !lite, alpha: true, powerPreference: profile.tier === 'full' ? 'high-performance' : 'default' }} onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.08; }}>
+  return <div className="mars-rover-scene" data-kpgs-scene={sceneContract.scene.id} data-kpgs-tier={sceneContract.runtime.tier} data-kpgs-budget={sceneContract.budget.maxDrawCalls} aria-label="Interactive Cars4Mars rover engineering simulation">
+    <Canvas dpr={sceneContract.budget.dpr} shadows={!lite} frameloop={sceneContract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [4.8, 3.25, 6.35], fov: 42, near: 0.1, far: 40 }} gl={{ antialias: !lite, alpha: true, powerPreference: sceneContract.runtime.tier === 'full' ? 'high-performance' : 'default' }} onCreated={({ gl }) => { gl.toneMapping = THREE.ACESFilmicToneMapping; gl.toneMappingExposure = 1.08; }}>
       <fog attach="fog" args={['#230d09', 7, 17]} />
       <hemisphereLight intensity={1.2} color="#ffe2bb" groundColor="#32120b" />
       <directionalLight position={[4.5, 7, 3]} intensity={3.4} color="#ffd39b" castShadow={!lite} />
@@ -343,7 +350,7 @@ export function MarsRoverScene() {
       <MarsTerrain lite={lite} />
       <SimulationRamp visible={Boolean(isGrade)} lite={lite} />
       <RoverRig controls={controls} lite={lite} animate={animate} scenario={activeScenario} scenarioRevision={scenarioRevision} onTelemetry={updateTelemetry} onSimulation={updateSimulation} />
-      {animate && <Sparkles count={profile.tier === 'full' ? 42 : 18} scale={[9, 3.8, 9]} size={0.9} speed={0.16} color="#ffbd82" />}
+      {sceneContract.budget.sparkles > 0 && <Sparkles count={sceneContract.budget.sparkles} scale={[9, 3.8, 9]} size={0.9} speed={animate ? 0.16 : 0} color="#ffbd82" />}
       <OrbitControls makeDefault enablePan={false} enableDamping dampingFactor={0.08} minDistance={4.2} maxDistance={9.2} minPolarAngle={Math.PI * 0.18} maxPolarAngle={Math.PI * 0.48} target={[0, 0.8, 0]} rotateSpeed={0.38} zoomSpeed={0.55} />
     </Canvas>
 

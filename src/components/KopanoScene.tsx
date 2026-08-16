@@ -5,6 +5,7 @@ import * as THREE from 'three';
 import { createKPGSSceneContract, emitKPGSReceipt, type KPGSSceneContract } from '../kpgsSceneContract';
 import { getExperienceProfile } from '../experienceRuntime';
 import type { View } from '../routeRegistry';
+import { useKPGSVisibility } from '../useKPGSVisibility';
 
 const nodes: [number, number, number][] = [
   [-2.15, .9, .1], [-1.75, -.8, .45], [-.55, 1.35, -.25],
@@ -56,13 +57,14 @@ function World({ contract }: { contract: KPGSSceneContract }) {
 export function KopanoScene({ view = 'home' }: { view?: View }) {
   const profile = useMemo(() => getExperienceProfile(), []);
   const contract = useMemo(() => createKPGSSceneContract(view, profile, 'home'), [profile, view]);
+  const visible = useKPGSVisibility();
 
   useEffect(() => {
     emitKPGSReceipt(contract, 'scene_mounted', { particle_count: contract.budget.particleCount });
   }, [contract]);
 
   return <div className="kopano-scene" data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} aria-label="Interactive Kopano spatial systems map">
-    <Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate ? 'always' : 'demand'} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: !contract.runtime.tier.startsWith('lite'), alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}>
+    <Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: !contract.runtime.tier.startsWith('lite'), alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}>
       <World contract={contract} />
       <OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} minPolarAngle={Math.PI * .36} maxPolarAngle={Math.PI * .64} rotateSpeed={.25} />
     </Canvas>

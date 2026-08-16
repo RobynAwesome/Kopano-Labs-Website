@@ -120,7 +120,7 @@ export function App() {
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
         <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
-        <NavButton id="foc" active={primaryView} onClick={navigate}>FOC</NavButton>
+        <NavButton id="foc" active={primaryView} onClick={navigate}>Evidence gate</NavButton>
         <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
       </nav>
       <a className="source-pill" href="/release.json">Live state ↗</a>

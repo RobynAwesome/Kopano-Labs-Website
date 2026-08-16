@@ -108,7 +108,7 @@ export function SiteExperience() {
       <header className="content-estate-head"><a href="/" className="content-back" onClick={(event) => navigateInternal(event, '/')}>← Kopano Labs</a><span className="eyebrow">CONTENT + PUBLIC ESTATE</span><h1>Everything connects.<br/><em>Nothing gets flattened.</em></h1><p>Projects, systems, experiments and public surfaces stay distinct. Repository labels are shown only where they are explicitly established; Main Brain governs architecture while each product keeps its own source lineage.</p></header>
       <RouteExperienceSurface view="content"/>
       <main className="content-estate-grid">
-        {estate.map((item, index) => <motion.a key={item.title} className="content-estate-card" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined} initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:index*.045}} whileHover={{y:-8,scale:1.01}}>
+        {estate.map((item, index) => <motion.a key={item.title} className="content-estate-card" href={item.href} onClick={(event) => navigateInternal(event, item.href)} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined} initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:index*.045}} whileHover={{y:-8,scale:1.01}}>
           <div className="content-estate-image"><img src={item.image} alt=""/></div><div className="content-estate-copy"><span>{item.kind}</span><h2>{item.title}</h2><p>{item.note}</p><code>{item.repo}</code></div><b className="content-estate-arrow">↗</b>
         </motion.a>)}
       </main>

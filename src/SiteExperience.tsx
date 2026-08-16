@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 type ThemeMode = 'light' | 'dark' | 'crazy';
 
 const estate = [
-  { title: 'Kopano Labs', kind: 'Primary studio', href: 'https://KopanoLabs.com', repo: 'RobynAwesome/Kopano-Labs-Website', image: '/assets/brand/kopano-mark.svg', note: 'Canonical production source for the systems studio, proof surfaces, public experiments and shared interactive atlas.' },
+  { title: 'Kopano Labs', kind: 'Primary studio', href: 'https://KopanoLabs.com', repo: 'RobynAwesome/Kopano-Labs-Website', image: '/assets/brand/kopano-mark.svg', note: 'Observed implementation/deployment source for the systems studio, proof surfaces, public experiments and shared interactive atlas. Canonical production-source authority remains owner-gated.' },
   { title: 'FiveS Arena', kind: 'Community infrastructure', href: 'https://FivesArena.com', repo: 'RobynAwesome/Bookit-5s-Arena', image: '/assets/brand/kopano-mark.svg', note: 'Football booking, live fixture APIs, competition and participation infrastructure.' },
   { title: 'KasiLink', kind: 'Opportunity network', href: 'https://KasiLink.com', repo: 'Production source is governed separately', image: '/assets/brand/kopano-mark.svg', note: 'Local opportunity and service routing with a lower-data discovery lane.' },
   { title: 'CrisisConnect', kind: 'Field intelligence', href: 'https://crisisconnect.kopanolabs.com', repo: 'RobynAwesome/crisis-connect', image: '/assets/brand/kopano-mark.svg', note: 'Mobile-first crisis reporting, GPS evidence and telemetry.' },

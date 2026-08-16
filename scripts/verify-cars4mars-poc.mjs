@@ -1,4 +1,4 @@
-import { readFile, stat } from 'node:fs/promises';
+import { readFile } from 'node:fs/promises';
 
 const failures = [];
 
@@ -57,9 +57,11 @@ requireText('heartbeat model', simModel, 'command_timeout_ms');
 
 if (robots.includes('KOPANO_LABS.pdf') || sitemap.includes('KOPANO_LABS.pdf')) failures.push('retired report path leaked into crawl policy');
 
-for (const path of ['public/assets/cars4mars/rover-open-concept.png', 'public/assets/cars4mars/rover-field-concept.png']) {
-  try { const info = await stat(path); if (info.size < 1000) failures.push(`asset is empty or implausibly small: ${path}`); }
-  catch { failures.push(`missing asset: ${path}`); }
+for (const path of ['public/assets/cars4mars/rover-open-concept.jpg', 'public/assets/cars4mars/rover-field-concept.jpg']) {
+  try {
+    const bytes = await readFile(path);
+    if (bytes.length < 1000 || bytes[0] !== 0xff || bytes[1] !== 0xd8 || bytes.at(-2) !== 0xff || bytes.at(-1) !== 0xd9) failures.push('asset is not a valid JPEG: ' + path);
+  } catch { failures.push('missing asset: ' + path); }
 }
 
 if (failures.length) {

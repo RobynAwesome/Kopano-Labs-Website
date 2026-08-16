@@ -9,6 +9,7 @@ import { KopanoScene } from './components/KopanoScene';
 import { MarsRoverScene } from './components/MarsRoverScene';
 import { RoverVisual } from './components/RoverVisual';
 import { SpatialDirectory } from './components/SpatialDirectory';
+import { RouteExperienceSurface } from './components/RouteExperienceSurface';
 import { SystemAtlas } from './components/SystemAtlas';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
 
@@ -95,7 +96,10 @@ export function App() {
   const navigate = (next: View) => {
     setView(next);
     const path = pathForView(next);
-    if (location.pathname !== path) history.pushState({}, '', path);
+    if (location.pathname !== path) {
+      history.pushState({}, '', path);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -158,9 +162,9 @@ export function App() {
           <section className="next-public-strip"><span>UP NEXT</span><strong>Falling Walls Lab collaboration page</strong><strong>NICIS founder-in-action page</strong></section>
         </motion.section>}
 
-        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><FOCMatrix/></motion.section>}
+        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><RouteExperienceSurface view="foc"/><FOCMatrix/></motion.section>}
 
-        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
+        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><RouteExperienceSurface view="labs"/><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
 
         {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><SystemAtlas view={view}/><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
@@ -169,7 +173,7 @@ export function App() {
           <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)}/></div>
         </motion.section>}
 
-        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
+        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><RouteExperienceSurface view="proof"/><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
       </AnimatePresence>
     </main>
 

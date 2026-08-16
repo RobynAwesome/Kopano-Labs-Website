@@ -24,7 +24,7 @@ const links = [
   ['Labs', '/labs/'],
   ['Content', '/content/'],
   ['Cars4Mars', '/Cars4Mars/'],
-  ['FOC', '/FOC/'],
+  ['Evidence gate', '/FOC/'],
   ['Proof', '/proof/'],
 ] as const;
 
@@ -99,7 +99,7 @@ export function SiteExperience() {
     <AnimatePresence>
       {menuOpen && <motion.aside id="estate-menu" className="estate-menu" initial={{opacity:0,x:40}} animate={{opacity:1,x:0}} exit={{opacity:0,x:40}}>
         <div className="estate-menu-head"><img src="/assets/brand/kopano-mark.svg" alt=""/><div><strong>Kopano Labs</strong><small>Navigate the estate</small></div></div>
-        <nav>{links.map(([label, href], index) => <motion.a key={href} href={href} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:index*.035}}>{label}<b>↗</b></motion.a>)}</nav>
+        <nav>{links.map(([label, href], index) => <motion.a key={href} href={href} onClick={(event) => navigateInternal(event, href)} initial={{opacity:0,x:20}} animate={{opacity:1,x:0}} transition={{delay:index*.035}}>{label}<b>↗</b></motion.a>)}</nav>
         <a className="estate-source" href="https://github.com/Kopano-Labs/Introduction-to-MCP" target="_blank" rel="noreferrer">Main Brain governance ↗</a>
       </motion.aside>}
     </AnimatePresence>

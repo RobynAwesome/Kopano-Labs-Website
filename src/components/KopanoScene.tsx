@@ -7,6 +7,15 @@ import { getExperienceProfile } from '../experienceRuntime';
 import type { View } from '../routeRegistry';
 import { useKPGSVisibility } from '../useKPGSVisibility';
 
+const sceneLabels: Partial<Record<View, [string, string, string]>> = {
+  home: ['KOPANO MESH · KC FIRST', 'KC · LABS · MARS', 'REALITY → PROOF'],
+  labs: ['KC / KOPANO CONTEXT · LOCAL POC', 'INPUT · CLASSIFY · ROUTE', 'POC → EVIDENCE'],
+  systems: ['KOPANO SYSTEMS · ADAPTIVE', 'CONTEXT · FIVES · KASILINK', 'STATE → ROUTE → PROOF'],
+  foc: ['EVIDENCE GATE · REVIEW', 'WORKS · VISIBLE · BACKED', 'CLAIM → ARTIFACT'],
+  proof: ['PROOF MESH · SOURCE AWARE', 'SOURCE · STATE · ARTIFACT', 'LINEAGE → OWNERSHIP'],
+  content: ['PUBLIC ESTATE · NAVIGABLE', 'PROJECTS · SYSTEMS · ROUTES', 'LINEAGE → NEXT STEP'],
+};
+
 const nodes: [number, number, number][] = [
   [-2.15, .9, .1], [-1.75, -.8, .45], [-.55, 1.35, -.25],
   [.1, -1.15, .3], [2.45, 1.05, -.3], [1.7, -1.2, .2],
@@ -63,13 +72,14 @@ export function KopanoScene({ view = 'home' }: { view?: View }) {
     emitKPGSReceipt(contract, 'scene_mounted', { particle_count: contract.budget.particleCount });
   }, [contract]);
 
-  return <div className="kopano-scene" data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} aria-label="Interactive Kopano spatial systems map">
+  const labels = sceneLabels[view] ?? sceneLabels.home;
+  return <div className="kopano-scene" data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} aria-label={labels[0] + ' interactive spatial proof surface'}>
     <Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: !contract.runtime.tier.startsWith('lite'), alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}>
       <World contract={contract} />
       <OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} minPolarAngle={Math.PI * .36} maxPolarAngle={Math.PI * .64} rotateSpeed={.25} />
     </Canvas>
-    <div className="scene-label scene-label-a">KOPANO MESH · {contract.runtime.tier.toUpperCase()}</div>
-    <div className="scene-label scene-label-b">FIVES · KASILINK · CRISIS</div>
-    <div className="scene-label scene-label-c">REALITY → PROOF</div>
+    <div className="scene-label scene-label-a">{labels[0]}</div>
+    <div className="scene-label scene-label-b">{labels[1]}</div>
+    <div className="scene-label scene-label-c">{labels[2]}</div>
   </div>;
 }

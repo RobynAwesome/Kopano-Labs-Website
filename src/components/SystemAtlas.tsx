@@ -91,7 +91,7 @@ function World({ id, contract }: { id: SystemSceneId; contract: KPGSSceneContrac
   const lite = contract.runtime.tier === 'lite';
   const sceneProps = { animate, lite };
   const sparkles = contract.budget.sparkles;
-  return <><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={profile.tier === 'full' ? 2.8 : 2.1} color="#ffd38b"/><pointLight position={[-4,-2,3]} intensity={profile.tier === 'full' ? 13 : 8} distance={10} color="#63d5ff"/>{id === 'fives' && <FootballField {...sceneProps}/>}{id === 'context' && <ContextMesh {...sceneProps}/>}{id === 'kasilink' && <KasiNetwork {...sceneProps}/>}{id === 'crisis' && <CrisisRadar {...sceneProps}/>}{id === 'starfall' && <StarfallField {...sceneProps}/>}{id === 'mars' && <MarsRig {...sceneProps}/>} {animate && sparkles > 0 && <Sparkles count={sparkles} scale={[6,4,3]} size={1.1} speed={profile.tier === 'full' ? .16 : .08} color="#bfefff"/>}</>;
+  return <><ambientLight intensity={1.05}/><directionalLight position={[4,5,5]} intensity={contract.runtime.tier === 'full' ? 2.8 : 2.1} color="#ffd38b"/><pointLight position={[-4,-2,3]} intensity={contract.runtime.tier === 'full' ? 13 : 8} distance={10} color="#63d5ff"/>{id === 'fives' && <FootballField {...sceneProps}/>}{id === 'context' && <ContextMesh {...sceneProps}/>}{id === 'kasilink' && <KasiNetwork {...sceneProps}/>}{id === 'crisis' && <CrisisRadar {...sceneProps}/>}{id === 'starfall' && <StarfallField {...sceneProps}/>}{id === 'mars' && <MarsRig {...sceneProps}/>} {animate && sparkles > 0 && <Sparkles count={sparkles} scale={[6,4,3]} size={1.1} speed={contract.runtime.tier === 'full' ? .16 : .08} color="#bfefff"/>}</>;
 }
 
 export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: boolean; view?: View }) {

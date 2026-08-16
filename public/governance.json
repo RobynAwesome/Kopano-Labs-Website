@@ -1,7 +1,7 @@
 {
   "schema": "kopano-labs-production-governance/v3",
   "site": "https://KopanoLabs.com",
-  "canonical_source_repository": "RobynAwesome/Kopano-Labs-Website",
+  "canonical_source_repository": null,
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
   "stateless_renter": {

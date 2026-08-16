@@ -1,7 +1,7 @@
 {
   "site": "Kopano Labs",
   "domain": "https://KopanoLabs.com",
-  "canonical_source_repository": "RobynAwesome/Kopano-Labs-Website",
+  "canonical_source_repository": null,
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
   "source_authority": "Kopano-Labs/Introduction-to-MCP",
   "governance": {

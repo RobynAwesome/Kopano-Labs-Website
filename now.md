@@ -307,7 +307,7 @@ Any Forge/window arriving after this point must:
 
 ## [WEBSITE_SURFACE_CONVERGENCE] Immersive public routes and asset truth (2026-08-16)
 
-**Status:** implemented on `agent/kpgs-spatial-conductor`; awaiting preview/browser verification.
+**Status:** Vercel + GitHub production gates verified on `agent/kpgs-spatial-conductor`; visual browser capture remains environment-blocked because no browser executable is installed.
 
 **Current truth:**
 
@@ -318,3 +318,11 @@ Any Forge/window arriving after this point must:
 - The build now validates raster signatures and PNG CRCs before compiling, and the convergence gate checks that each public route family has an immersive surface.
 
 **Boundary:** design references remain design references; spatial POCs do not advance physical validation or prove deployment ownership.
+
+
+**Verification receipt (2026-08-16):**
+
+- Vercel READY: `dpl_7ShnJmnr6hmVQv1H1y35VhVSy4mM` · branch preview `kopano-labs-ixefc3r6q-robynawesomes-projects.vercel.app`.
+- GitHub production gate: run `31954297636` SUCCESS.
+- Build gates: public asset CRC/signature validation, TypeScript, route shell generation, convergence and Cars4Mars POC all PASS.
+- Browser visual capture: blocked in this runtime; no claim of screenshot-level visual verification is recorded.

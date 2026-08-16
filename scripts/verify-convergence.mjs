@@ -15,11 +15,19 @@ for (const file of mustExist) {
 
 const appSource = await readFile(new URL('../src/App.tsx', import.meta.url), 'utf8');
 const siteExperienceSource = await readFile(new URL('../src/SiteExperience.tsx', import.meta.url), 'utf8');
+const routeSurfaceSource = await readFile(new URL('../src/components/RouteExperienceSurface.tsx', import.meta.url), 'utf8');
+const kcWorkbenchSource = await readFile(new URL('../src/components/KopanoContextWorkbench.tsx', import.meta.url), 'utf8');
+const focSource = await readFile(new URL('../src/components/FOCMatrix.tsx', import.meta.url), 'utf8');
+const systemAtlasSource = await readFile(new URL('../src/components/SystemAtlas.tsx', import.meta.url), 'utf8');
 for (const expected of ['RouteExperienceSurface view="labs"', 'RouteExperienceSurface view="foc"', 'RouteExperienceSurface view="proof"']) {
   if (!appSource.includes(expected)) throw new Error('Convergence gate: missing immersive route surface ' + expected);
 }
 if (!siteExperienceSource.includes('RouteExperienceSurface view="content"')) throw new Error('Convergence gate: content estate has no spatial surface');
 if (!siteExperienceSource.includes("addEventListener('popstate'")) throw new Error('Convergence gate: content route does not sync after SPA navigation');
+if (!routeSurfaceSource.includes('<KopanoContextWorkbench />')) throw new Error('Convergence gate: Labs has no visible KC workbench');
+if (!kcWorkbenchSource.includes('LOCAL KC REHEARSAL ≠ OWNER-READY KC RUNTIME')) throw new Error('Convergence gate: KC truth boundary missing');
+if (focSource.includes('FAKE OF CONCEPT') || focSource.includes('FREEDOM OF CONCEPT') || focSource.includes('foc-groups')) throw new Error('Convergence gate: retired FOC groups leaked into the public surface');
+if (!systemAtlasSource.includes("useState<SystemSceneId>('context')")) throw new Error('Convergence gate: KC is not the default systems world');
 
 const index = await readFile(new URL('index.html', root), 'utf8');
 if (!/assets\/.*\.js/.test(index)) throw new Error('Convergence gate: Vite JS bundle missing from dist/index.html');

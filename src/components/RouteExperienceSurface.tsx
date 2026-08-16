@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import type { View } from '../routeRegistry';
+import { KopanoContextWorkbench } from './KopanoContextWorkbench';
 import { KopanoScene } from './KopanoScene';
 
 type SurfaceDefinition = {
@@ -13,20 +14,20 @@ type SurfaceDefinition = {
 
 const surfaces: Partial<Record<View, SurfaceDefinition>> = {
   labs: {
-    eyebrow: 'LABS · INTERACTION CONTRACT',
-    title: 'Every experiment gets a bounded first move.',
-    description: 'The route is a small working surface: choose a need, see a local response, then decide what evidence is required before the idea becomes a promise.',
-    stage: 'INPUT → RESPONSE → EVIDENCE',
-    boundary: 'INTERACTION ≠ SYSTEM VALIDATION',
-    signals: [['INPUT', 'One need, problem or goal'], ['MODE', 'Local interaction first'], ['GATE', 'Claim only after evidence']],
+    eyebrow: 'LABS · KC LOCAL REHEARSAL',
+    title: 'Make the orchestration visible.',
+    description: 'Labs is a working surface, not a gallery. Enter one need, watch KC classify the lane, then inspect the boundary before the next promise is made.',
+    stage: 'INPUT → CLASSIFY → ROUTE → EVIDENCE',
+    boundary: 'LOCAL REHEARSAL ≠ PRODUCTION ORCHESTRATION',
+    signals: [['OWNER', 'KC / Cassy governance lane'], ['MODE', 'Browser-local first move'], ['GATE', 'Evidence before claim']],
   },
   foc: {
-    eyebrow: 'FOC · PROMOTION GATE',
-    title: 'Validation is a living system, not a scorecard.',
-    description: 'The matrix stays inspectable while the spatial layer keeps the meaning visible: a product must work, be seen, have backing, stay current and remain connected.',
-    stage: 'WORKS · VISIBLE · BACKED',
+    eyebrow: 'FOC · EVIDENCE GATE',
+    title: 'One contract. No theatre.',
+    description: 'This review surface keeps the state legible: inspect what works, what is visible, who backs it, how current it is and what it connects to. FOC groups are out; evidence stays.',
+    stage: 'INPUT → REVIEW → GATE',
     boundary: 'PRESENTATION ≠ VALIDATION',
-    signals: [['WORKS', 'Does the thing function?'], ['VISIBLE', 'Can the public inspect it?'], ['BACKING', 'Who makes it real?']],
+    signals: [['WORKS', 'Does the thing function?'], ['EVIDENCE', 'Can the artifact be inspected?'], ['OWNER', 'Who carries the next move?']],
   },
   proof: {
     eyebrow: 'PROOF · SOURCE LINEAGE',
@@ -69,6 +70,7 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
           <small>Pointer response follows route intent. Motion pauses when the page is hidden or reduced.</small>
         </motion.div>
       </div>
+      {view === 'labs' && <KopanoContextWorkbench />}
     </section>
   );
 }

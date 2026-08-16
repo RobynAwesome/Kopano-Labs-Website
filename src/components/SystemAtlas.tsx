@@ -26,7 +26,7 @@ type SceneMotionProps = {
 };
 
 const systems: readonly SystemDefinition[] = [
-  { id: 'context', label: 'Kopano Context', kicker: 'ORCHESTRATION', detail: 'Agent mesh, routing and proof-aware coordination.', href: 'https://kopanocontext.kopanolabs.com', state: 'RESERVED / OWNER GATE' },
+  { id: 'context', label: 'Kopano Context', kicker: 'ORCHESTRATION', detail: 'Agent mesh, routing and proof-aware coordination.', href: 'https://kopanocontext.kopanolabs.com', state: 'KC POC / OWNER GATE' },
   { id: 'fives', label: 'FiveS Arena', kicker: 'COMMUNITY INFRASTRUCTURE', detail: 'Live football, booking, fixtures and competition systems.', href: 'https://fivesarena.com', state: 'LIVE' },
   { id: 'kasilink', label: 'KasiLink', kicker: 'OPPORTUNITY NETWORK', detail: 'Township opportunity, service discovery and low-data routing.', href: 'https://kasilink.com', state: 'LIVE' },
   { id: 'crisis', label: 'CrisisConnect', kicker: 'FIELD INTELLIGENCE', detail: 'GPS-anchored reporting, telemetry and resilient field evidence.', href: 'https://crisisconnect.kopanolabs.com', state: 'PUBLIC LANE' },
@@ -96,7 +96,7 @@ function World({ id, contract }: { id: SystemSceneId; contract: KPGSSceneContrac
 }
 
 export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: boolean; view?: View }) {
-  const [active, setActive] = useState<SystemSceneId>('fives');
+  const [active, setActive] = useState<SystemSceneId>('context');
   const profile = useMemo(() => getExperienceProfile(), []);
   const selected = systems.find((system)=>system.id === active) ?? systems[0];
   const contract = useMemo(() => createKPGSSceneContract(view, profile, active), [active, profile, view]);

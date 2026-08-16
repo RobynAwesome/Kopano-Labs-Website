@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-
 type Signal = 'yes' | 'partial' | 'no' | 'target';
 
 type Product = {
@@ -32,30 +30,29 @@ function classify(product: Product) {
   return ['BUILDING', 'building'];
 }
 
-const focGroups = [
-  ['FAKE OF CONCEPT', 'Claim surface outruns current evidence. The fix is not more copy; it is evidence, working state, backing or visible proof.'],
-  ['FREEDOM OF CONCEPT', 'Agency is allowed, but freedom is never consequence-free. Actions remain governed by evidence, ownership and downstream effect.'],
+const reviewContract = [
+  ['01', 'WORKS', 'The user can complete a meaningful first move.'],
+  ['02', 'VISIBLE', 'The public can inspect the current state and artifact.'],
+  ['03', 'BACKED', 'An owner, source or next physical gate is named.'],
 ] as const;
 
 export function FOCMatrix() {
   return <section className="foc-surface">
     <div className="foc-head">
-      <span className="eyebrow">POC ↔ FOC</span>
-      <h1>Validate the thing.<br/><em>Then amplify it.</em></h1>
-      <p>Working state, visibility, backing, recency and connectedness are separate signals. No MVP gets promoted by presentation alone.</p>
+      <span className="eyebrow">FOC · EVIDENCE GATE</span>
+      <h1>Make the state legible.<br/><em>Then make the claim.</em></h1>
+      <p>This is one review contract for public work. It is not a group directory, a popularity score or proof by presentation alone.</p>
     </div>
 
-    <div className="foc-groups">
-      {focGroups.map(([name, rule], index) => <motion.article key={name} initial={{opacity:0,y:18}} animate={{opacity:1,y:0}} transition={{delay:index*.08}}>
-        <span>{String(index + 1).padStart(2,'0')}</span><h2>{name}</h2><p>{rule}</p>
-      </motion.article>)}
+    <div className="foc-contract-strip" aria-label="FOC review contract">
+      {reviewContract.map(([index, label, detail]) => <article key={label}><span>{index}</span><strong>{label}</strong><p>{detail}</p></article>)}
     </div>
 
-    <div className="foc-matrix" role="table" aria-label="Kopano Labs MVP FOC validation matrix">
+    <div className="foc-matrix" role="table" aria-label="Kopano Labs evidence gate matrix">
       <div className="foc-row foc-row-head" role="row"><b>PRODUCT</b><b>WORKS</b><b>VISIBLE</b><b>BACKING</b><b>CURRENT</b><b>CONNECTED</b><b>STATE</b></div>
       {products.map((product) => {
         const [state, tone] = classify(product);
-        return <a key={product.name} className={`foc-row ${tone}`} href={product.route} target={product.route.startsWith('http') ? '_blank' : undefined} rel={product.route.startsWith('http') ? 'noreferrer' : undefined} role="row">
+        return <a key={product.name} className={'foc-row ' + tone} href={product.route} target={product.route.startsWith('http') ? '_blank' : undefined} rel={product.route.startsWith('http') ? 'noreferrer' : undefined} role="row">
           <div><strong>{product.name}</strong><small>{product.backingLabel}</small></div>
           <i data-signal={product.works}>{product.works}</i>
           <i data-signal={product.visible}>{product.visible}</i>

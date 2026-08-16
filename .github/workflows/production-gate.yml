@@ -83,12 +83,17 @@ jobs:
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/content/"' dist/content/index.html
 
-      - name: Verify FOC implementation is functional
+      - name: Verify FOC evidence gate is functional
         run: |
           test -f src/components/FOCMatrix.tsx
           test -f src/foc.css
-          grep -q 'FAKE OF CONCEPT' src/components/FOCMatrix.tsx
-          grep -q 'FREEDOM OF CONCEPT' src/components/FOCMatrix.tsx
+          ! grep -q 'FAKE OF CONCEPT' src/components/FOCMatrix.tsx
+          ! grep -q 'FREEDOM OF CONCEPT' src/components/FOCMatrix.tsx
+          ! grep -q 'foc-groups' src/components/FOCMatrix.tsx
+          grep -q 'const reviewContract' src/components/FOCMatrix.tsx
+          grep -q "'WORKS'" src/components/FOCMatrix.tsx
+          grep -q "'VISIBLE'" src/components/FOCMatrix.tsx
+          grep -q "'BACKED'" src/components/FOCMatrix.tsx
           grep -q 'FiveS Arena' src/components/FOCMatrix.tsx
           grep -q 'KasiLink' src/components/FOCMatrix.tsx
           grep -q 'Cape Campus' src/components/FOCMatrix.tsx

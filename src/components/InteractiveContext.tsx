@@ -7,7 +7,8 @@ type Action = { label: string; href?: string; note: string };
 const actions: Record<string, Action[]> = {
   'Kopano Context': [
     { label: 'Inspect public proof', href: '/proof/', note: 'Trace source, state and evidence before trusting a claim.' },
-    { label: 'Open source', href: 'https://github.com/RobynAwesome/Kopano-Labs-Website', note: 'Production source for the public website.' },
+    { label: 'Open KC target', href: 'https://kopanocontext.kopanolabs.com', note: 'Canonical interface target; owner-ready runtime remains proof-gated.' },
+    { label: 'Open website source', href: 'https://github.com/RobynAwesome/Kopano-Labs-Website', note: 'Observed website implementation, not KC runtime authority.' },
   ],
   'CrisisConnect': [
     { label: 'Capture field report', note: 'Prototype a GPS + media + severity report locally on this device.' },

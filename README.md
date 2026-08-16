@@ -87,3 +87,128 @@ The design submission was completed on **02 August 2026**. The submitted package
 | `/sitemap.xml` | Generated crawler discovery map | **Implemented** |
 | `/robots.txt` | Guided crawler policy, not a blanket block | **Implemented** |
 | `/release.json` | Machine-readable production and evidence state | **Implemented** |
+
+---
+
+## Current capabilities
+
+### Spatial + motion runtime
+
+- React Three Fiber / Drei 3D scene.
+- Spatial Kopano systems atlas with distinct product worlds.
+- Pointer-responsive spatial movement.
+- Framer Motion page transitions and interaction choreography.
+- GSAP scroll choreography.
+- `full` / `balanced` / `lite` experience tiers.
+- `prefers-reduced-motion` handling.
+- Save-Data degradation for constrained devices.
+
+### Adaptive discovery
+
+- One route manifest drives human intent routing and crawler discovery.
+- Search-oriented intent entry: rover, jobs, experiments, systems, proof.
+- Generated `sitemap.xml`.
+- Guided `robots.txt`.
+- Canonical web URLs and route-specific metadata.
+- JSON-LD organization metadata.
+- Search Console baseline preserved under `docs/`.
+
+### Evidence governance
+
+- `RobynAwesome/Kopano-Labs-Website` is the currently observed GitHub implementation/deployment source; canonical GitHub production-source authority remains owner-gated.
+- `Introduction-to-MCP` remains architecture/source authority rather than a runtime dependency.
+- Cars4Mars keeps design evidence separate from physical validation.
+- CI validates route/crawler/release consistency.
+- Retired report delivery is explicitly excluded from crawl and release gates.
+
+---
+
+## Evidence state: do not confuse POC with FOC
+
+### POC — currently present
+
+- spatial React/Three runtime;
+- adaptive route registry;
+- public Labs, Systems, Content, Cars4Mars, FOC and Proof routes;
+- Cars4Mars mission status, ledger, architecture, media and support surfaces;
+- crawler guidance + generated sitemap;
+- Search Console baseline documentation;
+- source-lineage documentation;
+- branded production assets;
+- GitHub production gate;
+- production deployment receipts.
+
+### Not yet claimed as fully validated
+
+- finished physical Cars4Mars rover;
+- complete Cars4Mars field telemetry;
+- authenticated public Kopano workspace;
+- production visitor database/telemetry dashboard;
+- completed human-verification layer;
+- all legacy Studio functions migrated into the public runtime;
+- final cross-device visual regression report for every target device tier.
+
+---
+
+## Implementation order
+
+1. **P1 — Evolve public product/visual surface.**
+2. **P2 — Preserve and migrate KopanoLabs.com lineage from `Introduction-to-MCP` and owned visual/artifact repositories.**
+3. **P3 — Cars4Mars evidence, ledger, architecture, media and support surface.**
+4. **P4 — Production, indexing and source-parity gates.**
+5. **P5 — Human verification + first-party telemetry/database.**
+6. **P6 — Workspace: projects, tasks, artifacts, Forge/Cowork, Code, schedules, skills/connectors.**
+
+See [`IMPLEMENTATION_ORDER.md`](IMPLEMENTATION_ORDER.md) for the governing execution ladder.
+
+---
+
+## Asset registry
+
+| Asset | Role |
+|---|---|
+| `public/assets/brand/kopano-mark.svg` | app mark, favicon/PWA identity, spatial node identity |
+| `public/assets/brand/kopano-logo.svg` | institutional wordmark, README/header identity |
+| `public/assets/cars4mars/astronaut-campaign.svg` | Cars4Mars campaign visual; not physical rover evidence |
+| `public/assets/diagrams/agent-routing.svg` | adaptive user → agent → database/API/documents explainer |
+
+Production media should be compressed, labelled by provenance and loaded adaptively rather than forcing multi-megabyte video on every visitor.
+
+---
+
+## Local development
+
+```bash
+git clone https://github.com/RobynAwesome/Kopano-Labs-Website.git
+cd Kopano-Labs-Website
+npm install
+npm run dev
+```
+
+Production build:
+
+```bash
+npm run build
+```
+
+The build regenerates crawler policy before TypeScript/Vite compilation.
+
+---
+
+## Source lineage
+
+Website-facing architecture is traced back to `Kopano-Labs/Introduction-to-MCP`, including Studio, strategy, brand and context material. That repository is governance/architecture authority, not a runtime dependency.
+
+Visual evolution must also inspect owned donor repositories such as `RobynAwesome/Portfolio-MBR` and `RobynAwesome/three.js` before generating substitutes.
+
+`RobynAwesome/Money-managing-app` is unrelated and must never be used as Kopano Labs production source. `RobynAwesome/cars4mars-landingpage` is retired historical lineage and is not a production dependency.
+
+---
+
+<div align="center">
+
+### Intent → Route → Evidence → Production
+
+**Built in South Africa. Designed to survive contact with reality.**
+
+</div>

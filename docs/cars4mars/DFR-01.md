@@ -12,10 +12,10 @@
 - **Length:** 6 pages, A4
 - **Bytes:** 88,367
 - **SHA-256:** `42842e597020ebc221e363f826c4d9f328dbf2c6bca6c10e80d4f7ff86840855`
-- **Public route:** `/reports/KOPANO_LABS.pdf`
-- **Delivery:** Vercel rewrite to the verified external source artifact; cached at the production edge.
+- **Website route:** **RETIRED** — `/reports/KOPANO_LABS.pdf` is intentionally absent/404 and is not a production dependency.
+- **Submission state:** complete outside the KopanoLabs.com runtime.
 
-The artifact was independently materialized from the stored report and its SHA-256 matches `public/release.json` exactly.
+The artifact identity remains historical design evidence. Its removal from the website delivery graph does **not** alter the submitted DFR-01 baseline or its evidence value.
 
 ## Current-state declaration
 
@@ -45,11 +45,11 @@ DFR-01 is a **design baseline**, not physical rover evidence. At submission the 
 | Assembled | **NOT STARTED** | Dated photographs + configuration/assembly record |
 | Tested | **NOT STARTED** | Continuous footage + conditions + measurements + pass/fail decision |
 
-## Near-term gate from the submitted report
+## Historical near-term gate from the submitted report
 
-**03-10 August 2026:** funding, orders, final BOM, frame, drive and protected power.
+The submitted report named **03-10 August 2026** for funding, orders, final BOM, frame, drive and protected power. That schedule is preserved as historical design intent; it is not automatically promoted into current physical progress.
 
-Release evidence: approved orders plus loaded forward/reverse drive, turning and emergency-stop evidence.
+Release evidence for the physical system remains approved orders plus loaded forward/reverse drive, turning and emergency-stop evidence.
 
 ## Public-site governance
 
@@ -58,4 +58,5 @@ Release evidence: approved orders plus loaded forward/reverse drive, turning and
 3. A state transition requires a dated evidence record.
 4. Failures stay in the ledger; corrections create a new versioned decision.
 5. `/Cars4Mars/` is the canonical public mission record.
-6. `/reports/KOPANO_LABS.pdf` is advertised only because the delivered artifact hash matches the verified DFR-01 source.
+6. `/reports/KOPANO_LABS.pdf` and `/reports/` are retired website paths. Do not restore, rewrite, regenerate or gate production on them unless the owner explicitly reactivates that requirement.
+7. Report submission truth and website-delivery truth are separate: the report remains a submitted design artifact even though the website route is intentionally absent.

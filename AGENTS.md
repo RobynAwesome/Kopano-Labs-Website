@@ -1,7 +1,7 @@
 # Kopano Labs Production Agent Entry
 
 > Read this file before modifying, deploying, auditing, or making claims about KopanoLabs.com.
-> `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production repository for KopanoLabs.com.
+> `RobynAwesome/Kopano-Labs-Website` is the currently observed implementation/deployment repository; canonical GitHub production-source authority remains owner-gated until explicitly established.
 
 ## 0. Mandatory canonical startup
 
@@ -28,18 +28,23 @@ Authority order for production work:
 
 1. **Owner instruction in the current task** — scope and mission.
 2. **Kopano Labs governance/source authority** — `Kopano-Labs/Introduction-to-MCP`, especially `Schematics/` when governance interpretation is required.
-3. **Canonical GitHub production source** — `RobynAwesome/Kopano-Labs-Website`.
-4. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — deployment and public proof surfaces.
+3. **Explicit owner-established canonical GitHub production source**, when such a declaration exists.
+4. **Observed implementation/deployment source** — currently `RobynAwesome/Kopano-Labs-Website`.
+5. **Vercel project `kopano-labs` + live `https://KopanoLabs.com`** — deployment and public proof surfaces.
 
 `Kopano-Labs/Introduction-to-MCP` is governance and architecture authority. It is not a runtime/build dependency of the website.
 
 ## 2. Repository boundary
 
-Canonical GitHub production source:
+Canonical GitHub production source: **owner-gated / not yet established**.
+
+Observed implementation/deployment source:
 
 `RobynAwesome/Kopano-Labs-Website`
 
-This owner declaration is established as of 2026-08-12 and must remain synchronized across `canonical.md`, `now.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
+Do not silently convert deployment observation into canonical authority. Keep `canonical_source_repository: null` until the owner explicitly establishes a production repository, while recording `deployment_source_observed` separately.
+
+This boundary must remain synchronized across `canonical.md`, `now.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
 
 Do not infer or substitute another repository because names look similar.
 

@@ -3,15 +3,15 @@
 
 # Kopano Labs · Public Systems Studio
 
-**Canonical production source for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa.**
+**Observed implementation and deployment source for [KopanoLabs.com](https://kopanolabs.com) — experiments, sovereign systems, Cars4Mars engineering evidence and adaptive public interfaces built from South Africa. Canonical GitHub production-source authority remains owner-gated until explicitly established.**
 
 [![Production](https://img.shields.io/badge/production-kopanolabs.com-22c55e?style=for-the-badge&logo=vercel&logoColor=white)](https://kopanolabs.com)
-[![Canonical Source](https://img.shields.io/badge/canonical%20source-RobynAwesome%2FKopano--Labs--Website-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
+[![Observed Source](https://img.shields.io/badge/observed%20source-RobynAwesome%2FKopano--Labs--Website-111827?style=for-the-badge&logo=github)](https://github.com/RobynAwesome/Kopano-Labs-Website)
 [![Cars4Mars](https://img.shields.io/badge/Cars4Mars-primary%20evidence%20route-f97316?style=for-the-badge)](https://kopanolabs.com/Cars4Mars/)
 
 </div>
 
-> **Source governance:** `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production repository for KopanoLabs.com. `Kopano-Labs/Introduction-to-MCP` remains the Main Brain governance/architecture authority and is not a runtime dependency.
+> **Source governance:** `RobynAwesome/Kopano-Labs-Website` is the currently observed GitHub implementation/deployment repository for KopanoLabs.com. `canonical_source_repository` remains `null` until explicit owner establishment. `Kopano-Labs/Introduction-to-MCP` remains the Main Brain governance/architecture authority and is not a runtime dependency.
 
 ---
 
@@ -115,7 +115,7 @@ The design submission was completed on **02 August 2026**. The submitted package
 
 ### Evidence governance
 
-- `RobynAwesome/Kopano-Labs-Website` is the canonical GitHub production source.
+- `RobynAwesome/Kopano-Labs-Website` is the currently observed GitHub implementation/deployment source; canonical GitHub production-source authority remains owner-gated.
 - `Introduction-to-MCP` remains architecture/source authority rather than a runtime dependency.
 - Cars4Mars keeps design evidence separate from physical validation.
 - CI validates route/crawler/release consistency.

@@ -8,7 +8,7 @@ A newly arrived model, connector, coding agent, browser agent, or automation mus
 
 A renter is not the landlord. A model is not the ledger. A tool is not source authority.
 
-## Canonical graph
+## Authority graph
 
 ```text
 Kopano-Labs/Introduction-to-MCP
@@ -16,10 +16,10 @@ Kopano-Labs/Introduction-to-MCP
         ├── Schematics / governance / architecture source authority
         │
         ▼
-RobynAwesome/Kopano-Labs-Website
+owner-gated canonical production source: UNESTABLISHED
         │
-        ├── dedicated KopanoLabs.com implementation source
-        │
+        ├── observed implementation/deployment source:
+        │   RobynAwesome/Kopano-Labs-Website
         ▼
 Vercel project: kopano-labs
         │
@@ -27,7 +27,7 @@ Vercel project: kopano-labs
 https://KopanoLabs.com
 ```
 
-The website must not require `Introduction-to-MCP` at build or runtime. Governance is extracted into deterministic local production state.
+The website must not require `Introduction-to-MCP` at build or runtime. Governance is extracted into deterministic local production state. Deployment observation is evidence; it does not silently establish canonical GitHub production authority.
 
 ## Namespace lesson
 
@@ -55,10 +55,11 @@ For production repair, separate the requirement from its implementation.
 ### Fixed (`y`)
 
 - canonical public domain remains KopanoLabs.com;
+- canonical GitHub production source remains owner-gated until explicitly established;
 - evidence must stay truthful;
 - DFR-01 remains a design baseline, not physical proof;
 - excluded repositories remain excluded;
-- public artifacts must be directly inspectable;
+- public artifacts must be directly inspectable where they are active requirements;
 - live proof outranks an AI claim of success.
 
 ### Changeable (`x`)
@@ -94,33 +95,19 @@ VERIFY live surface
 REVEAL actual state
 ```
 
-### Cars4Mars DFR-01 case study
+### Cars4Mars DFR-01 case study — historical path, now retired
 
-Observed failure:
+Historical observation:
 
 `/reports/KOPANO_LABS.pdf → 404`
 
-Root cause:
+An external Google Drive rewrite was tested and produced redirect/authentication behavior rather than a deterministic anonymous first-party artifact. That mechanism was killed.
 
-The route was intentionally excluded from the SPA fallback and there was no first-party artifact at the path. Vercel was behaving correctly.
+**Current policy supersedes the old requirement:** the submitted DFR-01 package is complete outside this website, `/reports/` is intentionally retired, `/reports/KOPANO_LABS.pdf` is expected to remain absent/404, and neither route nor PDF is a KopanoLabs.com release dependency.
 
-Alternative path tested:
+Do not reconstruct, restore, rewrite, or monitor that report route as a required success path unless the owner explicitly reactivates it.
 
-External Vercel rewrite to the already-verified Google Drive copy.
-
-New evidence:
-
-The original 404 disappeared, but Drive introduced 303/302 redirects and eventually an authentication route.
-
-Decision:
-
-**KILL Drive as anonymous production origin.** The requirement remains valid; only the mechanism failed.
-
-Next valid architecture:
-
-First-party deterministic artifact delivery from the production build/repository so the canonical route can return the actual report without external authentication.
-
-The lesson is reusable: **changed error != solved requirement**.
+The reusable lesson remains: **changed error != solved requirement**, and a requirement that is no longer required must be removed from build, crawl, release and monitoring gates.
 
 ## Evidence hierarchy
 
@@ -142,15 +129,24 @@ At minimum:
 ```text
 /
 /Cars4Mars/
-/reports/KOPANO_LABS.pdf
+/FOC/
+/systems/
+/labs/
+/content/
+/proof/
 /robots.txt
 /sitemap.xml
 /release.json
+/governance.json
 ```
 
-Check the route itself, not only the deployment dashboard.
+Retired route invariant:
 
-For the report route, a successful result means the intended document is anonymously reachable. A redirect to authentication is not success.
+```text
+/reports/KOPANO_LABS.pdf -> expected absent / 404
+```
+
+A 404 on the retired report route is not a production defect.
 
 ## Cars4Mars state transitions
 
@@ -178,10 +174,11 @@ Do not send another alert merely because a known unchanged failure is still pres
 Before saying `fixed`, `live`, `healthy`, `delivered`, or equivalent, answer all of these from evidence:
 
 - What exact object did I verify?
-- Which namespace/repository supplied the source?
+- Which namespace/repository supplied the observed source?
+- Has the canonical production-source authority actually been established by the owner?
 - Which deployment is serving production?
 - What does the canonical live route return now?
-- Did the requirement pass, or did only the error change?
+- Did the active requirement pass, or did only the error change?
 - Did I touch anything outside the production boundary?
 
 If any answer is missing, report the bounded state instead of completion.

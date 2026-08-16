@@ -36,9 +36,11 @@ if (sitemap.includes('/reports/')) throw new Error('Convergence gate: retired re
 
 const release = JSON.parse(await readFile(new URL('release.json', root), 'utf8'));
 const governance = JSON.parse(await readFile(new URL('governance.json', root), 'utf8'));
-const canonicalRepository = 'RobynAwesome/Kopano-Labs-Website';
-if (release.canonical_source_repository !== canonicalRepository) throw new Error('Convergence gate: release canonical source drifted');
-if (governance.canonical_source_repository !== canonicalRepository) throw new Error('Convergence gate: governance canonical source drifted');
+const observedDeploymentRepository = 'RobynAwesome/Kopano-Labs-Website';
+if (release.canonical_source_repository !== null) throw new Error('Convergence gate: release canonical source requires explicit owner establishment');
+if (governance.canonical_source_repository !== null) throw new Error('Convergence gate: governance canonical source requires explicit owner establishment');
+if (release.deployment_source_observed !== observedDeploymentRepository) throw new Error('Convergence gate: release deployment-source observation drifted');
+if (governance.deployment_source_observed !== observedDeploymentRepository) throw new Error('Convergence gate: governance deployment-source observation drifted');
 if (release.cars4mars?.design_submission?.website_dependency !== false) throw new Error('Convergence gate: Cars4Mars PDF must not become a website dependency');
 
 try {
@@ -49,4 +51,4 @@ try {
   if (error?.code !== 'ENOENT') throw error;
 }
 
-console.log('Convergence gate passed: canonical source + rich runtime + machine artifacts coexist; reports remain retired.');
+console.log('Convergence gate passed: rich runtime + machine artifacts coexist; deployment observation remains distinct from canonical owner authority; reports remain retired.');

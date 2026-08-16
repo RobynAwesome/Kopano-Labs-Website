@@ -3,7 +3,7 @@
 **Status:** ACTIVE  
 **Owner:** Kholofelo Robyn Rababalela  
 **Target repository:** `RobynAwesome/Kopano-Labs-Website`  
-**Canonical GitHub production source:** `RobynAwesome/Kopano-Labs-Website`  
+**Canonical GitHub production source: owner-gated / not yet established**  
 **Governance authority:** `Kopano-Labs/Introduction-to-MCP`
 
 > This file is a startup law, not a design brief. It exists so every stateless renter begins from the same governed state before reading, editing, auditing, fixing, deploying, or claiming anything about KopanoLabs.com.
@@ -38,11 +38,13 @@ For KopanoLabs.com work, use this order:
 
 1. owner instruction in the current task
 2. `Kopano-Labs/Introduction-to-MCP` Main Brain / Schematics governance and architecture
-3. `RobynAwesome/Kopano-Labs-Website` as the canonical GitHub production repository
+3. explicit owner-established canonical production-source declaration, when one exists
 4. this repository's `canonical.md` and `now.md`
 5. target-repository source files and their explicit design/source authority files
 6. current production evidence and deployment receipts
 7. model inference only where the above sources are silent
+
+`RobynAwesome/Kopano-Labs-Website` is the currently observed implementation/deployment source. Observation is evidence, not an automatic canonical-authority grant.
 
 Model confidence never outranks an existing governed artifact.
 
@@ -114,15 +116,15 @@ A failed CI gate must identify the responsible artifact. A persistent defect req
 
 ## 6. Canonical-source lock
 
-Owner authority established on 2026-08-12:
+The canonical GitHub production source remains **unestablished / `null`** until the owner explicitly establishes it.
 
-`RobynAwesome/Kopano-Labs-Website` **is the canonical GitHub production repository for KopanoLabs.com.**
+`RobynAwesome/Kopano-Labs-Website` is currently the observed GitHub implementation and Vercel deployment source for KopanoLabs.com. That observation must remain represented separately as `deployment_source_observed` and must not be silently promoted into canonical authority.
 
 `Kopano-Labs/Introduction-to-MCP` remains the mandatory governance/architecture starting point and source authority. It is not the website deployment repository or runtime dependency.
 
-This lock must remain consistent across `AGENTS.md`, `now.md`, `README.md`, `IMPLEMENTATION_ORDER.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
+This state must remain consistent across `AGENTS.md`, `now.md`, `README.md`, `IMPLEMENTATION_ORDER.md`, `docs/SOURCE_AUTHORITY.md`, `docs/source-lineage/INDEX.md`, `public/release.json`, `public/governance.json`, CI gates, and public source labels.
 
-Any future change to the canonical production repository requires an explicit owner instruction and an atomic governance migration.
+Any future establishment or change of the canonical production repository requires an explicit owner instruction and an atomic governance migration.
 
 ## 7. Startup acknowledgement
 

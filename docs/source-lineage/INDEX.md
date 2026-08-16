@@ -1,6 +1,6 @@
 # Kopano Labs Website Source Lineage
 
-Canonical website implementation lives in `RobynAwesome/Kopano-Labs-Website`.
+Current website implementation/deployment work is observed in `RobynAwesome/Kopano-Labs-Website`. Canonical GitHub production-source authority remains owner-gated until explicitly established.
 
 The following files in `Kopano-Labs/Introduction-to-MCP` are source authorities or historical implementation donors for the rebuild. They are references, not production dependencies.
 

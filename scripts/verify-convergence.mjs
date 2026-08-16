@@ -13,6 +13,14 @@ for (const file of mustExist) {
   await access(new URL(file, root));
 }
 
+const appSource = await readFile(new URL('../src/App.tsx', import.meta.url), 'utf8');
+const siteExperienceSource = await readFile(new URL('../src/SiteExperience.tsx', import.meta.url), 'utf8');
+for (const expected of ['RouteExperienceSurface view="labs"', 'RouteExperienceSurface view="foc"', 'RouteExperienceSurface view="proof"']) {
+  if (!appSource.includes(expected)) throw new Error('Convergence gate: missing immersive route surface ' + expected);
+}
+if (!siteExperienceSource.includes('RouteExperienceSurface view="content"')) throw new Error('Convergence gate: content estate has no spatial surface');
+if (!siteExperienceSource.includes("addEventListener('popstate'")) throw new Error('Convergence gate: content route does not sync after SPA navigation');
+
 const index = await readFile(new URL('index.html', root), 'utf8');
 if (!/assets\/.*\.js/.test(index)) throw new Error('Convergence gate: Vite JS bundle missing from dist/index.html');
 

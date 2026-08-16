@@ -39,8 +39,8 @@ const competitionFacts = [
 ] as const;
 
 const visualReferences = [
-  ['/assets/cars4mars/rover-open-concept.png', 'OPEN SYSTEMS VIEW', 'Supplied concept visualisation of the rover with the electronics bay exposed.', 'Design reference · not physical build evidence.'],
-  ['/assets/cars4mars/rover-field-concept.png', 'FIELD CONCEPT', 'Supplied concept visualisation of the rover in a Mars-like field setting.', 'Design reference · not physical build evidence.'],
+  ['/assets/cars4mars/rover-open-concept.jpg', 'OPEN SYSTEMS VIEW', 'Supplied concept visualisation of the rover with the electronics bay exposed.', 'Design reference · not physical build evidence.'],
+  ['/assets/cars4mars/rover-field-concept.jpg', 'FIELD CONCEPT', 'Supplied concept visualisation of the rover in a Mars-like field setting.', 'Design reference · not physical build evidence.'],
 ] as const;
 
 const featuredVideo = '01exG-aWj6g';
@@ -90,11 +90,13 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
 
       <section className="visual-reference-section" aria-label="Cars4Mars design reference visuals">
         <div className="mission-section-head"><span className="eyebrow">DESIGN REFERENCE · NOT VALIDATION EVIDENCE</span><h2>Keep the target rover visible.</h2><p>These supplied concept visuals keep the intended rover shape present while the ledger stays honest: they are design references, not proof of assembly or testing.</p></div>
-        <div className="visual-reference-grid">{visualReferences.map(([src, label, alt, note]) => <figure key={src} className="visual-reference-card"><img src={src} alt={alt} loading="lazy" decoding="async" /><figcaption><strong>{label}</strong><span>{note}</span></figcaption></figure>)}</div>
+        <div className="visual-reference-grid">{visualReferences.map(([src, label, alt, note]) => <figure key={src} className="visual-reference-card"><img src={src} alt={alt} loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, 50vw" /><figcaption><strong>{label}</strong><span>{note}</span></figcaption></figure>)}</div>
       </section>
 
       <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE</span><h2>Funding → orders → frame → drive → protected power.</h2></div><div className="gate-meta"><span>ACCEPTANCE</span><strong>ORDERS + LOADED DRIVE + TURN + E-STOP</strong></div></section>
     </>}
+
+    {focus === 'architecture' && <RoverMechanismExplorer />}
 
     {showLedger && <section id="ledger" className="ledger-section">
       <div className="mission-section-head"><span className="eyebrow">OPEN BUILD LEDGER</span><h2>Transitions only.</h2></div>

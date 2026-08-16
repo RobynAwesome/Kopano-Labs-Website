@@ -304,3 +304,17 @@ Any Forge/window arriving after this point must:
 3. fetch the latest `main`;
 4. continue from unchecked work instead of reconstructing the website from chat memory;
 5. append its receipt after validated work.
+
+## [WEBSITE_SURFACE_CONVERGENCE] Immersive public routes and asset truth (2026-08-16)
+
+**Status:** implemented on `agent/kpgs-spatial-conductor`; awaiting preview/browser verification.
+
+**Current truth:**
+
+- Cars4Mars concept media was malformed on the active branch: the PNG chunk stream failed CRC validation mid-file, causing the browser to paint only a partial image. The public route now uses the valid JPEG source lineage with corrected `.jpg` references.
+- Labs, FOC, Proof and Content now expose route-specific spatial proof surfaces with explicit POC copy and KPGS truth boundaries; Systems and Cars4Mars retain their dedicated atlas/rover worlds.
+- Cars4Mars Architecture now mounts the interactive mechanism explorer instead of falling back to a flat architecture list.
+- Content route state now follows SPA history events, so navigating to `/content/` does not depend on a full page reload.
+- The build now validates raster signatures and PNG CRCs before compiling, and the convergence gate checks that each public route family has an immersive surface.
+
+**Boundary:** design references remain design references; spatial POCs do not advance physical validation or prove deployment ownership.

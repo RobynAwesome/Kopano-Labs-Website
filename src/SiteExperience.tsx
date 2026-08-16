@@ -1,5 +1,6 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
+import { RouteExperienceSurface } from './components/RouteExperienceSurface';
 
 type ThemeMode = 'light' | 'dark' | 'crazy';
 
@@ -34,7 +35,14 @@ function applyTheme(mode: ThemeMode) {
 export function SiteExperience() {
   const [theme, setTheme] = useState<ThemeMode>(() => (localStorage.getItem('kopano-theme') as ThemeMode) || 'dark');
   const [menuOpen, setMenuOpen] = useState(false);
-  const contentRoute = useMemo(() => location.pathname.toLowerCase().startsWith('/content'), []);
+  const [pathname, setPathname] = useState(() => location.pathname);
+  const contentRoute = pathname.toLowerCase().startsWith('/content');
+
+  useEffect(() => {
+    const syncPath = () => setPathname(location.pathname);
+    window.addEventListener('popstate', syncPath);
+    return () => window.removeEventListener('popstate', syncPath);
+  }, []);
 
   useEffect(() => applyTheme(theme), [theme]);
 
@@ -61,6 +69,7 @@ export function SiteExperience() {
 
     {contentRoute && <div className="content-estate-page">
       <header className="content-estate-head"><a href="/" className="content-back">← Kopano Labs</a><span className="eyebrow">CONTENT + PUBLIC ESTATE</span><h1>Everything connects.<br/><em>Nothing gets flattened.</em></h1><p>Projects, systems, experiments and public surfaces stay distinct. Repository labels are shown only where they are explicitly established; Main Brain governs architecture while each product keeps its own source lineage.</p></header>
+      <RouteExperienceSurface view="content"/>
       <main className="content-estate-grid">
         {estate.map((item, index) => <motion.a key={item.title} className="content-estate-card" href={item.href} target={item.href.startsWith('http') ? '_blank' : undefined} rel={item.href.startsWith('http') ? 'noreferrer' : undefined} initial={{opacity:0,y:22}} animate={{opacity:1,y:0}} transition={{delay:index*.045}} whileHover={{y:-8,scale:1.01}}>
           <div className="content-estate-image"><img src={item.image} alt=""/></div><div className="content-estate-copy"><span>{item.kind}</span><h2>{item.title}</h2><p>{item.note}</p><code>{item.repo}</code></div><b className="content-estate-arrow">↗</b>

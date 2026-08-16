@@ -34,4 +34,4 @@ The following paths in `Kopano-Labs/Introduction-to-MCP` are the authoritative d
 
 ## Governance rule
 
-`Kopano-Labs/Introduction-to-MCP` may inform and feed this website, but it is not the deployment repository for KopanoLabs.com. `RobynAwesome/Kopano-Labs-Website` is the dedicated production website source.
+`Kopano-Labs/Introduction-to-MCP` may inform and feed this website, but it is not the deployment repository for KopanoLabs.com. `RobynAwesome/Kopano-Labs-Website` is the currently observed implementation/deployment source. Canonical GitHub production-source authority remains owner-gated until explicitly established, and deployment observation must not be silently promoted into canonical authority.

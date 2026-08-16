@@ -125,6 +125,8 @@ Goal: stop treating Three.js as decorative canvases inside pages and evolve it i
 - [x] Framer Motion owns UI choreography in the current implementation.
 - [x] GSAP owns existing scroll choreography; future camera timelines remain proof-gated.
 - [x] React/R3F owns current stateful world objects.
+- [x] Bind the current hero mesh, systems atlas and Cars4Mars rover to one route-aware `kpgs.scene_contract.v1` with local receipts, tier budgets and hidden-page render pause.  
+  Receipt: PR #11 / branch `agent/kpgs-spatial-conductor`; Vercel preview `dpl_8n77JBgdTjJr4xfBcKJPzjskAqSR`.
 - [x] Preserve direct canonical routes (`/`, `/systems/`, `/labs/`, `/Cars4Mars/`, `/FOC/`, `/proof/`, `/content/`).
 
 ### Device tiers
@@ -291,6 +293,7 @@ Format:
 
 | 2026-08-15 | Codex | Added bounded Cars4Mars concept references, FOC CONNECTED signal and deterministic POC contract | PR #8 / preview branch `fix/cars4mars-poc-validation-2026-08-15` | Production-gate run `31874454665` SUCCESS; Vercel preview READY |
 | 2026-08-15 | Forge | Added auditable DFR-01 simulations to the existing Three.js rover while preserving human-drive mode and evidence boundaries | PR #10 / source head `5f7a334c84116ee7f4ce8a406940e9c10499ace1` / engineering source `88c7f37115b78df276756425600944abe36d649d` | Website production-gate `31901071476` SUCCESS; engineering evidence gate `31900861521` SUCCESS |
+| 2026-08-16 | Codex | Added adaptive KPGS spatial conductor across existing Three.js surfaces; preserved current scenes and evidence boundaries | PR #11 / head `fa467569cf0b428c5f2def9764b5c860db92b999` | Vercel READY `dpl_8n77JBgdTjJr4xfBcKJPzjskAqSR`; production-gate run `31952599621` SUCCESS; convergence + Cars4Mars gates PASS |
 
 ## Handoff rule
 

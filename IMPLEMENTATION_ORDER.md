@@ -3,7 +3,8 @@
 This file is the execution ladder for https://KopanoLabs.com. New ideas are appended behind existing work unless the owner explicitly changes priority.
 
 ## P0 — Production boundary ✅
-- Canonical GitHub production source: `RobynAwesome/Kopano-Labs-Website`.
+- Canonical GitHub production source: owner-gated / not yet established.
+- Observed implementation/deployment source: `RobynAwesome/Kopano-Labs-Website`.
 - Governance/specification authority: `Kopano-Labs/Introduction-to-MCP`.
 - Deployment/public proof surfaces: Vercel project `kopano-labs` + `https://KopanoLabs.com`.
 - `RobynAwesome/Money-managing-app` is unrelated and must never be used for Kopano Labs website work.
@@ -51,4 +52,4 @@ This file is the execution ladder for https://KopanoLabs.com. New ideas are appe
 2. A lower-priority implementation may be scaffolded but must not displace higher-priority delivery.
 3. No implementation claim without a repository, build, deployment, route, or runtime receipt.
 4. A blocker must state what is blocked, why it matters, whether it is actually required, and at least one materially different path forward before it stops delivery.
-5. Any change to this ordering or canonical production repository requires an explicit owner instruction.
+5. Any establishment or change of the canonical production repository requires an explicit owner instruction and an atomic governance migration.

@@ -6,6 +6,7 @@ import * as THREE from 'three';
 import { getExperienceProfile } from '../experienceRuntime';
 import { createKPGSSceneContract, emitKPGSReceipt, type KPGSSceneContract } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
+import { useKPGSVisibility } from '../useKPGSVisibility';
 import { FivesArenaFeed } from './FivesArenaFeed';
 
 export type SystemSceneId = 'context' | 'fives' | 'kasilink' | 'crisis' | 'starfall' | 'mars';
@@ -99,13 +100,14 @@ export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: b
   const profile = useMemo(() => getExperienceProfile(), []);
   const selected = systems.find((system)=>system.id === active) ?? systems[0];
   const contract = useMemo(() => createKPGSSceneContract(view, profile, active), [active, profile, view]);
+  const visible = useKPGSVisibility();
 
   useEffect(() => {
     emitKPGSReceipt(contract, 'scene_selected', { particle_count: contract.budget.particleCount });
   }, [contract]);
   return <section className={`system-atlas ${compact ? 'compact' : ''}`} data-experience-tier={contract.runtime.tier} data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} data-kpgs-budget={contract.budget.maxDrawCalls} aria-label="Interactive Kopano Labs systems atlas">
     <div className="atlas-heading"><div><span className="eyebrow">SPATIAL SYSTEMS ATLAS · INTERACTIVE</span><h2>Every system gets a world.</h2></div><p>Tap a live lane to change the scene. The visual form follows the product: pitch, network, radar, mesh, salvage field or rover.</p></div>
-    <div className="atlas-shell"><div className="atlas-stage" data-system={active} data-kpgs-intent={contract.route.intentClass}><Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate ? 'always' : 'demand'} camera={{position:[0,.4,5.6],fov:47}} gl={{antialias:contract.runtime.tier !== 'lite',alpha:true,powerPreference:contract.runtime.tier === 'full' ? 'high-performance' : 'default'}}><World id={active} contract={contract}/><OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} rotateSpeed={contract.runtime.tier === 'lite' ? .18 : .3} minPolarAngle={Math.PI*.28} maxPolarAngle={Math.PI*.72}/></Canvas><div className="atlas-stage-copy"><span>{selected.kicker}</span><h3>{selected.label}</h3><p>{selected.detail}</p><a href={selected.href} target={selected.href.startsWith('http')?'_blank':undefined} rel={selected.href.startsWith('http')?'noreferrer':undefined}>Open system ↗</a></div></div><div className="atlas-selector" role="list" aria-label="Choose a system scene">{systems.map((system,index)=><motion.button type="button" role="listitem" key={system.id} className={active===system.id?'active':''} onClick={()=>setActive(system.id)} whileHover={{x:4}}><span>{String(index+1).padStart(2,'0')}</span><div><strong>{system.label}</strong><small>{system.state}</small></div><b>↗</b></motion.button>)}</div></div>
+    <div className="atlas-shell"><div className="atlas-stage" data-system={active} data-kpgs-intent={contract.route.intentClass}><Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{position:[0,.4,5.6],fov:47}} gl={{antialias:contract.runtime.tier !== 'lite',alpha:true,powerPreference:contract.runtime.tier === 'full' ? 'high-performance' : 'default'}}><World id={active} contract={contract}/><OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} rotateSpeed={contract.runtime.tier === 'lite' ? .18 : .3} minPolarAngle={Math.PI*.28} maxPolarAngle={Math.PI*.72}/></Canvas><div className="atlas-stage-copy"><span>{selected.kicker}</span><h3>{selected.label}</h3><p>{selected.detail}</p><a href={selected.href} target={selected.href.startsWith('http')?'_blank':undefined} rel={selected.href.startsWith('http')?'noreferrer':undefined}>Open system ↗</a></div></div><div className="atlas-selector" role="list" aria-label="Choose a system scene">{systems.map((system,index)=><motion.button type="button" role="listitem" key={system.id} className={active===system.id?'active':''} onClick={()=>setActive(system.id)} whileHover={{x:4}}><span>{String(index+1).padStart(2,'0')}</span><div><strong>{system.label}</strong><small>{system.state}</small></div><b>↗</b></motion.button>)}</div></div>
     {active === 'fives' && <FivesArenaFeed/>}
   </section>;
 }

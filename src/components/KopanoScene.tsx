@@ -7,6 +7,8 @@ import { getExperienceProfile } from '../experienceRuntime';
 import type { View } from '../routeRegistry';
 import { useKPGSVisibility } from '../useKPGSVisibility';
 
+const defaultSceneLabels: [string, string, string] = ['KOPANO MESH · KC FIRST', 'KC · LABS · MARS', 'REALITY → PROOF'];
+
 const sceneLabels: Partial<Record<View, [string, string, string]>> = {
   home: ['KOPANO MESH · KC FIRST', 'KC · LABS · MARS', 'REALITY → PROOF'],
   labs: ['KC / KOPANO CONTEXT · LOCAL POC', 'INPUT · CLASSIFY · ROUTE', 'POC → EVIDENCE'],
@@ -72,7 +74,7 @@ export function KopanoScene({ view = 'home' }: { view?: View }) {
     emitKPGSReceipt(contract, 'scene_mounted', { particle_count: contract.budget.particleCount });
   }, [contract]);
 
-  const labels = sceneLabels[view] ?? sceneLabels.home;
+  const labels = sceneLabels[view] ?? defaultSceneLabels;
   return <div className="kopano-scene" data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} aria-label={labels[0] + ' interactive spatial proof surface'}>
     <Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: !contract.runtime.tier.startsWith('lite'), alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}>
       <World contract={contract} />

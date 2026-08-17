@@ -1,17 +1,19 @@
 import { AnimatePresence, motion } from 'framer-motion';
-import { FormEvent, useEffect, useMemo, useState } from 'react';
+import { lazy, Suspense, useEffect, useMemo, useState, type FormEvent } from 'react';
 import './adaptive.css';
 import { emitKPGSReceipt } from './kpgsSceneContract';
 import { syncKPGSRuntime } from './experienceRuntime';
-import { Cars4MarsMissionControl, type Cars4MarsFocus } from './components/Cars4MarsMissionControl';
+import type { Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { FOCMatrix } from './components/FOCMatrix';
-import { KopanoScene } from './components/KopanoScene';
-import { MarsRoverScene } from './components/MarsRoverScene';
 import { RoverVisual } from './components/RoverVisual';
 import { SpatialDirectory } from './components/SpatialDirectory';
-import { RouteExperienceSurface } from './components/RouteExperienceSurface';
-import { SystemAtlas } from './components/SystemAtlas';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
+
+const Cars4MarsMissionControl = lazy(() => import('./components/Cars4MarsMissionControl').then((module) => ({ default: module.Cars4MarsMissionControl })));
+const KopanoScene = lazy(() => import('./components/KopanoScene').then((module) => ({ default: module.KopanoScene })));
+const MarsRoverScene = lazy(() => import('./components/MarsRoverScene').then((module) => ({ default: module.MarsRoverScene })));
+const RouteExperienceSurface = lazy(() => import('./components/RouteExperienceSurface').then((module) => ({ default: module.RouteExperienceSurface })));
+const SystemAtlas = lazy(() => import('./components/SystemAtlas').then((module) => ({ default: module.SystemAtlas })));
 
 const experiments: [string, string, string][] = [
   ['Gig Matcher', 'Jobs + income', 'Match people to verified local work and apprenticeship paths.'],
@@ -55,6 +57,10 @@ const focusForView = (view: View): Cars4MarsFocus => {
   if (view === 'cars4mars-support') return 'support';
   return 'overview';
 };
+
+function GovernedFallback({ label }: { label: string }) {
+  return <div className="route-experience-boundary" role="status" aria-live="polite"><span>KPGS · ROUTE LOAD</span><strong>{label}</strong></div>;
+}
 
 function NavButton({ id, active, onClick, children }: { id: View; active: View; onClick: (id: View) => void; children: React.ReactNode }) {
   return <button className={`nav-button ${active === id ? 'active' : ''}`} onClick={() => onClick(id)}>{children}</button>;
@@ -137,10 +143,10 @@ export function App() {
               <p className="studio-principle">Realism accommodates aesthetics; sovereignty accommodates both.</p>
               <div className="hero-actions"><button className="primary" onClick={() => navigate('systems')}>Enter the systems</button><button className="secondary" onClick={() => navigate('labs')}>Explore the labs</button></div>
             </motion.div>
-            <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><KopanoScene view={view}/><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="football, jobs, crisis, rover, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
+            <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><Suspense fallback={<GovernedFallback label="Loading spatial systems map…"/>}><KopanoScene view={view}/></Suspense><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="football, jobs, crisis, rover, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
           </div>
 
-          <SystemAtlas compact view={view}/>
+          <Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas compact view={view}/></Suspense>
 
           <motion.div className="studio-intro" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
             <div><span className="eyebrow">KOPANO ECOSYSTEM</span><h2>Different problems. One engineering discipline.</h2></div>
@@ -162,18 +168,18 @@ export function App() {
           <section className="next-public-strip"><span>UP NEXT</span><strong>Falling Walls Lab collaboration page</strong><strong>NICIS founder-in-action page</strong></section>
         </motion.section>}
 
-        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><RouteExperienceSurface view="foc"/><FOCMatrix/></motion.section>}
+        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><Suspense fallback={<GovernedFallback label="Loading evidence surface…"/>}><RouteExperienceSurface view="foc"/></Suspense><FOCMatrix/></motion.section>}
 
-        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><RouteExperienceSurface view="labs"/><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
+        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><Suspense fallback={<GovernedFallback label="Loading KC local rehearsal…"/>}><RouteExperienceSurface view="labs"/></Suspense><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
 
-        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><SystemAtlas view={view}/><SpatialDirectory items={systems} kind="system"/></motion.section>}
+        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas view={view}/></Suspense><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
         {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><MarsRoverScene view={view}/><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
-          <div id="mission-control"><Cars4MarsMissionControl focus={focusForView(view)}/></div>
+          <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><Suspense fallback={<GovernedFallback label="Loading rover simulation…"/>}><MarsRoverScene view={view}/></Suspense><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
+          <div id="mission-control"><Suspense fallback={<GovernedFallback label="Loading mission control…"/>}><Cars4MarsMissionControl focus={focusForView(view)}/></Suspense></div>
         </motion.section>}
 
-        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><RouteExperienceSurface view="proof"/><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
+        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><Suspense fallback={<GovernedFallback label="Loading proof surface…"/>}><RouteExperienceSurface view="proof"/></Suspense><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
       </AnimatePresence>
     </main>
 

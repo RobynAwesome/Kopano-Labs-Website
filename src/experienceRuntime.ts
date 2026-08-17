@@ -1,5 +1,3 @@
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { applyKPGSRootAttributes, createKPGSSceneContract } from './kpgsSceneContract';
 import { viewForPath, type View } from './routeRegistry';
 
@@ -73,31 +71,46 @@ export function startExperienceRuntime() {
   const cleanupRoute = () => window.removeEventListener('popstate', syncRoute);
   if (profile.reducedMotion || profile.saveData) return cleanupRoute;
 
-  gsap.registerPlugin(ScrollTrigger);
-  const context = gsap.context(() => {
-    gsap.fromTo('.manifesto-band span',
-      { opacity: .28, y: 18, filter: 'blur(5px)' },
-      { opacity: 1, y: 0, filter: 'blur(0px)', stagger: .11, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: '.manifesto-band', start: 'top 86%' } },
-    );
+  let active = true;
+  let cleanupMotion = () => undefined;
 
-    gsap.utils.toArray<HTMLElement>('.directory-rail button').forEach((item, index) => {
-      gsap.fromTo(item,
-        { x: profile.tier === 'full' ? -28 : -12, opacity: 0 },
-        { x: 0, opacity: 1, duration: .55, delay: Math.min(index * .045, .24), ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 94%', once: true } },
+  void Promise.all([
+    import('gsap'),
+    import('gsap/ScrollTrigger'),
+  ]).then(([{ default: gsap }, { ScrollTrigger }]) => {
+    if (!active) return;
+
+    gsap.registerPlugin(ScrollTrigger);
+    const context = gsap.context(() => {
+      gsap.fromTo('.manifesto-band span',
+        { opacity: .28, y: 18, filter: 'blur(5px)' },
+        { opacity: 1, y: 0, filter: 'blur(0px)', stagger: .11, duration: .8, ease: 'power3.out', scrollTrigger: { trigger: '.manifesto-band', start: 'top 86%' } },
       );
+
+      gsap.utils.toArray<HTMLElement>('.directory-rail button').forEach((item, index) => {
+        gsap.fromTo(item,
+          { x: profile.tier === 'full' ? -28 : -12, opacity: 0 },
+          { x: 0, opacity: 1, duration: .55, delay: Math.min(index * .045, .24), ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 94%', once: true } },
+        );
+      });
+
+      gsap.utils.toArray<HTMLElement>('.evidence-grid article, .ledger article').forEach((item, index) => {
+        gsap.fromTo(item,
+          { y: 26, opacity: 0 },
+          { y: 0, opacity: 1, duration: .6, delay: Math.min(index * .05, .2), ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 94%', once: true } },
+        );
+      });
     });
 
-    gsap.utils.toArray<HTMLElement>('.evidence-grid article, .ledger article').forEach((item, index) => {
-      gsap.fromTo(item,
-        { y: 26, opacity: 0 },
-        { y: 0, opacity: 1, duration: .6, delay: Math.min(index * .05, .2), ease: 'power3.out', scrollTrigger: { trigger: item, start: 'top 94%', once: true } },
-      );
-    });
+    cleanupMotion = () => {
+      context.revert();
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    };
   });
 
   return () => {
+    active = false;
     cleanupRoute();
-    context.revert();
-    ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+    cleanupMotion();
   };
 }

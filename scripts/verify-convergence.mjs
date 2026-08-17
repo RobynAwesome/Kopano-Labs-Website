@@ -29,12 +29,29 @@ if (!kcWorkbenchSource.includes('LOCAL KC REHEARSAL ≠ OWNER-READY KC RUNTIME')
 if (focSource.includes('FAKE OF CONCEPT') || focSource.includes('FREEDOM OF CONCEPT') || focSource.includes('foc-groups')) throw new Error('Convergence gate: retired FOC groups leaked into the public surface');
 if (!systemAtlasSource.includes("useState<SystemSceneId>('context')")) throw new Error('Convergence gate: KC is not the default systems world');
 
+// Adaptive-runtime contract: constrained clients must preserve proof without paying the WebGL cost.
+if (!routeSurfaceSource.includes("lazy(() => import('./KopanoScene')")) throw new Error('Convergence gate: KopanoScene must remain a deferred WebGL import');
+for (const capability of ["profile.tier === 'lite'", 'profile.saveData', 'profile.reducedMotion']) {
+  if (!routeSurfaceSource.includes(capability)) throw new Error('Convergence gate: adaptive WebGL gate missing ' + capability);
+}
+if (!routeSurfaceSource.includes("renderer: 'css-lite', webgl: false")) throw new Error('Convergence gate: CSS-lite renderer receipt must declare webgl=false');
+if (!routeSurfaceSource.includes('data-kpgs-renderer="css-lite"')) throw new Error('Convergence gate: CSS-lite renderer must remain inspectable in the DOM');
+if (!routeSurfaceSource.includes('NO WEBGL · PROOF PRESERVED')) throw new Error('Convergence gate: lightweight proof boundary label missing');
+
 const index = await readFile(new URL('index.html', root), 'utf8');
 if (!/assets\/.*\.js/.test(index)) throw new Error('Convergence gate: Vite JS bundle missing from dist/index.html');
+if (index.includes('KopanoScene-') || index.includes('useKPGSVisibility-')) throw new Error('Convergence gate: WebGL runtime leaked into first-paint preload graph');
 
 const assetsDir = new URL('assets/', root);
 const assets = await readdir(assetsDir);
 if (!assets.some((name) => name.endsWith('.js'))) throw new Error('Convergence gate: no JS runtime bundle in dist/assets');
+if (!assets.some((name) => name.startsWith('KopanoScene-') && name.endsWith('.js'))) throw new Error('Convergence gate: deferred KopanoScene chunk missing');
+if (!assets.some((name) => name.startsWith('useKPGSVisibility-') && name.endsWith('.js'))) throw new Error('Convergence gate: deferred Three/KPGS runtime chunk missing');
+
+const entryMatch = index.match(/src="\/assets\/(index-[^"]+\.js)"/);
+if (!entryMatch) throw new Error('Convergence gate: unable to identify first-paint entry chunk');
+const entryInfo = await stat(new URL('assets/' + entryMatch[1], root));
+if (entryInfo.size > 400 * 1024) throw new Error(`Convergence gate: first-paint JS budget exceeded (${entryInfo.size} bytes > 409600)`);
 
 const robots = await readFile(new URL('robots.txt', root), 'utf8');
 if (!robots.includes('Disallow: /reports/')) throw new Error('Convergence gate: /reports/ must remain retired in robots.txt');
@@ -59,4 +76,4 @@ try {
   if (error?.code !== 'ENOENT') throw error;
 }
 
-console.log('Convergence gate passed: rich runtime + machine artifacts coexist; deployment observation remains distinct from canonical owner authority; reports remain retired.');
+console.log(`Convergence gate passed: rich runtime + machine artifacts coexist; constrained clients retain CSS-lite proof without first-paint WebGL; entry JS ${entryInfo.size} bytes; reports remain retired.`);

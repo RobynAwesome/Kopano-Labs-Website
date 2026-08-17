@@ -1,7 +1,9 @@
 import { motion } from 'framer-motion';
+import { lazy, Suspense } from 'react';
 import type { View } from '../routeRegistry';
 import { KopanoContextWorkbench } from './KopanoContextWorkbench';
-import { KopanoScene } from './KopanoScene';
+
+const KopanoScene = lazy(() => import('./KopanoScene').then((module) => ({ default: module.KopanoScene })));
 
 type SurfaceDefinition = {
   eyebrow: string;
@@ -63,7 +65,7 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
         <div className="route-experience-boundary"><span>TRUTH BOUNDARY</span><strong>{surface.boundary}</strong></div>
       </div>
       <div className="route-experience-stage">
-        <KopanoScene view={view} />
+        <Suspense fallback={<div className="scene-label scene-label-a" role="status">LOADING · SPATIAL CONTRACT</div>}><KopanoScene view={view} /></Suspense>
         <motion.div className="route-experience-stage-copy" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
           <span>LIVE SPATIAL CONTRACT</span>
           <strong>{surface.stage}</strong>

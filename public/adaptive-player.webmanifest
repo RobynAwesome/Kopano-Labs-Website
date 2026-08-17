@@ -1,0 +1,20 @@
+{
+  "id": "/adaptive-player/",
+  "name": "Kopano Adaptive Player",
+  "short_name": "Kopano Player",
+  "description": "A mobile-first KPGS adaptive player that preserves one task across lite, mobile, enhanced and immersive rendering profiles.",
+  "start_url": "/adaptive-player/",
+  "scope": "/adaptive-player/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#050a08",
+  "theme_color": "#08110d",
+  "icons": [
+    {
+      "src": "/assets/brand/kopano-mark.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

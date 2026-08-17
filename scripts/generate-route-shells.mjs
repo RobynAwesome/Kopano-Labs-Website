@@ -26,10 +26,21 @@ function replaceMeta(html, route) {
     .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`);
 }
 
-for (const route of manifest.routes.filter((entry) => entry.index && entry.path !== '/')) {
+const indexedRoutes = manifest.routes.filter((entry) => entry.index && entry.path !== '/');
+for (const route of indexedRoutes) {
   const target = join(new URL('../dist/', import.meta.url).pathname, route.path.replace(/^\//, ''), 'index.html');
   await mkdir(dirname(target), { recursive: true });
   await writeFile(target, replaceMeta(template, route), 'utf8');
 }
 
-console.log(`Generated ${manifest.routes.filter((entry) => entry.index && entry.path !== '/').length} route HTML shells.`);
+// POC-only direct shell: deployable and shareable, intentionally absent from the crawl manifest until BlackMask promotion.
+const adaptivePlayerRoute = {
+  path: '/adaptive-player/',
+  title: 'Adaptive PWA Player POC — Kopano Labs',
+  description: 'A mobile-first Kopano Labs POC that adapts one governed experience across lite, mobile, enhanced and immersive rendering profiles.',
+};
+const adaptivePlayerTarget = join(new URL('../dist/', import.meta.url).pathname, 'adaptive-player', 'index.html');
+await mkdir(dirname(adaptivePlayerTarget), { recursive: true });
+await writeFile(adaptivePlayerTarget, replaceMeta(template, adaptivePlayerRoute), 'utf8');
+
+console.log(`Generated ${indexedRoutes.length} public route HTML shells + 1 non-crawl Adaptive Player POC shell.`);

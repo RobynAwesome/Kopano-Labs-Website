@@ -1,26 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from './App';
-import { SiteExperience } from './SiteExperience';
-import { startExperienceRuntime } from './experienceRuntime';
 import './styles.css';
-import './spatial.css';
-import './directory.css';
-import './mission.css';
-import './now.css';
-import './foc.css';
-import './site-experience.css';
-import './system-atlas.css';
-import './visual-repair.css';
-import './cars4mars-simulation.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-    <SiteExperience />
-  </React.StrictMode>,
-);
+const root = ReactDOM.createRoot(document.getElementById('root')!);
+const adaptivePlayerPath = location.pathname.toLowerCase().startsWith('/adaptive-player/');
 
-requestAnimationFrame(() => {
-  startExperienceRuntime();
-});
+async function boot() {
+  if (adaptivePlayerPath) {
+    const { AdaptivePlayerApp } = await import('./AdaptivePlayerApp');
+    root.render(
+      <React.StrictMode>
+        <AdaptivePlayerApp />
+      </React.StrictMode>,
+    );
+    return;
+  }
+
+  await Promise.all([
+    import('./spatial.css'),
+    import('./directory.css'),
+    import('./mission.css'),
+    import('./now.css'),
+    import('./foc.css'),
+    import('./site-experience.css'),
+    import('./system-atlas.css'),
+    import('./visual-repair.css'),
+    import('./cars4mars-simulation.css'),
+  ]);
+
+  const [{ App }, { SiteExperience }, { startExperienceRuntime }] = await Promise.all([
+    import('./App'),
+    import('./SiteExperience'),
+    import('./experienceRuntime'),
+  ]);
+
+  root.render(
+    <React.StrictMode>
+      <App />
+      <SiteExperience />
+    </React.StrictMode>,
+  );
+
+  requestAnimationFrame(() => {
+    startExperienceRuntime();
+  });
+}
+
+void boot();

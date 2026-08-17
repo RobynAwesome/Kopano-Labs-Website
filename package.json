@@ -11,7 +11,8 @@
     "routes:generate": "node scripts/generate-route-shells.mjs",
     "convergence:verify": "node scripts/verify-convergence.mjs",
     "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
-    "build": "npm run assets:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify",
+    "player:verify": "node scripts/verify-adaptive-player-poc.mjs",
+    "build": "npm run assets:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify && npm run player:verify",
     "preview": "vite preview",
     "assets:verify": "node scripts/verify-public-assets.mjs"
   },

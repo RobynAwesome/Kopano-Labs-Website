@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useMemo } from 'react';
+import { getExperienceProfile, type ExperienceProfile } from '../experienceRuntime';
+import { createKPGSSceneContract, emitKPGSReceipt } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
+import '../lite-spatial.css';
 import { KopanoContextWorkbench } from './KopanoContextWorkbench';
 
 const KopanoScene = lazy(() => import('./KopanoScene').then((module) => ({ default: module.KopanoScene })));
@@ -49,12 +52,46 @@ const surfaces: Partial<Record<View, SurfaceDefinition>> = {
   },
 };
 
-export function RouteExperienceSurface({ view, compact = false }: { view: View; compact?: boolean }) {
-  const surface = surfaces[view];
-  if (!surface) return null;
+function LiteSpatialScene({ view, stage, profile }: { view: View; stage: string; profile: ExperienceProfile }) {
+  const contract = useMemo(() => createKPGSSceneContract(view, profile, 'home'), [profile, view]);
+
+  useEffect(() => {
+    const reason = profile.reducedMotion ? 'reduced-motion' : profile.saveData ? 'save-data' : profile.tier;
+    emitKPGSReceipt(contract, 'scene_mounted', { renderer: 'css-lite', webgl: false, reason });
+  }, [contract, profile]);
 
   return (
-    <section className={'route-experience-surface route-surface-' + view + (compact ? ' compact' : '')} aria-label={surface.eyebrow + ' spatial proof surface'} data-kpgs-surface={view}>
+    <div
+      className="kopano-scene kopano-scene-lite"
+      data-kpgs-scene={contract.scene.id}
+      data-kpgs-tier={contract.runtime.tier}
+      data-kpgs-renderer="css-lite"
+      aria-label="Kopano spatial proof surface, lightweight non-WebGL renderer"
+    >
+      <div className="lite-spatial-grid" aria-hidden="true" />
+      <div className="lite-spatial-orbit lite-orbit-a" aria-hidden="true" />
+      <div className="lite-spatial-orbit lite-orbit-b" aria-hidden="true" />
+      <div className="lite-spatial-core" aria-hidden="true"><span>KC</span></div>
+      <div className="lite-spatial-node lite-node-a" aria-hidden="true"><i /><span>INPUT</span></div>
+      <div className="lite-spatial-node lite-node-b" aria-hidden="true"><i /><span>CLASSIFY</span></div>
+      <div className="lite-spatial-node lite-node-c" aria-hidden="true"><i /><span>ROUTE</span></div>
+      <div className="lite-spatial-node lite-node-d" aria-hidden="true"><i /><span>EVIDENCE</span></div>
+      <span className="scene-label scene-label-a">KPGS · CSS LITE</span>
+      <span className="scene-label scene-label-b">NO WEBGL · PROOF PRESERVED</span>
+      <span className="scene-label scene-label-c">{stage}</span>
+    </div>
+  );
+}
+
+export function RouteExperienceSurface({ view, compact = false }: { view: View; compact?: boolean }) {
+  const surface = surfaces[view];
+  const profile = useMemo(() => getExperienceProfile(), []);
+  if (!surface) return null;
+
+  const avoidWebGL = profile.tier === 'lite' || profile.saveData || profile.reducedMotion;
+
+  return (
+    <section className={'route-experience-surface route-surface-' + view + (compact ? ' compact' : '')} aria-label={surface.eyebrow + ' spatial proof surface'} data-kpgs-surface={view} data-kpgs-renderer={avoidWebGL ? 'css-lite' : 'webgl'}>
       <div className="route-experience-copy">
         <span className="eyebrow">{surface.eyebrow}</span>
         <h2>{surface.title}</h2>
@@ -65,11 +102,13 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
         <div className="route-experience-boundary"><span>TRUTH BOUNDARY</span><strong>{surface.boundary}</strong></div>
       </div>
       <div className="route-experience-stage">
-        <Suspense fallback={<div className="scene-label scene-label-a" role="status">LOADING · SPATIAL CONTRACT</div>}><KopanoScene view={view} /></Suspense>
-        <motion.div className="route-experience-stage-copy" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
-          <span>LIVE SPATIAL CONTRACT</span>
+        {avoidWebGL
+          ? <LiteSpatialScene view={view} stage={surface.stage} profile={profile} />
+          : <Suspense fallback={<div className="scene-label scene-label-a" role="status">LOADING · SPATIAL CONTRACT</div>}><KopanoScene view={view} /></Suspense>}
+        <motion.div className="route-experience-stage-copy" initial={avoidWebGL ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
+          <span>{avoidWebGL ? 'LIVE LIGHTWEIGHT CONTRACT' : 'LIVE SPATIAL CONTRACT'}</span>
           <strong>{surface.stage}</strong>
-          <small>Pointer response follows route intent. Motion pauses when the page is hidden or reduced.</small>
+          <small>{avoidWebGL ? 'Capability gate preserved the proof surface without requesting WebGL.' : 'Pointer response follows route intent. Motion pauses when the page is hidden or reduced.'}</small>
         </motion.div>
       </div>
       {view === 'labs' && <KopanoContextWorkbench />}

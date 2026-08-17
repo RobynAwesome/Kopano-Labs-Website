@@ -7,10 +7,11 @@
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
+    "crawl:verify": "node scripts/verify-crawl-policy.mjs",
     "routes:generate": "node scripts/generate-route-shells.mjs",
     "convergence:verify": "node scripts/verify-convergence.mjs",
     "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
-    "build": "npm run assets:verify && npm run crawl:generate && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify",
+    "build": "npm run assets:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify",
     "preview": "vite preview",
     "assets:verify": "node scripts/verify-public-assets.mjs"
   },

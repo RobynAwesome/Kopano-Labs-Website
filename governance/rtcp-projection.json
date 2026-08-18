@@ -3,7 +3,7 @@
   "source": {
     "repository": "RobynAwesome/kopano-sovereign-hub",
     "path": "governance/rtcp.json",
-    "commit": "eaab28609219bdde19225549809109f13f35175c",
+    "commit": "c8cf3d0b726d32f00fd439392b56a4d925e4e5c0",
     "expectedSchema": "kopano.rtcp.runtime.v1"
   },
   "projection": {

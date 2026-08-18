@@ -43,7 +43,7 @@ export function ProjectRegistry() {
         <span className="eyebrow">ROBYNAWESOME · CANONICAL REPO ESTATE</span>
         <h2 id="project-registry-title">The work is bigger than the homepage.</h2>
       </div>
-      <p>RobynAwesome is the canonical GitHub namespace for Kopano-owned repositories. Production products, client systems and governance cores are separated from labs, workshops, learning repositories and upstream references so ownership does not become a false product claim.</p>
+      <p>RobynAwesome is the canonical GitHub namespace for Kopano-owned repositories. Production products, client systems, constitutional governance sources and runtime hubs are separated from labs, workshops, learning repositories and upstream references so ownership does not become a false product claim.</p>
     </div>
 
     <div className="project-registry-controls">
@@ -73,7 +73,7 @@ export function ProjectRegistry() {
         </a>)}
       </div>
       {rows.length === 0 && <div className="project-registry-boundary"><strong>NO MATCH</strong><span>Change the filter or search term. The manifest remains the source for this surface.</span></div>}
-      <p className="project-registry-law"><strong>KPGS boundary:</strong> repository ownership proves source authority, not production maturity. Public products still need their own deployment, user, field or client receipts.</p>
+      <p className="project-registry-law"><strong>KPGS boundary:</strong> repository ownership proves source authority, not production maturity. MAIN-BRAIN holds constitutional authority; runtime hubs and public products still need their own deployment, user, field or client receipts.</p>
     </>}
   </section>;
 }

@@ -4,7 +4,7 @@
   "version": "1.5.0",
   "type": "module",
   "scripts": {
-    "predev": "npm run experiments:sync && npm run evidence:sync",
+    "predev": "npm run experiments:sync && npm run evidence:sync && npm run rtcp:sync",
     "dev": "vite",
     "typecheck": "tsc --noEmit",
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
@@ -15,9 +15,11 @@
     "experiments:verify": "node scripts/verify-governed-experiments.mjs",
     "evidence:sync": "node scripts/sync-public-evidence.mjs",
     "evidence:verify": "node scripts/verify-public-evidence.mjs",
+    "rtcp:sync": "node scripts/sync-rtcp.mjs",
+    "rtcp:verify": "node scripts/verify-rtcp-projection.mjs",
     "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
     "player:verify": "node scripts/verify-adaptive-player-poc.mjs",
-    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify && npm run player:verify",
+    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run rtcp:sync && npm run rtcp:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify && npm run player:verify",
     "preview": "vite preview",
     "assets:verify": "node scripts/verify-public-assets.mjs"
   },

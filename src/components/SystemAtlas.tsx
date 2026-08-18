@@ -8,6 +8,7 @@ import type { View } from '../routeRegistry';
 import { useExperienceProfile } from '../useExperienceProfile';
 import { useKPGSVisibility } from '../useKPGSVisibility';
 import { FivesArenaFeed } from './FivesArenaFeed';
+import { RTCPHub } from './RTCPHub';
 
 export type SystemSceneId = 'context' | 'fives' | 'kasilink' | 'crisis' | 'starfall' | 'mars';
 
@@ -26,7 +27,7 @@ type SceneMotionProps = {
 };
 
 const systems: readonly SystemDefinition[] = [
-  { id: 'context', label: 'Kopano Context', kicker: 'ORCHESTRATION', detail: 'Agent mesh, routing and proof-aware coordination.', href: 'https://kopanocontext.kopanolabs.com', state: 'KC POC / OWNER GATE' },
+  { id: 'context', label: 'Kopano Context', kicker: 'ORCHESTRATION', detail: 'Agent mesh, routing and proof-aware coordination.', href: 'https://context.kopanolabs.com', state: 'KC POC / OWNER GATE' },
   { id: 'fives', label: 'FiveS Arena', kicker: 'COMMUNITY INFRASTRUCTURE', detail: 'Live football, booking, fixtures and competition systems.', href: 'https://fivesarena.com', state: 'LIVE' },
   { id: 'kasilink', label: 'KasiLink', kicker: 'OPPORTUNITY NETWORK', detail: 'Township opportunity, service discovery and low-data routing.', href: 'https://kasilink.com', state: 'LIVE' },
   { id: 'crisis', label: 'CrisisConnect', kicker: 'FIELD INTELLIGENCE', detail: 'GPS-anchored reporting, telemetry and resilient field evidence.', href: 'https://crisisconnect.kopanolabs.com', state: 'PUBLIC LANE' },
@@ -106,7 +107,8 @@ export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: b
     emitKPGSReceipt(contract, 'scene_selected', { particle_count: contract.budget.particleCount });
   }, [contract]);
   return <section className={`system-atlas ${compact ? 'compact' : ''}`} data-experience-tier={contract.runtime.tier} data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} data-kpgs-budget={contract.budget.maxDrawCalls} aria-label="Interactive Kopano Labs systems atlas">
-    <div className="atlas-heading"><div><span className="eyebrow">SPATIAL SYSTEMS ATLAS · INTERACTIVE</span><h2>Every system gets a world.</h2></div><p>Tap a live lane to change the scene. The visual form follows the product: pitch, network, radar, mesh, salvage field or rover.</p></div>
+    <RTCPHub compact={compact}/>
+    <div className="atlas-heading"><div><span className="eyebrow">EXPLORE THE ECOSYSTEM</span><h2>Every system keeps its own world.</h2></div><p>Choose a live lane below. The council coordinates across the company, but each product keeps its own experience, state, users and local agents.</p></div>
     <div className="atlas-shell"><div className="atlas-stage" data-system={active} data-kpgs-intent={contract.route.intentClass}><Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{position:[0,.4,5.6],fov:47}} gl={{antialias:contract.runtime.tier !== 'lite',alpha:true,powerPreference:contract.runtime.tier === 'full' ? 'high-performance' : 'default'}}><World id={active} contract={contract}/><OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} rotateSpeed={contract.runtime.tier === 'lite' ? .18 : .3} minPolarAngle={Math.PI*.28} maxPolarAngle={Math.PI*.72}/></Canvas><div className="atlas-stage-copy"><span>{selected.kicker}</span><h3>{selected.label}</h3><p>{selected.detail}</p><a href={selected.href} target={selected.href.startsWith('http')?'_blank':undefined} rel={selected.href.startsWith('http')?'noreferrer':undefined}>Open system ↗</a></div></div><div className="atlas-selector" role="list" aria-label="Choose a system scene">{systems.map((system,index)=><motion.button type="button" role="listitem" key={system.id} className={active===system.id?'active':''} onClick={()=>setActive(system.id)} whileHover={{x:4}}><span>{String(index+1).padStart(2,'0')}</span><div><strong>{system.label}</strong><small>{system.state}</small></div><b>↗</b></motion.button>)}</div></div>
     {active === 'fives' && <FivesArenaFeed/>}
   </section>;

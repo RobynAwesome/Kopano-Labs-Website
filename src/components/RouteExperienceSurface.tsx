@@ -5,6 +5,7 @@ import { createKPGSSceneContract, emitKPGSReceipt } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
 import '../lite-spatial.css';
 import { KopanoContextWorkbench } from './KopanoContextWorkbench';
+import { ProjectRegistry } from './ProjectRegistry';
 
 const KopanoScene = lazy(() => import('./KopanoScene').then((module) => ({ default: module.KopanoScene })));
 
@@ -43,12 +44,12 @@ const surfaces: Partial<Record<View, SurfaceDefinition>> = {
     signals: [['SOURCE', 'Who owns the authority?'], ['STATE', 'What is true now?'], ['ARTIFACT', 'What can be inspected?']],
   },
   content: {
-    eyebrow: 'PUBLIC ESTATE · NAVIGATION CONTRACT',
-    title: 'The estate stays connected without becoming one product.',
-    description: 'Projects, systems, experiments and governance surfaces keep their own identity. This map gives the visitor a next step while the labels preserve source lineage.',
-    stage: 'ESTATE → LINEAGE → NEXT STEP',
-    boundary: 'PUBLIC ESTATE ≠ SOURCE AUTHORITY',
-    signals: [['ESTATE', 'Projects stay distinct'], ['LINEAGE', 'Source is named'], ['ROUTE', 'Next action is visible']],
+    eyebrow: 'PUBLIC ESTATE · ROBYNAWESOME AUTHORITY',
+    title: 'Every public project gets a place in the estate.',
+    description: 'RobynAwesome is now the canonical GitHub namespace for Kopano-owned repositories. Operating products, client systems and governance cores remain distinct from labs, workshops, learning repositories and reference forks.',
+    stage: 'NAMESPACE → CLASSIFY → ROUTE → RECEIPT',
+    boundary: 'REPOSITORY OWNERSHIP ≠ PRODUCTION VALIDATION',
+    signals: [['OWNER', 'RobynAwesome namespace'], ['SCOPE', 'Public repositories only'], ['GATE', 'Product claims still require receipts']],
   },
 };
 
@@ -112,6 +113,7 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
         </motion.div>
       </div>
       {view === 'labs' && <KopanoContextWorkbench />}
+      {view === 'content' && <ProjectRegistry />}
     </section>
   );
 }

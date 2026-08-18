@@ -17,6 +17,10 @@ Allow: /robots.txt
 Allow: /sitemap.xml
 Allow: /release.json
 Allow: /governance.json
+Allow: /validation.json
+Allow: /projects.json
+Allow: /experiments.json
+Allow: /experiments.receipt.json
 Allow: /humans.txt
 Disallow: /reports/
 Disallow: /admin/

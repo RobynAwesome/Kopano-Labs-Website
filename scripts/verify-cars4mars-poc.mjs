@@ -15,7 +15,8 @@ const cars = await read('src/components/Cars4MarsMissionControl.tsx');
 const rover = await read('src/components/MarsRoverScene.tsx');
 const simModel = await read('src/cars4marsSimulation.ts');
 const simContractText = await read('public/cars4mars/simulation-scenarios.json');
-const foc = await read('src/components/FOCMatrix.tsx');
+const experimentsText = await read('public/experiments.json');
+const experimentsReceiptText = await read('public/experiments.receipt.json');
 const manifestText = await read('src/route-manifest.json');
 const releaseText = await read('public/release.json');
 const robots = await read('public/robots.txt');
@@ -43,11 +44,27 @@ try {
   if (!String(contract.truth_boundary).includes('model evidence only')) failures.push('simulation contract: truth boundary missing');
 } catch { failures.push('simulation contract: invalid JSON'); }
 
+// Connection proof belongs in the governed machine estate, not a public UI matrix.
+try {
+  const registry = JSON.parse(experimentsText);
+  const cars4mars = registry.nodes?.find((node) => node.id === 'cars4mars');
+  if (!cars4mars) failures.push('experiment estate: Cars4Mars node missing');
+  else {
+    if (cars4mars.state !== 'BUILD') failures.push('experiment estate: Cars4Mars must remain BUILD until physical validation receipt');
+    if (cars4mars.repo !== 'https://github.com/RobynAwesome/cars4mars-project') failures.push('experiment estate: Cars4Mars source repo connection drifted');
+    if (cars4mars.surface !== 'https://kopanolabs.com/Cars4Mars/') failures.push('experiment estate: Cars4Mars public surface connection drifted');
+  }
+} catch { failures.push('experiment estate: invalid JSON'); }
+
+try {
+  const receipt = JSON.parse(experimentsReceiptText);
+  if (receipt.gate !== 'ALLOW') failures.push('experiment estate: projection receipt gate is not ALLOW');
+  if (receipt.projection?.nodeCount < 1) failures.push('experiment estate: projection receipt has no governed nodes');
+} catch { failures.push('experiment estate receipt: invalid JSON'); }
+
 requireText('mission state model', cars, 'DESIGNED');
 requireText('design boundary', cars, 'not physical build evidence');
 requireText('verified mission video', cars, '01exG-aWj6g');
-requireText('FOC connected signal', foc, 'connected: Signal');
-requireText('FOC connected column', foc, '<b>CONNECTED</b>');
 requireText('Cars4Mars crawl policy', robots, 'Allow: /Cars4Mars/');
 requireText('Cars4Mars sitemap', sitemap, 'https://kopanolabs.com/Cars4Mars/');
 requireText('simulation visual boundary', rover, 'MODEL EVIDENCE ≠ PHYSICAL VALIDATION');
@@ -73,6 +90,6 @@ if (failures.length) {
 console.log('Cars4Mars POC contract: PASS');
 console.log('- five public evidence routes present');
 console.log('- design submission remains complete and physical validation remains honest');
-console.log('- FOC matrix exposes WORKS, VISIBLE, BACKING, CURRENT and CONNECTED');
+console.log('- governed experiment estate proves source ↔ public-surface connection without exposing a UI matrix');
 console.log('- Three.js rover preserves human-in-loop mode and exposes model-evidence simulation modes');
 console.log('- DFR-01 simulation contract is machine-readable and truth-bounded');

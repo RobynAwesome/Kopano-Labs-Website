@@ -1,29 +1,79 @@
 import { Float, Line, OrbitControls, Sparkles, Stars } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
 import { createKPGSSceneContract, emitKPGSReceipt, type KPGSSceneContract } from '../kpgsSceneContract';
-import { getExperienceProfile } from '../experienceRuntime';
 import type { View } from '../routeRegistry';
+import { useExperienceProfile } from '../useExperienceProfile';
 import { useKPGSVisibility } from '../useKPGSVisibility';
 
-const defaultSceneLabels: [string, string, string] = ['KOPANO MESH · KC FIRST', 'KC · LABS · MARS', 'REALITY → PROOF'];
+const defaultSceneLabels: [string, string, string] = ['Explore what we are building', 'Move through the work', 'Open a path to see the proof'];
 
 const sceneLabels: Partial<Record<View, [string, string, string]>> = {
-  home: ['KOPANO MESH · KC FIRST', 'KC · LABS · MARS', 'REALITY → PROOF'],
-  labs: ['KC / KOPANO CONTEXT · LOCAL POC', 'INPUT · CLASSIFY · ROUTE', 'POC → EVIDENCE'],
-  systems: ['KOPANO SYSTEMS · ADAPTIVE', 'CONTEXT · FIVES · KASILINK', 'STATE → ROUTE → PROOF'],
-  foc: ['EVIDENCE GATE · REVIEW', 'WORKS · VISIBLE · BACKED', 'CLAIM → ARTIFACT'],
-  proof: ['PROOF MESH · SOURCE AWARE', 'SOURCE · STATE · ARTIFACT', 'LINEAGE → OWNERSHIP'],
-  content: ['PUBLIC ESTATE · NAVIGABLE', 'PROJECTS · SYSTEMS · ROUTES', 'LINEAGE → NEXT STEP'],
+  home: ['Explore what we are building', 'Drag to look around', 'Open a path to see the proof'],
+  labs: ['Experiments becoming products', 'Built for real constraints', 'Open a project to see the evidence'],
+  systems: ['Systems that connect the work', 'Tap a system to explore', 'Live products, field tools and R&D'],
+  foc: ['Real work, not claims', 'Follow the evidence', 'Source → state → artifact'],
+  proof: ['See what backs the work', 'Trace the source', 'Evidence before explanation'],
+  content: ['Find the work quickly', 'Projects, systems and evidence', 'Choose what you came to see'],
 };
 
-const nodes: [number, number, number][] = [
-  [-2.15, .9, .1], [-1.75, -.8, .45], [-.55, 1.35, -.25],
-  [.1, -1.15, .3], [2.45, 1.05, -.3], [1.7, -1.2, .2],
-];
+const nodes = [
+  { position: [-2.15, .9, .1] as [number, number, number], label: 'Community systems' },
+  { position: [-1.75, -.8, .45] as [number, number, number], label: 'Field work' },
+  { position: [-.55, 1.35, -.25] as [number, number, number], label: 'Applied AI' },
+  { position: [.1, -1.15, .3] as [number, number, number], label: 'Public evidence' },
+  { position: [2.45, 1.05, -.3] as [number, number, number], label: 'Physical builds' },
+  { position: [1.7, -1.2, .2] as [number, number, number], label: 'Interactive labs' },
+] as const;
 
-function World({ contract }: { contract: KPGSSceneContract }) {
+const nodePoints = nodes.map((node) => node.position);
+
+function TopologyNode({
+  position,
+  index,
+  animate,
+  lite,
+  onFocus,
+}: {
+  position: [number, number, number];
+  index: number;
+  animate: boolean;
+  lite: boolean;
+  onFocus: (index: number | null) => void;
+}) {
+  const mesh = useRef<THREE.Mesh>(null);
+  const [hovered, setHovered] = useState(false);
+
+  useFrame((state) => {
+    if (!mesh.current) return;
+    const pulse = animate ? 1 + Math.sin(state.clock.elapsedTime * 1.3 + index) * .08 : 1;
+    const target = hovered ? 1.65 : pulse;
+    const scale = THREE.MathUtils.lerp(mesh.current.scale.x, target, .12);
+    mesh.current.scale.setScalar(scale);
+  });
+
+  return <Float speed={animate ? .5 + index * .06 : 0} floatIntensity={animate ? .12 : 0}>
+    <mesh
+      ref={mesh}
+      position={position}
+      onPointerEnter={(event) => {
+        event.stopPropagation();
+        setHovered(true);
+        onFocus(index);
+      }}
+      onPointerLeave={() => {
+        setHovered(false);
+        onFocus(null);
+      }}
+    >
+      <sphereGeometry args={[.085, lite ? 8 : 14, lite ? 8 : 14]} />
+      <meshBasicMaterial color={index % 2 ? '#63d5ff' : '#00e676'} />
+    </mesh>
+  </Float>;
+}
+
+function World({ contract, onFocus }: { contract: KPGSSceneContract; onFocus: (index: number | null) => void }) {
   const mesh = useRef<THREE.Group>(null);
   const core = useRef<THREE.Mesh>(null);
 
@@ -53,35 +103,54 @@ function World({ contract }: { contract: KPGSSceneContract }) {
       <icosahedronGeometry args={[2.2, lite ? 1 : 2]} />
       <meshBasicMaterial color="#f5a623" wireframe transparent opacity={.12} />
     </mesh>
-    {nodes.map((p, i) => <Float key={i} speed={animate ? .5 + i * .06 : 0} floatIntensity={animate ? .12 : 0}>
-      <mesh position={p}><sphereGeometry args={[.075, lite ? 8 : 14, lite ? 8 : 14]} /><meshBasicMaterial color={i % 2 ? '#63d5ff' : '#00e676'} /></mesh>
-    </Float>)}
-    <Line points={nodes} color="#63d5ff" transparent opacity={.2} lineWidth={.65} />
+    {nodes.map((node, index) => <TopologyNode
+      key={node.label}
+      position={node.position}
+      index={index}
+      animate={animate}
+      lite={lite}
+      onFocus={onFocus}
+    />)}
+    <Line points={nodePoints} color="#63d5ff" transparent opacity={.2} lineWidth={.65} />
     <mesh rotation={[Math.PI * .58, 0, -.25]}>
-      <torusGeometry args={[2.35, .012, 8, lite ? 90 : 180]} /><meshBasicMaterial color="#63d5ff" transparent opacity={.34} />
+      <torusGeometry args={[2.35, .012, 8, lite ? 90 : 180]} />
+      <meshBasicMaterial color="#63d5ff" transparent opacity={.34} />
     </mesh>
     {contract.budget.particleCount > 0 && <Stars radius={18} depth={12} count={contract.budget.particleCount} factor={1.4} saturation={0} fade speed={animate ? .15 : 0} />}
-    {contract.budget.sparkles > 0 && <Sparkles count={contract.budget.sparkles} scale={[7,4,4]} size={1.2} speed={animate ? .18 : 0} color="#9fdcff" />}
+    {contract.budget.sparkles > 0 && <Sparkles count={contract.budget.sparkles} scale={[7, 4, 4]} size={1.2} speed={animate ? .18 : 0} color="#9fdcff" />}
   </group>;
 }
 
 export function KopanoScene({ view = 'home' }: { view?: View }) {
-  const profile = useMemo(() => getExperienceProfile(), []);
+  const profile = useExperienceProfile();
   const contract = useMemo(() => createKPGSSceneContract(view, profile, 'home'), [profile, view]);
   const visible = useKPGSVisibility();
+  const [focusIndex, setFocusIndex] = useState<number | null>(null);
 
   useEffect(() => {
     emitKPGSReceipt(contract, 'scene_mounted', { particle_count: contract.budget.particleCount });
   }, [contract]);
 
   const labels = sceneLabels[view] ?? defaultSceneLabels;
-  return <div className="kopano-scene" data-kpgs-scene={contract.scene.id} data-kpgs-tier={contract.runtime.tier} aria-label={labels[0] + ' interactive spatial proof surface'}>
-    <Canvas dpr={contract.budget.dpr} frameloop={contract.runtime.animate && visible ? 'always' : 'demand'} camera={{ position: [0, .35, 6.5], fov: 48 }} gl={{ antialias: !contract.runtime.tier.startsWith('lite'), alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}>
-      <World contract={contract} />
+  const focusLabel = focusIndex === null ? labels[1] : nodes[focusIndex]?.label;
+
+  return <div
+    className="kopano-scene"
+    data-kpgs-scene={contract.scene.id}
+    data-kpgs-tier={contract.runtime.tier}
+    aria-label={labels[0] + ' interactive spatial surface'}
+  >
+    <Canvas
+      dpr={contract.budget.dpr}
+      frameloop={contract.runtime.animate && visible ? 'always' : 'demand'}
+      camera={{ position: [0, .35, 6.5], fov: 48 }}
+      gl={{ antialias: contract.runtime.tier !== 'lite', alpha: true, powerPreference: contract.runtime.tier === 'full' ? 'high-performance' : 'default' }}
+    >
+      <World contract={contract} onFocus={setFocusIndex} />
       <OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} minPolarAngle={Math.PI * .36} maxPolarAngle={Math.PI * .64} rotateSpeed={.25} />
     </Canvas>
     <div className="scene-label scene-label-a">{labels[0]}</div>
-    <div className="scene-label scene-label-b">{labels[1]}</div>
+    <div className="scene-label scene-label-b">{focusLabel}</div>
     <div className="scene-label scene-label-c">{labels[2]}</div>
   </div>;
 }

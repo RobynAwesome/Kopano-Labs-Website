@@ -1,7 +1,7 @@
 import { Float, Line } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { AnimatePresence, motion } from 'framer-motion';
-import { FormEvent, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import * as THREE from 'three';
 import { council, routeRtcpIntent, rtcpDomains, type RtcpRoute } from '../rtcpRuntime';
 import { useExperienceProfile } from '../useExperienceProfile';
@@ -11,6 +11,59 @@ const seatPositions = council.map((_, index) => {
   const angle = (index / council.length) * Math.PI * 2 - Math.PI / 2;
   return [Math.cos(angle) * 2.25, Math.sin(angle) * .72, Math.sin(angle) * 1.35] as [number, number, number];
 });
+
+const seatColors = ['#ffd28a', '#ffad8c', '#82dccb', '#bf9cff', '#ff9fc8', '#7bd8ff', '#ffc56d', '#ff8d78', '#9eb6c4', '#d4efff'] as const;
+
+function SeatGeometry({ index }: { index: number }) {
+  switch (index) {
+    case 0: return <icosahedronGeometry args={[.16, 1]} />;
+    case 1: return <octahedronGeometry args={[.17, 0]} />;
+    case 2: return <boxGeometry args={[.25, .25, .25]} />;
+    case 3: return <dodecahedronGeometry args={[.16, 0]} />;
+    case 4: return <torusGeometry args={[.14, .045, 8, 24]} />;
+    case 5: return <coneGeometry args={[.16, .3, 6]} />;
+    case 6: return <tetrahedronGeometry args={[.19, 0]} />;
+    case 7: return <cylinderGeometry args={[.13, .17, .26, 8]} />;
+    case 8: return <torusKnotGeometry args={[.105, .035, 32, 6, 2, 3]} />;
+    default: return <sphereGeometry args={[.15, 18, 18]} />;
+  }
+}
+
+function CouncilIdentity({ index, active, animate }: { index: number; active: boolean; animate: boolean }) {
+  const group = useRef<THREE.Group>(null);
+  const color = seatColors[index % seatColors.length];
+
+  useFrame((state, delta) => {
+    if (!group.current) return;
+    const targetScale = active ? 1.26 : 1;
+    const nextScale = THREE.MathUtils.damp(group.current.scale.x, targetScale, 5.2, delta);
+    group.current.scale.setScalar(nextScale);
+    if (animate) {
+      group.current.rotation.y += delta * (active ? .7 : .12);
+      group.current.rotation.x = Math.sin(state.clock.elapsedTime * .55 + index) * (active ? .12 : .035);
+    }
+  });
+
+  return <group ref={group}>
+    <mesh castShadow>
+      <SeatGeometry index={index} />
+      <meshStandardMaterial
+        color={active ? color : '#5f7c89'}
+        emissive={active ? color : '#13242d'}
+        emissiveIntensity={active ? .42 : .12}
+        metalness={active ? .58 : .34}
+        roughness={active ? .28 : .46}
+      />
+    </mesh>
+    {active && <>
+      <mesh rotation={[Math.PI / 2, 0, 0]} scale={1.45}>
+        <torusGeometry args={[.16, .012, 6, 28]} />
+        <meshBasicMaterial color={color} transparent opacity={.52} />
+      </mesh>
+      <pointLight color={color} intensity={1.9} distance={1.35} />
+    </>}
+  </group>;
+}
 
 function CouncilWorld({ activeIds, animate }: { activeIds: Set<string>; animate: boolean }) {
   const group = useRef<THREE.Group>(null);
@@ -41,28 +94,11 @@ function CouncilWorld({ activeIds, animate }: { activeIds: Set<string>; animate:
       </mesh>
     </Float>
 
-    {council.map((member, index) => {
-      const active = activeIds.has(member.id);
-      const p = seatPositions[index];
-      return <Float key={member.id} speed={animate ? .45 + index * .025 : 0} floatIntensity={animate ? .08 : 0}>
-        <group position={p} scale={active ? 1.18 : 1}>
-          <mesh>
-            <sphereGeometry args={[active ? .155 : .12, 18, 18]} />
-            <meshStandardMaterial
-              color={active ? '#ffcf82' : '#5f7c89'}
-              emissive={active ? '#7d481c' : '#13242d'}
-              emissiveIntensity={active ? .8 : .18}
-              metalness={.36}
-              roughness={.38}
-            />
-          </mesh>
-          {active && <mesh scale={1.7}>
-            <sphereGeometry args={[.14, 18, 18]} />
-            <meshBasicMaterial color="#ffcf82" transparent opacity={.12} />
-          </mesh>}
-        </group>
-      </Float>;
-    })}
+    {council.map((member, index) => <Float key={member.id} speed={animate ? .45 + index * .025 : 0} floatIntensity={animate ? .08 : 0}>
+      <group position={seatPositions[index]}>
+        <CouncilIdentity index={index} active={activeIds.has(member.id)} animate={animate} />
+      </group>
+    </Float>)}
 
     <Line points={[...seatPositions, seatPositions[0]]} color="#7fa9b9" transparent opacity={.18} lineWidth={.7} />
   </group>;
@@ -74,9 +110,13 @@ function LiteCouncil({ activeIds }: { activeIds: Set<string> }) {
     {council.map((member, index) => <i
       key={member.id}
       className={activeIds.has(member.id) ? 'active' : ''}
-      style={{ '--seat-angle': `${index * 36}deg` } as React.CSSProperties}
+      style={{ '--seat-angle': `${index * 36}deg` } as CSSProperties}
     />)}
   </div>;
+}
+
+function domainHref(host: string) {
+  return host.startsWith('http') ? host : `https://${host}`;
 }
 
 export function RTCPHub({ compact = false }: { compact?: boolean }) {
@@ -96,6 +136,12 @@ export function RTCPHub({ compact = false }: { compact?: boolean }) {
   };
 
   const selectedDomain = route?.domain ?? rtcpDomains[0];
+  const connected = route?.receipt.adapterId === 'kpgs.rtcp.vercel.route';
+  const transportMessage = !route
+    ? 'Ready for one request'
+    : connected
+      ? 'Hub connected · council route confirmed'
+      : 'Local council map · Hub transport is not reachable yet';
 
   return <section className={`rtcp-hub ${compact ? 'compact' : ''}`} aria-label="Round Table Council operating hub">
     <div className="rtcp-copy">
@@ -123,7 +169,10 @@ export function RTCPHub({ compact = false }: { compact?: boolean }) {
             <strong>{selectedDomain.label}</strong>
             <small>{selectedDomain.host} · {selectedDomain.state}</small>
           </div>
-          <b>{selectedDomain.integration === 'ADAPT_EXISTING' ? 'Existing system preserved' : selectedDomain.integration}</b>
+          <div className="rtcp-return-actions">
+            <b>{selectedDomain.integration === 'ADAPT_EXISTING' ? 'Existing system preserved' : selectedDomain.integration}</b>
+            {route && <a href={domainHref(selectedDomain.host)} target="_blank" rel="noreferrer">Open system ↗</a>}
+          </div>
         </motion.div>
       </AnimatePresence>
     </div>
@@ -136,7 +185,7 @@ export function RTCPHub({ compact = false }: { compact?: boolean }) {
       <div className="rtcp-stage-label">
         <span>ROUND TABLE COUNCIL</span>
         <strong>{route ? `${route.council.length} seats active` : 'Standing council'}</strong>
-        <small>{route?.execution.providerBinding === 'UNBOUND' || route?.execution.providerBinding === 'LOCAL_PROJECTION' ? 'Governance route only · provider execution not claimed' : route?.execution.providerBinding}</small>
+        <small>{transportMessage}{route ? ' · external AI provider not attached' : ''}</small>
       </div>
     </div>
 

@@ -105,7 +105,7 @@ jobs:
           ! grep -Eqi 'MMAO|GSMB|KPSMB|CCP|FOC risk|telemetry class' public/evidence.json
 
           jq -e '.schema == "kopano-labs.rtcp-public.v1" and (.council | length == 10)' public/rtcp.json
-          jq -e '.source.commit == "eaab28609219bdde19225549809109f13f35175c"' public/rtcp.json
+          jq -e '.source.commit == "c8cf3d0b726d32f00fd439392b56a4d925e4e5c0"' public/rtcp.json
           jq -e '.authority.projectionPolicy == "PUBLIC_COUNCIL_ROUTING"' public/rtcp.json
           jq -e '.authority.providerInternals == "WITHHOLD_UNTIL_VERIFIED_PUBLIC_RECEIPT"' public/rtcp.json
           jq -e '[.council[].name] == ["KC","CASSEY","CASSIE","KESSA","YASSIE","APEX","THARI","KHELOS","ANCHOR","ANTIGRAVITY"]' public/rtcp.json

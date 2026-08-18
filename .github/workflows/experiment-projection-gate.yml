@@ -5,17 +5,25 @@ on:
     paths:
       - 'governance/experiment-projection.json'
       - 'governance/public-evidence-projection.json'
+      - 'governance/rtcp-projection.json'
       - 'scripts/sync-sovereign-experiments.mjs'
       - 'scripts/verify-governed-experiments.mjs'
       - 'scripts/sync-public-evidence.mjs'
       - 'scripts/verify-public-evidence.mjs'
+      - 'scripts/sync-rtcp.mjs'
+      - 'scripts/verify-rtcp-projection.mjs'
       - 'src/data/governedExperiments.json'
       - 'src/data/governedExperiments.ts'
       - 'src/data/publicEvidence.json'
+      - 'src/data/rtcp.json'
+      - 'src/rtcpRuntime.ts'
+      - 'src/components/RTCPHub.tsx'
+      - 'src/components/rtcp-hub.css'
       - 'src/components/GovernanceExperimentMap.tsx'
       - 'src/components/FOCMatrix.tsx'
       - 'src/components/RealityValidationBar.tsx'
       - 'src/components/RouteExperienceSurface.tsx'
+      - 'src/components/SystemAtlas.tsx'
       - 'src/governance-experiments.css'
       - 'src/foc.css'
       - 'src/reality-validation.css'
@@ -59,6 +67,12 @@ jobs:
       - name: Verify human evidence contract
         run: npm run evidence:verify
 
+      - name: Sync pinned RTCP council projection
+        run: npm run rtcp:sync
+
+      - name: Verify RTCP council and domain invariants
+        run: npm run rtcp:verify
+
       - name: TypeScript 7 proof
         run: |
           npx tsc --version | grep -q '^Version 7\.'
@@ -73,6 +87,8 @@ jobs:
           test -f public/experiments.receipt.json
           test -f public/evidence.json
           test -f public/evidence.receipt.json
+          test -f public/rtcp.json
+          test -f public/rtcp.receipt.json
           jq -e '.schema == "kopano-labs.governed-experiments.v2"' public/experiments.json
           jq -e '.source.commit == "e7eaf19f97454abb6e0dd2579c28aac65bf7431a"' public/experiments.json
           jq -e '.authority.projectionPolicy == "PUBLIC_EVIDENCE_ONLY"' public/experiments.json
@@ -88,6 +104,16 @@ jobs:
           jq -e '.source.commit == "7cd91a678590a67d72a16b3b400caf0eb8d581a7" and .gate == "ALLOW"' public/evidence.receipt.json
           ! grep -Eqi 'MMAO|GSMB|KPSMB|CCP|FOC risk|telemetry class' public/evidence.json
 
+          jq -e '.schema == "kopano-labs.rtcp-public.v1" and (.council | length == 10)' public/rtcp.json
+          jq -e '.source.commit == "eaab28609219bdde19225549809109f13f35175c"' public/rtcp.json
+          jq -e '.authority.projectionPolicy == "PUBLIC_COUNCIL_ROUTING"' public/rtcp.json
+          jq -e '.authority.providerInternals == "WITHHOLD_UNTIL_VERIFIED_PUBLIC_RECEIPT"' public/rtcp.json
+          jq -e '[.council[].name] == ["KC","CASSEY","CASSIE","KESSA","YASSIE","APEX","THARI","KHELOS","ANCHOR","ANTIGRAVITY"]' public/rtcp.json
+          jq -e 'all(.domains[]; .integration == "ADAPT_EXISTING")' public/rtcp.json
+          jq -e '.domains[] | select(.id == "context") | .host == "context.kopanolabs.com"' public/rtcp.json
+          ! grep -q 'kopanocontext.kopanolabs.com' public/rtcp.json
+          jq -e '.gate == "ALLOW" and .projection.councilSeats == 10' public/rtcp.receipt.json
+
       - name: Upload projection receipts
         uses: actions/upload-artifact@v4
         with:
@@ -97,6 +123,8 @@ jobs:
             public/experiments.receipt.json
             public/evidence.json
             public/evidence.receipt.json
+            public/rtcp.json
+            public/rtcp.receipt.json
             public/governance.json
             public/release.json
           if-no-files-found: error

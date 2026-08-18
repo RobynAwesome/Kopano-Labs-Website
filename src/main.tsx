@@ -24,6 +24,7 @@ async function boot() {
     import('./now.css'),
     import('./foc.css'),
     import('./reality-validation.css'),
+    import('./governance-experiments.css'),
     import('./site-experience.css'),
     import('./system-atlas.css'),
     import('./visual-repair.css'),

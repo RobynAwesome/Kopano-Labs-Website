@@ -49,7 +49,8 @@ function TopologyNode({
     if (!mesh.current) return;
     const pulse = animate ? 1 + Math.sin(state.clock.elapsedTime * 1.3 + index) * .08 : 1;
     const target = hovered ? 1.65 : pulse;
-    mesh.current.scale.lerp(new THREE.Vector3(target, target, target), .12);
+    const scale = THREE.MathUtils.lerp(mesh.current.scale.x, target, .12);
+    mesh.current.scale.setScalar(scale);
   });
 
   return <Float speed={animate ? .5 + index * .06 : 0} floatIntensity={animate ? .12 : 0}>
@@ -149,8 +150,7 @@ export function KopanoScene({ view = 'home' }: { view?: View }) {
       <OrbitControls enablePan={false} enableZoom={false} enableRotate={contract.behavior.pointerResponse !== 'off'} minPolarAngle={Math.PI * .36} maxPolarAngle={Math.PI * .64} rotateSpeed={.25} />
     </Canvas>
     <div className="scene-label scene-label-a">{labels[0]}</div>
-    <div className="scene-label scene-label-b" aria-live="polite">{focusLabel}</div>
+    <div className="scene-label scene-label-b">{focusLabel}</div>
     <div className="scene-label scene-label-c">{labels[2]}</div>
-    <span className="scene-runtime-badge" aria-hidden="true">{contract.runtime.tier}</span>
   </div>;
 }

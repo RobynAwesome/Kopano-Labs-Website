@@ -31,6 +31,7 @@ export function RealityValidationBar() {
       <span>REALITY &gt; INDEX</span>
       <strong>Field validation is already happening.</strong>
       <a href="/FOC/#field-validation">Open the evidence ledger →</a>
+      <a href="/content/">Explore all public projects →</a>
     </div>
     <div className="reality-validation-track">
       {receipts.map((receipt) => <a key={receipt.title} className="reality-validation-item" href={receipt.href} target={receipt.href.startsWith('http') ? '_blank' : undefined} rel={receipt.href.startsWith('http') ? 'noreferrer' : undefined}>

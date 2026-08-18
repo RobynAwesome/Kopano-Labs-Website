@@ -62,24 +62,24 @@
     {
       "id": "foc",
       "path": "/FOC/",
-      "title": "FOC Validation — Kopano Labs",
-      "description": "Kopano Labs FOC validation matrix: working state, public visibility, backing and recency across active MVPs.",
+      "title": "Real-World Validation & FOC Evidence — Kopano Labs",
+      "description": "Inspect Kopano Labs real-world validation: Five's Arena at Hellenic FC, field operations for a North West lucerne farm, external client work, bounded academic development, MMAO/KPGS governance and CCP proof gates.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 6,
-      "intents": ["foc", "fake of concept", "freedom of concept", "validation", "backing", "mvp state"],
-      "humanPrompt": "I want to inspect FOC validation across the MVP portfolio."
+      "intents": ["foc", "validation", "clients", "real world proof", "hellenic", "fives arena", "lucerne", "alfalfa", "mmao", "kpgs", "ccp", "backing", "mvp state"],
+      "humanPrompt": "I want to inspect real-world validation, clients, field receipts and convergence evidence."
     },
     {
       "id": "home",
       "path": "/",
       "title": "Kopano Labs — South African Systems Studio",
-      "description": "Kopano Labs builds offline-first, proof-gated software, community infrastructure and cyber-physical experiments for real South African constraints.",
+      "description": "Kopano Labs builds and operates proof-gated systems across client venues, field agriculture, local businesses, AI orchestration and cyber-physical engineering under real South African constraints.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 7,
-      "intents": ["explore", "kopano", "south africa", "systems studio", "offline first", "current work", "official website"],
-      "humanPrompt": "I want to understand Kopano Labs and see what it is building now."
+      "intents": ["explore", "kopano", "south africa", "systems studio", "clients", "field work", "offline first", "current work", "official website"],
+      "humanPrompt": "I want to understand Kopano Labs, its real-world validation and what it is building now."
     },
     {
       "id": "systems",
@@ -141,6 +141,7 @@
     "/sitemap.xml",
     "/release.json",
     "/governance.json",
+    "/validation.json",
     "/humans.txt"
   ]
 }

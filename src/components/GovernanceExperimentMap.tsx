@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { governanceExperimentAuthority, governedExperiments, type GovernedExperiment } from '../data/governedExperiments';
+import { governanceExperimentAuthority, governedExperimentSource, governedExperiments, type GovernedExperiment } from '../data/governedExperiments';
 
 const stateTone = (state: GovernedExperiment['state']) => {
   if (['VALIDATED_LIVE', 'VALIDATED_FIELD', 'DELIVERED_EXTERNAL', 'LIVE', 'PUBLIC'].includes(state)) return 'validated';
@@ -9,6 +9,11 @@ const stateTone = (state: GovernedExperiment['state']) => {
 };
 
 const lifecycleIndex = ['PLANT', 'WATER', 'PRUNE', 'HARVEST'] as const;
+const relationLabel: Record<GovernedExperiment['relation'], string> = {
+  experiment: 'EXPERIMENT',
+  'validation-input': 'VALIDATION INPUT',
+  'evidence-surface': 'EVIDENCE SURFACE',
+};
 
 function ExperimentCard({ experiment, index }: { experiment: GovernedExperiment; index: number }) {
   const target = experiment.surface ?? experiment.repo;
@@ -16,6 +21,7 @@ function ExperimentCard({ experiment, index }: { experiment: GovernedExperiment;
 
   return <motion.article
     className={`governed-experiment-card ${stateTone(experiment.state)}`}
+    data-relation={experiment.relation}
     initial={{ opacity: 0, y: 18 }}
     whileInView={{ opacity: 1, y: 0 }}
     viewport={{ once: true, amount: .12 }}
@@ -25,7 +31,7 @@ function ExperimentCard({ experiment, index }: { experiment: GovernedExperiment;
       <span>{experiment.lifecycle ?? 'EXTENSION'}</span>
       <b>{experiment.state}</b>
     </div>
-    <small>{experiment.lane}</small>
+    <small>{relationLabel[experiment.relation]} · {experiment.lane.replaceAll('-', ' ')}</small>
     <h3>{experiment.name}</h3>
     <p>{experiment.description}</p>
     <div className="governed-experiment-backing"><span>BOUNDARY</span><strong>{experiment.backing}</strong></div>
@@ -41,25 +47,29 @@ export function GovernanceExperimentMap({ query = '' }: { query?: string }) {
   const visible = governedExperiments.filter((experiment) => !normalized || [
     experiment.name,
     experiment.lane,
+    experiment.relation,
     experiment.state,
     experiment.lifecycle ?? '',
     experiment.backing,
     experiment.description,
   ].join(' ').toLowerCase().includes(normalized));
+  const experiments = governedExperiments.filter((experiment) => experiment.relation === 'experiment').length;
   const validationInputs = governedExperiments.filter((experiment) => experiment.relation === 'validation-input').length;
+  const evidenceSurfaces = governedExperiments.filter((experiment) => experiment.relation === 'evidence-surface').length;
 
   return <section className="governed-experiment-map" aria-labelledby="governed-experiment-title">
     <div className="governed-experiment-heading">
       <div>
         <span className="eyebrow">KOPANO SOVEREIGN HUB · GOVERNANCE SYSTEMS EXPERIMENTS</span>
-        <h2 id="governed-experiment-title">The things we actually run.</h2>
+        <h2 id="governed-experiment-title">One governed estate. Different realities.</h2>
       </div>
-      <div className="governed-experiment-count"><strong>{visible.length}</strong><span>visible nodes</span><small>{validationInputs} external validation inputs</small></div>
+      <div className="governed-experiment-count"><strong>{visible.length}</strong><span>visible nodes</span><small>{experiments} experiments · {validationInputs} validation inputs · {evidenceSurfaces} evidence surface</small></div>
     </div>
 
     <div className="governance-authority-strip">
-      <div><span>CONSTITUTION</span><strong>{governanceExperimentAuthority.constitutional}</strong></div>
-      <div><span>RUNTIME</span><strong>{governanceExperimentAuthority.runtime}</strong></div>
+      <div><span>CONSTITUTION</span><strong>Introduction-to-MCP · MAIN-BRAIN</strong></div>
+      <div><span>RUNTIME</span><strong>Kopano Sovereign Hub</strong></div>
+      <div><span>PINNED SOURCE</span><strong>{governedExperimentSource.commit.slice(0, 12)} · SHA-256 {governedExperimentSource.sourceSha256.slice(0, 12)}</strong></div>
       <div><span>LAW</span><strong>{governanceExperimentAuthority.realityIndex}</strong></div>
     </div>
 
@@ -68,7 +78,7 @@ export function GovernanceExperimentMap({ query = '' }: { query?: string }) {
       <div><span>05</span><strong>FRUIT</strong><small>Only the live, receipt-backed ecosystem graduates here.</small></div>
     </div>
 
-    <p className="governed-experiment-law"><strong>{governanceExperimentAuthority.renterAssertion}</strong> · The Sovereign Hub is the runtime projection. MAIN-BRAIN stays landlord. Search/indexing observes the receipts; it does not create them.</p>
+    <p className="governed-experiment-law"><strong>{governanceExperimentAuthority.renterAssertion}</strong> · KopanoLabs.com projects an immutable Sovereign Hub registry commit. Presentation may adapt; relation, lifecycle, state, backing and ownership claims may not. Private context and non-public commercial terms stay outside the projection.</p>
 
     <div className="governed-experiment-grid">
       {visible.map((experiment, index) => <ExperimentCard key={experiment.id} experiment={experiment} index={index} />)}

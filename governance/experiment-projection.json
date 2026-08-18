@@ -1,0 +1,17 @@
+{
+  "schema": "kopano-labs.experiment-projection.v1",
+  "source": {
+    "repository": "RobynAwesome/kopano-sovereign-hub",
+    "path": "governance/experiments.json",
+    "commit": "5483b0a2be6ac19d7be969546df84140ef31bedd",
+    "expectedSchema": "kopano.sovereign.experiment-estate.v1"
+  },
+  "projection": {
+    "schema": "kopano-labs.governed-experiments.v2",
+    "sourceOfTruth": "SOVEREIGN_HUB_PINNED_COMMIT",
+    "presentationMayTransform": true,
+    "claimsMayTransform": false,
+    "privateContext": "WITHHOLD",
+    "commercialTerms": "WITHHOLD_UNLESS_EXPLICITLY_PUBLIC"
+  }
+}

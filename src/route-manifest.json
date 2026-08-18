@@ -106,13 +106,13 @@
     {
       "id": "content",
       "path": "/content/",
-      "title": "Content & Public Estate — Kopano Labs",
-      "description": "Navigate the Kopano Labs public estate: systems, projects, experiments, public domains and explicitly identified repository surfaces without inventing production source authority.",
+      "title": "Projects & Public Repo Estate — Kopano Labs",
+      "description": "Explore the canonical RobynAwesome public repository estate for Kopano Labs: operating products, client systems, governance cores, engineering projects, labs, workshops and reference repositories with source-authority boundaries.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 10,
-      "intents": ["content", "projects", "portfolio", "repositories", "repos", "estate", "domains", "apps"],
-      "humanPrompt": "I want the full public project and content estate."
+      "intents": ["content", "projects", "portfolio", "repositories", "repos", "estate", "robynawesome", "github", "domains", "apps"],
+      "humanPrompt": "I want the full public project and repository estate."
     },
     {
       "id": "proof",
@@ -142,6 +142,7 @@
     "/release.json",
     "/governance.json",
     "/validation.json",
+    "/projects.json",
     "/humans.txt"
   ]
 }

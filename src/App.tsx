@@ -5,6 +5,7 @@ import { emitKPGSReceipt } from './kpgsSceneContract';
 import { syncKPGSRuntime } from './experienceRuntime';
 import type { Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { FOCMatrix } from './components/FOCMatrix';
+import { GovernanceExperimentMap } from './components/GovernanceExperimentMap';
 import { RoverVisual } from './components/RoverVisual';
 import { SpatialDirectory } from './components/SpatialDirectory';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
@@ -15,16 +16,8 @@ const MarsRoverScene = lazy(() => import('./components/MarsRoverScene').then((mo
 const RouteExperienceSurface = lazy(() => import('./components/RouteExperienceSurface').then((module) => ({ default: module.RouteExperienceSurface })));
 const SystemAtlas = lazy(() => import('./components/SystemAtlas').then((module) => ({ default: module.SystemAtlas })));
 
-const experiments: [string, string, string][] = [
-  ['Gig Matcher', 'Jobs + income', 'Match people to verified local work and apprenticeship paths.'],
-  ['Youth Opportunity Finder', 'Education + youth', 'Find bursaries, programmes, communities and real next steps.'],
-  ['SA Language Engine', 'Language access', 'Design interfaces that work across South Africa\'s language reality.'],
-  ['SME Assistant', 'Small business', 'Practical operating help for informal and growing businesses.'],
-  ['Kopano Forge', 'Collaborative execution', 'Move from idea to tasks, artifacts, review and proof.'],
-  ['Kopano Code', 'Build + learn', 'Coding acceleration with craft learning and visible reasoning boundaries.'],
-];
-
 const systems: [string, string, string][] = [
+  ['Kopano Sovereign Hub', 'Governance experiment runtime', 'The runtime projection that binds KPGS experiments, adapters and receipts while MAIN-BRAIN remains constitutional authority.'],
   ['Kopano Context', 'Multi-agent orchestration', 'The orchestration and audit layer behind the ecosystem.'],
   ['FiveS Arena', 'Community infrastructure', 'Football booking, live fixtures, competition and local participation systems.'],
   ['KasiLink', 'Opportunity network', 'Township opportunity and service discovery with low-data routing.'],
@@ -34,6 +27,7 @@ const systems: [string, string, string][] = [
 ];
 
 const now = [
+  { id:'hub', mark:'KSH', title:'Kopano Sovereign Hub', state:'RUNTIME', detail:'KPGS governance experiments converge through one governed runtime without moving constitutional authority out of MAIN-BRAIN.', href:'/labs/', tone:'blue' },
   { id:'fives', mark:'5S', title:'FiveS Arena', state:'LIVE', detail:'Community football infrastructure with live booking and fixture surfaces.', href:'https://fivesarena.com', tone:'green' },
   { id:'kasilink', mark:'KL', title:'KasiLink', state:'LIVE', detail:'Local opportunity and service routing for township conditions.', href:'https://kasilink.com', tone:'blue' },
   { id:'cars4mars', mark:'MARS', title:'Cars4Mars', state:'BUILD', detail:'Rover design submitted. Hardware build and physical validation next.', href:'/Cars4Mars/', tone:'mars' },
@@ -43,8 +37,9 @@ const now = [
 
 const proof = [
   ['FOUNDER AUTHORITY', 'Kholofelo Robyn Rababalela', 'Founder · Director · Sovereign System Engineer'],
-  ['DEPLOYMENT PROVENANCE', 'Observed in current Vercel metadata', 'RobynAwesome/Kopano-Labs-Website · not canonical source authority'],
-  ['SOURCE AUTHORITY', 'Kopano Studio + Schematics lineage preserved', 'Kopano-Labs/Introduction-to-MCP'],
+  ['DEPLOYMENT PROVENANCE', 'Observed in current Vercel metadata', 'RobynAwesome/Kopano-Labs-Website · not constitutional source authority'],
+  ['CONSTITUTIONAL AUTHORITY', 'KPGS / MAIN-BRAIN', 'RobynAwesome/Introduction-to-MCP'],
+  ['RUNTIME AUTHORITY', 'Kopano Sovereign Hub', 'RobynAwesome/kopano-sovereign-hub · runtime projection'],
   ['OPERATING PRINCIPLE', 'No claims without evidence', 'Audit twice. Show the artifact.'],
 ];
 
@@ -114,8 +109,6 @@ export function App() {
     navigate(routeForIntent(intent || 'explore').id);
   };
 
-  const filteredExperiments = experiments.filter((item) => item.join(' ').toLowerCase().includes(query.toLowerCase()));
-
   return <div className="app-shell" data-kpgs-route={view}>
     <a className="skip-link" href="#main-content">Skip to content</a>
     <div className="ambient ambient-a"/><div className="ambient ambient-b"/>
@@ -124,7 +117,7 @@ export function App() {
       <nav aria-label="Primary">
         <NavButton id="home" active={primaryView} onClick={navigate}>Now</NavButton>
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
-        <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
+        <NavButton id="labs" active={primaryView} onClick={navigate}>Experiments</NavButton>
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
         <NavButton id="foc" active={primaryView} onClick={navigate}>Evidence gate</NavButton>
         <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
@@ -141,7 +134,7 @@ export function App() {
               <h1>Realism.<br/><em>Sovereignty. Proof.</em></h1>
               <p>Offline-first, proof-gated systems built to stay useful when the grid and the cloud do not.</p>
               <p className="studio-principle">Realism accommodates aesthetics; sovereignty accommodates both.</p>
-              <div className="hero-actions"><button className="primary" onClick={() => navigate('systems')}>Enter the systems</button><button className="secondary" onClick={() => navigate('labs')}>Explore the labs</button></div>
+              <div className="hero-actions"><button className="primary" onClick={() => navigate('systems')}>Enter the systems</button><button className="secondary" onClick={() => navigate('labs')}>Run the experiments</button></div>
             </motion.div>
             <motion.div className="spatial-stage" initial={{opacity:0,scale:.92,rotateY:10}} animate={{opacity:1,scale:1,rotateY:0}} transition={{duration:1,ease:[.23,1,.32,1]}}><Suspense fallback={<GovernedFallback label="Loading spatial systems map…"/>}><KopanoScene view={view}/></Suspense><div className="command-card adaptive-command spatial-panel"><div className="command-body"><span className="eyebrow">ROUTE BY NEED</span><form className="intent-form" onSubmit={resolveIntent}><input value={intent} onChange={(event)=>setIntent(event.target.value)} placeholder="football, jobs, crisis, rover, AI…" aria-label="What are you looking for?"/><button type="submit">Go →</button></form></div></div></motion.div>
           </div>
@@ -150,7 +143,7 @@ export function App() {
 
           <motion.div className="studio-intro" initial={{opacity:0,y:16}} whileInView={{opacity:1,y:0}} viewport={{once:true}}>
             <div><span className="eyebrow">KOPANO ECOSYSTEM</span><h2>Different problems. One engineering discipline.</h2></div>
-            <p>Kopano Labs connects orchestration, public-interest software, community infrastructure and cyber-physical builds without pretending they are the same product.</p>
+            <p>Kopano Labs connects governance experiments, client delivery, public-interest software, community infrastructure and cyber-physical builds without pretending they are the same product.</p>
           </motion.div>
 
           <section className="now-surface" aria-label="Current Kopano Labs work">
@@ -170,19 +163,24 @@ export function App() {
 
         {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><Suspense fallback={<GovernedFallback label="Loading evidence surface…"/>}><RouteExperienceSurface view="foc"/></Suspense><FOCMatrix/></motion.section>}
 
-        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">KOPANO LABS</span><h1>Experiments in motion.</h1><p>Practical tools around jobs, language access, small business and collaborative execution.</p></div><Suspense fallback={<GovernedFallback label="Loading KC local rehearsal…"/>}><RouteExperienceSurface view="labs"/></Suspense><div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search experiments…"/><span>{filteredExperiments.length}</span></div><SpatialDirectory items={filteredExperiments} kind="experiment" emptyLabel="No match."/></motion.section>}
+        {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
+          <div className="page-head"><span className="eyebrow">KOPANO LABS · KPGS</span><h1>Governance systems experiments.</h1><p>Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer and the external receipts that test whether the same governance discipline survives different realities.</p></div>
+          <Suspense fallback={<GovernedFallback label="Loading KC local rehearsal…"/>}><RouteExperienceSurface view="labs"/></Suspense>
+          <div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Cape Campass, Harvest, Starfall, field receipts…"/><span>KSH</span></div>
+          <GovernanceExperimentMap query={query}/>
+        </motion.section>}
 
-        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. Engage with the shape of each system before opening the full product.</p></div><Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas view={view}/></Suspense><SpatialDirectory items={systems} kind="system"/></motion.section>}
+        {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. The Sovereign Hub connects the governance experiment runtime without collapsing those systems into one product.</p></div><Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas view={view}/></Suspense><SpatialDirectory items={systems} kind="system"/></motion.section>}
 
         {isCars4MarsView(view) && <motion.section key={view} className="page mars-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
           <div className="mars-hero spatial-mars"><div><span className="eyebrow">CARS4MARS · BUILD IN PUBLIC</span><h1>From Cape Town<br/>to Mars.</h1><p>Drive the browser rover, inspect the mechanisms, then follow the evidence ledger. Design submitted. Physical build next.</p><div className="hero-actions"><a className="primary" href="/Cars4Mars/">Mission control</a><a className="secondary" href="/Cars4Mars/Media/">Watch</a></div></div><div className="spatial-stage mars-stage"><Suspense fallback={<GovernedFallback label="Loading rover simulation…"/>}><MarsRoverScene view={view}/></Suspense><div className="mission-chip"><span>MISSION STATE</span><b>DESIGN → PHYSICAL VALIDATION</b></div></div></div>
           <div id="mission-control"><Suspense fallback={<GovernedFallback label="Loading mission control…"/>}><Cars4MarsMissionControl focus={focusForView(view)}/></Suspense></div>
         </motion.section>}
 
-        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, deployment provenance and operating ownership. Private communications do not belong on this surface.</p></div><Suspense fallback={<GovernedFallback label="Loading proof surface…"/>}><RouteExperienceSurface view="proof"/></Suspense><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
+        {view === 'proof' && <motion.section key="proof" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">PUBLIC PROOF</span><h1>Public evidence.</h1><p>Source authority, runtime provenance, external validation and operating ownership. Private communications do not belong on this surface.</p></div><Suspense fallback={<GovernedFallback label="Loading proof surface…"/>}><RouteExperienceSurface view="proof"/></Suspense><div className="ledger">{proof.map(([kind,title,artifact])=><article key={title}><span className="status-dot"/><div><span className="eyebrow">{kind}</span><h3>{title}</h3></div><code>{artifact}</code></article>)}</div></motion.section>}
       </AnimatePresence>
     </main>
 
-    <footer><span>Kopano Labs · Cape Town, South Africa</span><span>Realism · Aesthetics · Sovereignty · Proof</span></footer>
+    <footer><span>Kopano Labs · Cape Town, South Africa</span><span>Reality → governance → receipt → public evidence</span></footer>
   </div>;
 }

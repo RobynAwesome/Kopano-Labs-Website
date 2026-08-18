@@ -3,7 +3,7 @@
   "domain": "https://KopanoLabs.com",
   "canonical_source_repository": null,
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
-  "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "source_authority": "RobynAwesome/Introduction-to-MCP",
   "governance": {
     "machine_manifest": "/governance.json",
     "agent_entry": "AGENTS.md",
@@ -20,6 +20,14 @@
     "projection_policy": "PUBLIC_EVIDENCE_ONLY",
     "private_context": "WITHHOLD",
     "commercial_terms": "WITHHOLD_UNLESS_EXPLICITLY_PUBLIC"
+  },
+  "public_evidence": {
+    "parser_runtime": ".NET 10",
+    "runtime_authority": "RobynAwesome/kopano-sovereign-hub",
+    "pinned_source_commit": "7cd91a678590a67d72a16b3b400caf0eb8d581a7",
+    "public_registry": "/evidence.json",
+    "receipt": "/evidence.receipt.json",
+    "ui_rule": "human-first by default; technical governance is progressive disclosure"
   },
   "production_dependency_policy": {
     "retired_repository": "RobynAwesome/cars4mars-landingpage",

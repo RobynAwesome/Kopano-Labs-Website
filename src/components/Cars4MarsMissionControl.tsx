@@ -5,17 +5,19 @@ import { RoverVisual } from './RoverVisual';
 export type Cars4MarsFocus = 'overview' | 'ledger' | 'architecture' | 'media' | 'support';
 
 const states = [
-  ['DESIGNED', 'LOCKED', 'Design submission completed 02 Aug 2026.', 'verified'],
+  ['DESIGNED', 'LOCKED', 'DFR-01 submission completed 02 Aug 2026. P-001 refines a bounded wheel interface without rewriting the baseline.', 'verified'],
   ['FUNDED', 'PENDING EVIDENCE', 'Funding discussion is not a funding instrument.', 'pending'],
   ['ORDERED', 'NO ORDER EVIDENCE', 'Advance only on PO, invoice or verified donor commitment.', 'blocked'],
-  ['ASSEMBLED', 'NOT STARTED', 'Advance on dated assembly record and configuration evidence.', 'blocked'],
-  ['TESTED', 'NOT STARTED', 'Advance on continuous footage, measurements and pass/fail record.', 'blocked'],
+  ['ASSEMBLED', 'NOT STARTED', 'P-001 wheel dimensioning is active design work; no fabricated wheel or assembled rover is claimed.', 'blocked'],
+  ['TESTED', 'NOT STARTED', 'Software/simulation evidence exists separately; physical mobility advances only on measured test evidence.', 'blocked'],
 ] as const;
 
 const ledger = [
   ['2026-08-02', 'DESIGN', 'Submission complete', 'DFR-01 delivered to the Cars4Mars organisers. Website delivery is not a release dependency.', 'verified'],
   ['2026-08-09', 'WEB', 'Mission surface reopened', 'Cars4Mars moved from report remediation back to public build, media, architecture and backing work.', 'verified'],
-  ['NEXT', 'PHYSICAL', 'Funding + procurement gate', 'Advance only when funding instruments, orders and the resulting physical evidence exist.', 'pending'],
+  ['2026-08-15', 'SOFTWARE', 'Deterministic control evidence recorded', 'Host-side and native embedded-core tests passed in the engineering repository. This remains software evidence, not rover mobility evidence.', 'verified'],
+  ['2026-08-18', 'MECHANICAL', 'P-001 wheel interface opened', 'At 19:17 SAST the physical-build transition was bounded to one 250 mm wheel interface. HPI d-school lab access and LightBurn 2 are facility context only; generated axle/wheel boards are design references only.', 'pending'],
+  ['NEXT', 'P-001A', 'Dimension before fabrication', 'Capture the rough sketch plus front, side and top/section views; then define wheel width, hub face, centre bore, bolt pattern, tread pockets, material and actual process before releasing a coupon.', 'pending'],
 ] as const;
 
 const architecture = [
@@ -77,7 +79,7 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
 
     {overview && <>
       <section id="status" className="mission-status" aria-label="Cars4Mars mission status">
-        <div className="mission-section-head"><span className="eyebrow">CURRENT MISSION STATE</span><h2>Design locked. Build next.</h2></div>
+        <div className="mission-section-head"><span className="eyebrow">CURRENT MISSION STATE · 18 AUG 2026</span><h2>DFR-01 locked. P-001 wheel interface active.</h2><p>Current mechanical state: generated concept → dimensioning. No wheel, axle, rocker-bogie assembly or rover is promoted to fabricated/tested until a dated physical receipt exists.</p></div>
         <div className="mission-state-grid">{states.map(([name, state, evidence, tone], index) => <motion.article key={name} className={`mission-state ${tone}`} initial={{opacity:0,y:18}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={{delay:index*.05}}><span>{String(index + 1).padStart(2,'0')}</span><b>{name}</b><strong>{state}</strong><p>{evidence}</p></motion.article>)}</div>
       </section>
 
@@ -93,7 +95,7 @@ export function Cars4MarsMissionControl({ focus = 'overview' }: { focus?: Cars4M
         <div className="visual-reference-grid">{visualReferences.map(([src, label, alt, note]) => <figure key={src} className="visual-reference-card"><img src={src} alt={alt} loading="lazy" decoding="async" sizes="(max-width: 760px) 100vw, 50vw" /><figcaption><strong>{label}</strong><span>{note}</span></figcaption></figure>)}</div>
       </section>
 
-      <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE</span><h2>Funding → orders → frame → drive → protected power.</h2></div><div className="gate-meta"><span>ACCEPTANCE</span><strong>ORDERS + LOADED DRIVE + TURN + E-STOP</strong></div></section>
+      <section className="next-gate-panel"><div><span className="eyebrow">NEXT PHYSICAL GATE · P-001A</span><h2>Wheel/hub dimensions → fit coupon → tread coupon → first wheel prototype.</h2></div><div className="gate-meta"><span>ACCEPTANCE</span><strong>ROUGH SKETCH + 3 VIEWS + DIMENSIONED INTERFACE + COUPON RECEIPT</strong></div></section>
     </>}
 
     {focus === 'architecture' && <RoverMechanismExplorer />}

@@ -50,6 +50,7 @@ export type RtcpRoute = {
 const projection = rtcpProjection as RtcpPublicProjection;
 export const council: readonly RtcpSeat[] = projection.council;
 export const rtcpDomains: readonly RtcpDomain[] = projection.domains;
+export const DEFAULT_RTCP_HUB_BASE = 'https://kopano-sovereign-hub-robynawesome-robynawesomes-projects.vercel.app';
 
 function localRoute(intent: string): RtcpRoute {
   const normalized = intent.toLowerCase();
@@ -76,7 +77,7 @@ function localRoute(intent: string): RtcpRoute {
     execution: {
       mode: 'GOVERNANCE_ROUTE_ONLY',
       providerBinding: 'LOCAL_PROJECTION',
-      next: 'The .NET RTCP gateway becomes authoritative when its public runtime endpoint is bound.',
+      next: 'The public RTCP transport will become authoritative automatically when its deployment is reachable.',
     },
     receipt: {
       gate: 'ALLOW',
@@ -84,14 +85,14 @@ function localRoute(intent: string): RtcpRoute {
       adapterId: 'kpgs.rtcp.local-projection',
       constitutionalAuthority: projection.authority.constitutional,
       runtimeAuthority: projection.authority.runtime,
-      truthBoundary: 'This browser route mirrors the pinned RTCP projection; it does not claim external model execution.',
+      truthBoundary: 'This browser route mirrors the pinned RTCP projection because the public transport was unavailable; it does not claim external model execution.',
     },
   };
 }
 
 export async function routeRtcpIntent(intent: string): Promise<RtcpRoute> {
-  const base = (import.meta.env.VITE_KOPANO_HUB_API_BASE as string | undefined)?.replace(/\/$/, '');
-  if (!base) return localRoute(intent);
+  const configured = import.meta.env.VITE_KOPANO_HUB_API_BASE as string | undefined;
+  const base = (configured || DEFAULT_RTCP_HUB_BASE).replace(/\/$/, '');
 
   try {
     const response = await fetch(`${base}/api/rtcp/route`, {

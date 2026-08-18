@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './styles.css';
+import { RealityValidationBar } from './components/RealityValidationBar';
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 const adaptivePlayerPath = location.pathname.toLowerCase().startsWith('/adaptive-player/');
@@ -22,6 +23,7 @@ async function boot() {
     import('./mission.css'),
     import('./now.css'),
     import('./foc.css'),
+    import('./reality-validation.css'),
     import('./site-experience.css'),
     import('./system-atlas.css'),
     import('./visual-repair.css'),
@@ -36,6 +38,7 @@ async function boot() {
 
   root.render(
     <React.StrictMode>
+      <RealityValidationBar />
       <App />
       <SiteExperience />
     </React.StrictMode>,

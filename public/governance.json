@@ -69,8 +69,11 @@
       "repository": "RobynAwesome/cars4mars-project",
       "pull_request": 5,
       "merged_commit": "e7d5a3d1ef797693e03f382a3c9900bc50de6f6a",
+      "artifact_provenance_pull_request": 7,
+      "artifact_provenance_merged_commit": "74fa057fed4a5a68ab9a0b9370b5f01b2be954a8",
+      "artifact_register_path": "engineering/mechanical/P-001_ARTIFACT_REGISTER.json",
       "active_issue": 6,
-      "ledger_id": "C4M-MECH-0001"
+      "ledger_ids": ["C4M-MECH-0001", "C4M-MECH-0002"]
     },
     "progressive_update": {
       "chain": ["APU","Progressive Update","#NB","bounded CRUD","SWFUS"],

@@ -74,40 +74,40 @@
       "id": "home",
       "path": "/",
       "title": "Kopano Labs — South African Systems Studio",
-      "description": "Kopano Labs builds and operates proof-gated systems across client venues, field agriculture, local businesses, AI orchestration and cyber-physical engineering under real South African constraints.",
+      "description": "Kopano Labs builds and operates proof-gated systems across client venues, field agriculture, governance experiments, local businesses, AI orchestration and cyber-physical engineering under real South African constraints.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 7,
-      "intents": ["explore", "kopano", "south africa", "systems studio", "clients", "field work", "offline first", "current work", "official website"],
+      "intents": ["explore", "kopano", "south africa", "systems studio", "governance experiments", "clients", "field work", "offline first", "current work", "official website"],
       "humanPrompt": "I want to understand Kopano Labs, its real-world validation and what it is building now."
     },
     {
       "id": "systems",
       "path": "/systems/",
       "title": "Interactive Systems Atlas — Kopano Labs",
-      "description": "Explore Kopano Labs systems through interactive spatial representations of FiveS Arena, KasiLink, CrisisConnect, Kopano Context, Starfall Salvage and Cars4Mars.",
+      "description": "Explore Kopano Labs systems through Kopano Sovereign Hub, Kopano Context, FiveS Arena, KasiLink, CrisisConnect, Starfall Salvage and Cars4Mars.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 8,
-      "intents": ["systems", "crisisconnect", "fives arena", "football", "fixtures", "kasilink", "starfall", "infrastructure", "threejs", "interactive"],
+      "intents": ["systems", "sovereign hub", "kopano context", "crisisconnect", "fives arena", "football", "kasilink", "starfall", "infrastructure", "threejs", "interactive"],
       "humanPrompt": "I want to interact with the systems being built."
     },
     {
       "id": "labs",
       "path": "/labs/",
-      "title": "Experiments — Kopano Labs",
-      "description": "Explore Kopano Labs experiments for jobs, youth opportunity, language access, small business, collaborative execution and coding.",
+      "title": "KPGS Governance Systems Experiments — Kopano Labs",
+      "description": "Explore the governed Kopano experiment estate: Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer, education experiments and external validation receipts routed through Kopano Sovereign Hub.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 9,
-      "intents": ["experiments", "jobs", "youth", "language", "sme", "tools"],
-      "humanPrompt": "I need an experiment or practical tool."
+      "intents": ["experiments", "governance systems experiments", "kopano sovereign hub", "kpgs", "mmao", "ccp", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation"],
+      "humanPrompt": "I want the actual governed experiment estate and its evidence state."
     },
     {
       "id": "content",
       "path": "/content/",
       "title": "Projects & Public Repo Estate — Kopano Labs",
-      "description": "Explore the canonical RobynAwesome public repository estate for Kopano Labs: operating products, client systems, governance cores, engineering projects, labs, workshops and reference repositories with source-authority boundaries.",
+      "description": "Explore the canonical RobynAwesome public repository estate for Kopano Labs: operating products, client systems, governance runtimes, engineering projects, labs, workshops and reference repositories with source-authority boundaries.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 10,
@@ -118,11 +118,11 @@
       "id": "proof",
       "path": "/proof/",
       "title": "Proof & Lineage — Kopano Labs",
-      "description": "Inspect the source lineage, evidence state, public artifacts and verification model behind Kopano Labs work.",
+      "description": "Inspect constitutional source authority, runtime provenance, real-world validation, public artifacts and verification behind Kopano Labs work.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 11,
-      "intents": ["proof", "source", "audit", "lineage", "verification"],
+      "intents": ["proof", "source", "audit", "lineage", "verification", "main brain", "sovereign hub", "receipts"],
       "humanPrompt": "I want evidence, source lineage and verification."
     }
   ],
@@ -143,6 +143,7 @@
     "/governance.json",
     "/validation.json",
     "/projects.json",
+    "/experiments.json",
     "/humans.txt"
   ]
 }

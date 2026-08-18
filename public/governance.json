@@ -57,7 +57,64 @@
     "baseline": "DFR-01",
     "submitted": "2026-08-02",
     "state_model": ["DESIGNED","FUNDED","ORDERED","ASSEMBLED","TESTED","VALIDATED"],
-    "truth_rule": "web progress does not imply physical progress"
+    "truth_rule": "web progress, generated imagery, simulation, software evidence and facility access do not imply physical progress",
+    "observed_at": "2026-08-18T19:17:00+02:00",
+    "canonical_governance": {
+      "repository": "RobynAwesome/Introduction-to-MCP",
+      "pull_request": 78,
+      "merged_commit": "a064929dcca43b1d78dc11ff7b289e2d76fbbdb1",
+      "contract_path": "governance/kpgs-vnext/domain-contracts/cars4mars/README.md"
+    },
+    "engineering_evidence": {
+      "repository": "RobynAwesome/cars4mars-project",
+      "pull_request": 5,
+      "merged_commit": "e7d5a3d1ef797693e03f382a3c9900bc50de6f6a",
+      "active_issue": 6,
+      "ledger_id": "C4M-MECH-0001"
+    },
+    "progressive_update": {
+      "chain": ["APU","Progressive Update","#NB","bounded CRUD","SWFUS"],
+      "apu_state": "YELLOW",
+      "crud_decision": "HOLD",
+      "swfus_physical_state_promotion": false,
+      "reason": "P-001 wheel concept is coherent but critical hub/interface dimensions and physical coupon evidence are still absent"
+    },
+    "active_p_step": {
+      "id": "P-001A",
+      "part": "wheel_interface",
+      "locked_outer_diameter_mm": 250,
+      "evidence_state": "GENERATED_CONCEPT_TO_DIMENSIONING",
+      "next_required_packet": [
+        "rough_hand_sketch",
+        "front_view",
+        "side_view",
+        "top_or_section_view",
+        "wheel_width_mm",
+        "hub_mounting_face_diameter_mm",
+        "center_bore_diameter_mm",
+        "bolt_pattern",
+        "tread_pocket_dimensions_mm",
+        "prototype_material",
+        "printer_or_process"
+      ],
+      "small_piece_sequence": [
+        "P-001A dimension interface",
+        "P-001B hub and bolt-pattern coupon",
+        "P-001C tread-insert coupon",
+        "P-001D first full wheel prototype"
+      ]
+    },
+    "facility_context": {
+      "location": "HPI d-school fabrication / 3D lab",
+      "lightburn_2_available": true,
+      "classification": "facility_context_only",
+      "fabricated_part_claim": false
+    },
+    "generated_design_references": [
+      "Cars4Mars Axle Module Concept Board",
+      "Cars4Mars Axle Module Assembly Guide",
+      "Cars4Mars Part 1 - Wheel Concept Poster"
+    ]
   },
   "monitoring": {"mode":"transition_only","repeat_unchanged_known_defect":false}
 }

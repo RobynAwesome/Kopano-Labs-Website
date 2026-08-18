@@ -3,7 +3,7 @@
   "headline": "Built in real environments.",
   "intro": "We test our systems with real operators, real constraints and real work — not only inside demos.",
   "primaryAction": "Explore our work",
-  "primaryActionHref": "/content/",
+  "primaryActionHref": "https://kopanolabs.com/content/",
   "items": [
     {
       "id": "bookit-fivesarena",
@@ -19,7 +19,7 @@
       "area": "Agriculture",
       "state": "In the field",
       "summary": "Decision support for frost, irrigation, crop regrowth, livestock and water security on a working farm.",
-      "href": "/FOC/#field-validation"
+      "href": "https://kopanolabs.com/FOC/#field-validation"
     },
     {
       "id": "flow-inc-ink",
@@ -27,13 +27,13 @@
       "area": "Local business",
       "state": "Delivered",
       "summary": "Completed digital delivery for an operating tattoo and piercing business in Midrand.",
-      "href": "/FOC/#field-validation"
+      "href": "https://kopanolabs.com/FOC/#field-validation"
     }
   ],
   "technical": {
-    "source": "https://github.com/RobynAwesome/Introduction-to-MCP",
+    "source": "https://github.com/RobynAwesome/Introduction-to-MCP/tree/master/Schematics/21-KOPANO-PHU%20GOVERNACE%20SYSTEMS/MAIN-BRAIN",
     "runtime": "https://github.com/RobynAwesome/kopano-sovereign-hub",
     "rule": "Detailed governance stays behind the interface. Public claims remain bounded by receipts.",
-    "detailsHref": "/proof/"
+    "detailsHref": "https://kopanolabs.com/proof/"
   }
 }

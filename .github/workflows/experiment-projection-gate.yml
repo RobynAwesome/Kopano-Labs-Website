@@ -1,0 +1,74 @@
+name: experiment-projection-gate
+
+on:
+  pull_request:
+    paths:
+      - 'governance/experiment-projection.json'
+      - 'scripts/sync-sovereign-experiments.mjs'
+      - 'scripts/verify-governed-experiments.mjs'
+      - 'src/data/governedExperiments.json'
+      - 'src/data/governedExperiments.ts'
+      - 'src/components/GovernanceExperimentMap.tsx'
+      - 'src/governance-experiments.css'
+      - 'src/route-manifest.json'
+      - 'public/governance.json'
+      - 'public/release.json'
+      - 'package.json'
+      - '.github/workflows/experiment-projection-gate.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  projection:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Set up Node 22
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Sync pinned Sovereign Hub registry
+        run: npm run experiments:sync
+
+      - name: Verify projection, relation and privacy gates
+        run: npm run experiments:verify
+
+      - name: TypeScript 7 proof
+        run: |
+          npx tsc --version | grep -q '^Version 7\.'
+          npm run typecheck
+
+      - name: Full Adaptive PWA build
+        run: npm run build
+
+      - name: Verify generated public receipts
+        run: |
+          test -f public/experiments.json
+          test -f public/experiments.receipt.json
+          jq -e '.schema == "kopano-labs.governed-experiments.v2"' public/experiments.json
+          jq -e '.source.commit == "e7eaf19f97454abb6e0dd2579c28aac65bf7431a"' public/experiments.json
+          jq -e '.authority.projectionPolicy == "PUBLIC_EVIDENCE_ONLY"' public/experiments.json
+          jq -e '.nodes[] | select(.id == "portfolio") | .relation == "evidence-surface"' public/experiments.json
+          jq -e '.nodes[] | select(.id == "freddy-nw-alfalfa") | .relation == "validation-input" and (.backing | contains("commercial terms withheld"))' public/experiments.json
+          jq -e '.gate == "ALLOW" and .projection.nodeCount == 16' public/experiments.receipt.json
+          ! grep -Eq 'R[[:space:]]?3[,\.]?500|3500/month' public/experiments.json
+
+      - name: Upload projection receipt
+        uses: actions/upload-artifact@v4
+        with:
+          name: governed-experiment-projection-receipt
+          path: |
+            public/experiments.json
+            public/experiments.receipt.json
+            public/governance.json
+            public/release.json
+          if-no-files-found: error

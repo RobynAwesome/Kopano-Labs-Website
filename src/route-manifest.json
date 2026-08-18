@@ -96,12 +96,12 @@
       "id": "labs",
       "path": "/labs/",
       "title": "KPGS Governance Systems Experiments — Kopano Labs",
-      "description": "Explore the governed Kopano experiment estate: Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer, education experiments and external validation receipts routed through Kopano Sovereign Hub.",
+      "description": "Explore the governed Kopano experiment estate projected from a pinned Kopano Sovereign Hub registry: Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer, education experiments and bounded external validation inputs.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 9,
-      "intents": ["experiments", "governance systems experiments", "kopano sovereign hub", "kpgs", "mmao", "ccp", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation"],
-      "humanPrompt": "I want the actual governed experiment estate and its evidence state."
+      "intents": ["experiments", "governance systems experiments", "kopano sovereign hub", "kpgs", "mmao", "ccp", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation", "projection receipt"],
+      "humanPrompt": "I want the governed experiment estate, its source commit and evidence state."
     },
     {
       "id": "content",
@@ -144,6 +144,7 @@
     "/validation.json",
     "/projects.json",
     "/experiments.json",
+    "/experiments.receipt.json",
     "/humans.txt"
   ]
 }

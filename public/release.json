@@ -12,6 +12,15 @@
     "stateless_renter_entryway": "docs/STATELESS_RENTER_ENTRYWAY.md",
     "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY"
   },
+  "experiment_projection": {
+    "runtime_authority": "RobynAwesome/kopano-sovereign-hub",
+    "pinned_source_commit": "e7eaf19f97454abb6e0dd2579c28aac65bf7431a",
+    "public_registry": "/experiments.json",
+    "receipt": "/experiments.receipt.json",
+    "projection_policy": "PUBLIC_EVIDENCE_ONLY",
+    "private_context": "WITHHOLD",
+    "commercial_terms": "WITHHOLD_UNLESS_EXPLICITLY_PUBLIC"
+  },
   "production_dependency_policy": {
     "retired_repository": "RobynAwesome/cars4mars-landingpage",
     "retired_repo_is_dependency": false,

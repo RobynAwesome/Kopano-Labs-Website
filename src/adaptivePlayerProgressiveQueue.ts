@@ -16,9 +16,10 @@ const EVIDENCE = [
   'git://RobynAwesome/Kopano-Labs-Website/b45ed21b795f8cf2cd601dd141b056d033be3a1b',
 ];
 
+type BlockedQueueStatus = 'held' | 'rejected';
 type QueueItem = {
   update: ProgressiveUpdate;
-  status: 'pending' | 'held' | 'rejected';
+  status: 'pending' | BlockedQueueStatus;
   queued_at: string;
   receipt: SwfusReceipt | null;
 };
@@ -27,7 +28,7 @@ export type PlayerProgressiveStatus =
   | { state: 'idle'; reason: null; receipt: null }
   | { state: 'pending'; reason: string; receipt: null }
   | { state: 'applied'; reason: null; receipt: SwfusReceipt }
-  | { state: 'held' | 'rejected'; reason: string; receipt: SwfusReceipt };
+  | { state: BlockedQueueStatus; reason: string; receipt: SwfusReceipt };
 
 function randomId(prefix: string) {
   const suffix = typeof crypto !== 'undefined' && typeof crypto.randomUUID === 'function'
@@ -65,6 +66,10 @@ function writeQueue(items: QueueItem[]) {
   writeJson(QUEUE_KEY, items);
 }
 
+function isBlockedStatus(status: QueueItem['status']): status is BlockedQueueStatus {
+  return status === 'held' || status === 'rejected';
+}
+
 function endpoint() {
   const configured = (import.meta.env.VITE_KPGS_PROGRESSIVE_UPDATE_ENDPOINT || '').trim();
   return configured || null;
@@ -88,8 +93,11 @@ export function readSavedPlayerProfile(): PlayerProfile | null {
 
 export function readPlayerProgressiveStatus(): PlayerProgressiveStatus {
   const items = queue();
-  const blocked = items.find((item) => item.status !== 'pending');
-  if (blocked?.receipt) {
+  const blocked = items.find(
+    (item): item is QueueItem & { status: BlockedQueueStatus; receipt: SwfusReceipt } =>
+      isBlockedStatus(item.status) && item.receipt !== null,
+  );
+  if (blocked) {
     return { state: blocked.status, receipt: blocked.receipt, reason: decisiveReason(blocked.receipt) };
   }
   if (items.length) {

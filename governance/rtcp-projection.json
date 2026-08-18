@@ -1,0 +1,16 @@
+{
+  "schema": "kopano-labs.rtcp-projection.v1",
+  "source": {
+    "repository": "RobynAwesome/kopano-sovereign-hub",
+    "path": "governance/rtcp.json",
+    "commit": "c8cf3d0b726d32f00fd439392b56a4d925e4e5c0",
+    "expectedSchema": "kopano.rtcp.runtime.v1"
+  },
+  "projection": {
+    "schema": "kopano-labs.rtcp-public.v1",
+    "sourceOfTruth": "SOVEREIGN_HUB_PINNED_COMMIT",
+    "presentationMayTransform": true,
+    "claimsMayTransform": false,
+    "providerInternals": "WITHHOLD_UNTIL_VERIFIED_PUBLIC_RECEIPT"
+  }
+}

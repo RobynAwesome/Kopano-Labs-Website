@@ -85,22 +85,20 @@ jobs:
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/content/"' dist/content/index.html
 
-      - name: Verify FOC evidence gate is functional
+      - name: Verify parser-driven public evidence gate
         run: |
           test -f src/components/FOCMatrix.tsx
-          test -f src/foc.css
-          ! grep -q 'FAKE OF CONCEPT' src/components/FOCMatrix.tsx
-          ! grep -q 'FREEDOM OF CONCEPT' src/components/FOCMatrix.tsx
-          ! grep -q 'foc-groups' src/components/FOCMatrix.tsx
-          grep -q 'const reviewContract' src/components/FOCMatrix.tsx
-          grep -q "'WORKS'" src/components/FOCMatrix.tsx
-          grep -q "'VISIBLE'" src/components/FOCMatrix.tsx
-          grep -q "'BACKED'" src/components/FOCMatrix.tsx
-          grep -q 'FiveS Arena' src/components/FOCMatrix.tsx
-          grep -q 'KasiLink' src/components/FOCMatrix.tsx
-          grep -q 'Cape Campus' src/components/FOCMatrix.tsx
-          grep -q 'Starfall Salvage' src/components/FOCMatrix.tsx
-          grep -q 'classify(product)' src/components/FOCMatrix.tsx
+          test -f src/data/publicEvidence.json
+          test -f public/evidence.json
+          test -f public/evidence.receipt.json
+          test -f scripts/sync-public-evidence.mjs
+          test -f scripts/verify-public-evidence.mjs
+          ! grep -Eq 'FAKE OF CONCEPT|FREEDOM OF CONCEPT|foc-groups|reviewContract' src/components/FOCMatrix.tsx
+          grep -q "import evidence from '../data/publicEvidence.json'" src/components/FOCMatrix.tsx
+          grep -q 'publicEvidence.items.map' src/components/FOCMatrix.tsx
+          jq -e '.schema == "kopano.public-evidence.v1" and (.items | length > 0)' public/evidence.json
+          jq -e '.gate == "ALLOW"' public/evidence.receipt.json
+          npm run evidence:verify
 
       - name: Verify current-work visual surface
         run: |
@@ -136,6 +134,7 @@ jobs:
           grep -q 'gsap' package.json
           grep -q 'saveData' src/experienceRuntime.ts
           grep -q 'getExperienceProfile' src/experienceRuntime.ts
+          grep -q 'kpgs:profile-change' src/experienceRuntime.ts
           grep -q 'data-experience-tier' src/components/SystemAtlas.tsx
 
       - name: Verify Search Console baseline is preserved

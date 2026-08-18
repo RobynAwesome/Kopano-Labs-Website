@@ -57,7 +57,8 @@ for (const capability of ["profile.tier === 'lite'", 'profile.saveData', 'profil
 }
 if (!routeSurfaceSource.includes("renderer: 'css-lite', webgl: false")) throw new Error('Convergence gate: CSS-lite renderer receipt must declare webgl=false');
 if (!routeSurfaceSource.includes('data-kpgs-renderer="css-lite"')) throw new Error('Convergence gate: CSS-lite renderer must remain inspectable in the DOM');
-if (!routeSurfaceSource.includes('NO WEBGL · PROOF PRESERVED')) throw new Error('Convergence gate: lightweight proof boundary label missing');
+if (!routeSurfaceSource.includes('FAST PATH · SAME CONTENT')) throw new Error('Convergence gate: lightweight renderer must promise content parity');
+if (!routeSurfaceSource.includes('same content while using a lighter renderer')) throw new Error('Convergence gate: lightweight renderer behavior explanation missing');
 
 const index = await readFile(new URL('index.html', root), 'utf8');
 if (!/assets\/.*\.js/.test(index)) throw new Error('Convergence gate: Vite JS bundle missing from dist/index.html');

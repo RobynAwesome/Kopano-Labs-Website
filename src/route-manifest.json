@@ -62,13 +62,13 @@
     {
       "id": "foc",
       "path": "/FOC/",
-      "title": "Real-World Validation & FOC Evidence — Kopano Labs",
-      "description": "Inspect Kopano Labs real-world validation: Five's Arena at Hellenic FC, field operations for a North West lucerne farm, external client work, bounded academic development, MMAO/KPGS governance and CCP proof gates.",
+      "title": "Real-World Work — Kopano Labs",
+      "description": "See where Kopano Labs has been tested in real environments: Five's Arena at Hellenic FC, a North West lucerne farm and delivered work for Flow Inc Ink.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 6,
-      "intents": ["foc", "validation", "clients", "real world proof", "hellenic", "fives arena", "lucerne", "alfalfa", "mmao", "kpgs", "ccp", "backing", "mvp state"],
-      "humanPrompt": "I want to inspect real-world validation, clients, field receipts and convergence evidence."
+      "intents": ["real work", "clients", "case studies", "validation", "hellenic", "fives arena", "lucerne", "alfalfa", "flow inc ink", "proof"],
+      "humanPrompt": "Show me where Kopano Labs has worked in the real world."
     },
     {
       "id": "home",
@@ -78,8 +78,8 @@
       "index": true,
       "crawl": true,
       "sitemapOrder": 7,
-      "intents": ["explore", "kopano", "south africa", "systems studio", "governance experiments", "clients", "field work", "offline first", "current work", "official website"],
-      "humanPrompt": "I want to understand Kopano Labs, its real-world validation and what it is building now."
+      "intents": ["explore", "kopano", "south africa", "systems studio", "clients", "field work", "offline first", "current work", "official website"],
+      "humanPrompt": "I want to understand Kopano Labs and what it is building now."
     },
     {
       "id": "systems",
@@ -95,19 +95,19 @@
     {
       "id": "labs",
       "path": "/labs/",
-      "title": "KPGS Governance Systems Experiments — Kopano Labs",
-      "description": "Explore the governed Kopano experiment estate projected from a pinned Kopano Sovereign Hub registry: Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer, education experiments and bounded external validation inputs.",
+      "title": "Labs & Experiments — Kopano Labs",
+      "description": "See what Kopano Labs is testing across community infrastructure, agriculture, education, mobility, games and engineering.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 9,
-      "intents": ["experiments", "governance systems experiments", "kopano sovereign hub", "kpgs", "mmao", "ccp", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation", "projection receipt"],
-      "humanPrompt": "I want the governed experiment estate, its source commit and evidence state."
+      "intents": ["labs", "experiments", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation"],
+      "humanPrompt": "Show me the projects and experiments Kopano Labs is testing."
     },
     {
       "id": "content",
       "path": "/content/",
-      "title": "Projects & Public Repo Estate — Kopano Labs",
-      "description": "Explore the canonical RobynAwesome public repository estate for Kopano Labs: operating products, client systems, governance runtimes, engineering projects, labs, workshops and reference repositories with source-authority boundaries.",
+      "title": "Projects — Kopano Labs",
+      "description": "Explore Kopano Labs public projects and source repositories across products, client systems, governance runtimes, engineering, labs and workshops.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 10,
@@ -117,13 +117,13 @@
     {
       "id": "proof",
       "path": "/proof/",
-      "title": "Proof & Lineage — Kopano Labs",
-      "description": "Inspect constitutional source authority, runtime provenance, real-world validation, public artifacts and verification behind Kopano Labs work.",
+      "title": "Technical Proof — Kopano Labs",
+      "description": "Inspect source authority, runtime provenance, public artifacts and technical verification behind Kopano Labs work.",
       "index": true,
       "crawl": true,
       "sitemapOrder": 11,
       "intents": ["proof", "source", "audit", "lineage", "verification", "main brain", "sovereign hub", "receipts"],
-      "humanPrompt": "I want evidence, source lineage and verification."
+      "humanPrompt": "I want the technical evidence, source lineage and verification."
     }
   ],
   "indexArtifacts": [],
@@ -145,6 +145,8 @@
     "/projects.json",
     "/experiments.json",
     "/experiments.receipt.json",
+    "/evidence.json",
+    "/evidence.receipt.json",
     "/humans.txt"
   ]
 }

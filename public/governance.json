@@ -3,7 +3,7 @@
   "site": "https://KopanoLabs.com",
   "canonical_source_repository": null,
   "deployment_source_observed": "RobynAwesome/Kopano-Labs-Website",
-  "source_authority": "Kopano-Labs/Introduction-to-MCP",
+  "source_authority": "RobynAwesome/Introduction-to-MCP",
   "stateless_renter": {
     "identity": "I_AM_STATELESS_RENTER_NOT_SOURCE_AUTHORITY",
     "entry_file": "AGENTS.md",
@@ -24,6 +24,15 @@
     "commercial_terms": "WITHHOLD_UNLESS_EXPLICITLY_PUBLIC",
     "claim_rule": "presentation may adapt; relation, lifecycle, state, backing and ownership claims may not"
   },
+  "public_evidence_parser": {
+    "runtime": ".NET 10 · Kopano Sovereign Gateway",
+    "source": "RobynAwesome/kopano-sovereign-hub@7cd91a678590a67d72a16b3b400caf0eb8d581a7",
+    "source_path": "governance/public-evidence.json",
+    "endpoint": "/api/public/evidence",
+    "website_projection_config": "governance/public-evidence-projection.json",
+    "public_artifacts": ["/evidence.json", "/evidence.receipt.json"],
+    "ui_rule": "render the parsed public contract; keep internal governance detail behind technical proof"
+  },
   "production_exclusions": [
     {"repository":"RobynAwesome/Money-managing-app","status":"unrelated","production_dependency":false,"mutation_allowed_for_kopano_production":false},
     {"repository":"RobynAwesome/cars4mars-landingpage","status":"retired","production_dependency":false,"mutation_allowed_for_kopano_production":false}
@@ -31,8 +40,8 @@
   "convergence_protocol": {
     "sequence": ["observe","pin_last_known_good","merge_do_not_replace","build_full_surface","verify_visual_and_machine_gates","promote","receipt"],
     "rule": "no partial deployment may replace the full production application",
-    "visual_invariants": ["react_runtime","threejs_scene","motion_breathing","foc","systems","proof","cars4mars_rover_media","governed_experiment_estate"],
-    "machine_invariants": ["/robots.txt","/sitemap.xml","/release.json","/governance.json","/experiments.json","/experiments.receipt.json"],
+    "visual_invariants": ["react_runtime","threejs_scene","motion_breathing","human_evidence_surface","systems","proof","cars4mars_rover_media","governed_experiment_estate"],
+    "machine_invariants": ["/robots.txt","/sitemap.xml","/release.json","/governance.json","/experiments.json","/experiments.receipt.json","/evidence.json","/evidence.receipt.json"],
     "retired_paths": ["/reports/","/reports/KOPANO_LABS.pdf"]
   },
   "blocker_protocol": {
@@ -40,7 +49,7 @@
     "principle": "a block is a branch point, not proof that no other solution exists",
     "success_rule": "changed error does not equal satisfied requirement"
   },
-  "live_gates": ["/","/Cars4Mars/","/FOC/","/systems/","/labs/","/content/","/proof/","/robots.txt","/sitemap.xml","/release.json","/governance.json","/experiments.json","/experiments.receipt.json"],
+  "live_gates": ["/","/Cars4Mars/","/FOC/","/systems/","/labs/","/content/","/proof/","/robots.txt","/sitemap.xml","/release.json","/governance.json","/experiments.json","/experiments.receipt.json","/evidence.json","/evidence.receipt.json"],
   "retired_routes": {
     "/reports/KOPANO_LABS.pdf": {"expected_status":404,"website_dependency":false,"release_gate":false,"reactivation_requires_owner_instruction":true}
   },

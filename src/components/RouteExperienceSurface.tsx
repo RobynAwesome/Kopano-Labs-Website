@@ -28,12 +28,12 @@ const surfaces: Partial<Record<View, SurfaceDefinition>> = {
     signals: [['OWNER', 'KC / Cassy governance lane'], ['MODE', 'Browser-local first move'], ['GATE', 'Evidence before claim']],
   },
   foc: {
-    eyebrow: 'FOC · EVIDENCE GATE',
-    title: 'One contract. No theatre.',
-    description: 'This review surface keeps the state legible: inspect what works, what is visible, who backs it, how current it is and what it connects to. FOC groups are out; evidence stays.',
-    stage: 'INPUT → REVIEW → GATE',
-    boundary: 'PRESENTATION ≠ VALIDATION',
-    signals: [['WORKS', 'Does the thing function?'], ['EVIDENCE', 'Can the artifact be inspected?'], ['OWNER', 'Who carries the next move?']],
+    eyebrow: 'REAL-WORLD WORK',
+    title: 'Built in real environments.',
+    description: 'The evidence page is intentionally human-first. Technical governance stays behind the interface and is available through Proof when needed.',
+    stage: 'BUILD → TEST → SCALE',
+    boundary: 'PUBLIC EXPERIENCE ≠ INTERNAL GOVERNANCE CONSOLE',
+    signals: [['BUILD', 'Useful first version'], ['TEST', 'Real operators and constraints'], ['SCALE', 'Only what survives']],
   },
   proof: {
     eyebrow: 'PROOF · SOURCE LINEAGE',
@@ -85,6 +85,8 @@ function LiteSpatialScene({ view, stage, profile }: { view: View; stage: string;
 }
 
 export function RouteExperienceSurface({ view, compact = false }: { view: View; compact?: boolean }) {
+  if (view === 'foc') return null;
+
   const surface = surfaces[view];
   const profile = useMemo(() => getExperienceProfile(), []);
   if (!surface) return null;

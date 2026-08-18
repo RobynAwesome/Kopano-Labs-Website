@@ -118,10 +118,10 @@ export function App() {
       <nav aria-label="Primary">
         <NavButton id="home" active={primaryView} onClick={navigate}>Now</NavButton>
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
-        <NavButton id="labs" active={primaryView} onClick={navigate}>Experiments</NavButton>
+        <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
         <NavButton id="content" active={primaryView} onClick={navigate}>Projects</NavButton>
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
-        <NavButton id="foc" active={primaryView} onClick={navigate}>Evidence gate</NavButton>
+        <NavButton id="foc" active={primaryView} onClick={navigate}>Real work</NavButton>
         <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
       </nav>
       <a className="source-pill" href="/release.json">Live state ↗</a>
@@ -163,12 +163,12 @@ export function App() {
           <section className="next-public-strip"><span>UP NEXT</span><strong>Falling Walls Lab collaboration page</strong><strong>NICIS founder-in-action page</strong></section>
         </motion.section>}
 
-        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><Suspense fallback={<GovernedFallback label="Loading evidence surface…"/>}><RouteExperienceSurface view="foc"/></Suspense><FOCMatrix/></motion.section>}
+        {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><FOCMatrix/></motion.section>}
 
         {view === 'labs' && <motion.section key="labs" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
-          <div className="page-head"><span className="eyebrow">KOPANO LABS · KPGS</span><h1>Governance systems experiments.</h1><p>Cape Campass, Harvest-4-All, Starfall Salvage, CrisisConnect, KasiLink, Cars4Mars, Project Jennifer and the external receipts that test whether the same governance discipline survives different realities.</p></div>
+          <div className="page-head"><span className="eyebrow">KOPANO LABS · LABS</span><h1>Experiments in progress.</h1><p>See what we are testing across community infrastructure, agriculture, education, mobility, games and engineering.</p></div>
           <Suspense fallback={<GovernedFallback label="Loading KC local rehearsal…"/>}><RouteExperienceSurface view="labs"/></Suspense>
-          <div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Cape Campass, Harvest, Starfall, field receipts…"/><span>KSH</span></div>
+          <div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search projects and experiments…"/><span>KSH</span></div>
           <GovernanceExperimentMap query={query}/>
         </motion.section>}
 

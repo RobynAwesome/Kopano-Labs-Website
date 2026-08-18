@@ -21,6 +21,8 @@ Allow: /validation.json
 Allow: /projects.json
 Allow: /experiments.json
 Allow: /experiments.receipt.json
+Allow: /evidence.json
+Allow: /evidence.receipt.json
 Allow: /humans.txt
 Disallow: /reports/
 Disallow: /admin/

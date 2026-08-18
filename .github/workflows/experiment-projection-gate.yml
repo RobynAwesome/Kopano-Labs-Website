@@ -4,15 +4,26 @@ on:
   pull_request:
     paths:
       - 'governance/experiment-projection.json'
+      - 'governance/public-evidence-projection.json'
       - 'scripts/sync-sovereign-experiments.mjs'
       - 'scripts/verify-governed-experiments.mjs'
+      - 'scripts/sync-public-evidence.mjs'
+      - 'scripts/verify-public-evidence.mjs'
       - 'src/data/governedExperiments.json'
       - 'src/data/governedExperiments.ts'
+      - 'src/data/publicEvidence.json'
       - 'src/components/GovernanceExperimentMap.tsx'
+      - 'src/components/FOCMatrix.tsx'
+      - 'src/components/RealityValidationBar.tsx'
+      - 'src/components/RouteExperienceSurface.tsx'
       - 'src/governance-experiments.css'
+      - 'src/foc.css'
+      - 'src/reality-validation.css'
+      - 'src/App.tsx'
       - 'src/route-manifest.json'
       - 'public/governance.json'
       - 'public/release.json'
+      - 'public/robots.txt'
       - 'package.json'
       - '.github/workflows/experiment-projection-gate.yml'
   workflow_dispatch:
@@ -39,8 +50,14 @@ jobs:
       - name: Sync pinned Sovereign Hub registry
         run: npm run experiments:sync
 
-      - name: Verify projection, relation and privacy gates
+      - name: Verify experiment projection, relation and privacy gates
         run: npm run experiments:verify
+
+      - name: Sync .NET-parsed public evidence contract
+        run: npm run evidence:sync
+
+      - name: Verify human evidence contract
+        run: npm run evidence:verify
 
       - name: TypeScript 7 proof
         run: |
@@ -54,6 +71,8 @@ jobs:
         run: |
           test -f public/experiments.json
           test -f public/experiments.receipt.json
+          test -f public/evidence.json
+          test -f public/evidence.receipt.json
           jq -e '.schema == "kopano-labs.governed-experiments.v2"' public/experiments.json
           jq -e '.source.commit == "e7eaf19f97454abb6e0dd2579c28aac65bf7431a"' public/experiments.json
           jq -e '.authority.projectionPolicy == "PUBLIC_EVIDENCE_ONLY"' public/experiments.json
@@ -62,13 +81,22 @@ jobs:
           jq -e '.gate == "ALLOW" and .projection.nodeCount == 16' public/experiments.receipt.json
           ! grep -Eq 'R[[:space:]]?3[,\.]?500|3500/month' public/experiments.json
 
-      - name: Upload projection receipt
+          jq -e '.schema == "kopano.public-evidence.v1" and (.items | length == 3)' public/evidence.json
+          jq -e '.items[] | select(.id == "bookit-fivesarena") | .name == "Five\u0027s Arena × Hellenic FC" and .state == "Live"' public/evidence.json
+          jq -e '.items[] | select(.id == "freddy-nw-alfalfa") | .name == "North West lucerne farm" and .state == "In the field"' public/evidence.json
+          jq -e '.items[] | select(.id == "flow-inc-ink") | .state == "Delivered"' public/evidence.json
+          jq -e '.source.commit == "7cd91a678590a67d72a16b3b400caf0eb8d581a7" and .gate == "ALLOW"' public/evidence.receipt.json
+          ! grep -Eqi 'MMAO|GSMB|KPSMB|CCP|FOC risk|telemetry class' public/evidence.json
+
+      - name: Upload projection receipts
         uses: actions/upload-artifact@v4
         with:
-          name: governed-experiment-projection-receipt
+          name: governed-public-projection-receipts
           path: |
             public/experiments.json
             public/experiments.receipt.json
+            public/evidence.json
+            public/evidence.receipt.json
             public/governance.json
             public/release.json
           if-no-files-found: error

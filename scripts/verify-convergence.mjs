@@ -7,6 +7,8 @@ const mustExist = [
   'sitemap.xml',
   'release.json',
   'governance.json',
+  'evidence.json',
+  'evidence.receipt.json',
 ];
 
 for (const file of mustExist) {
@@ -19,9 +21,28 @@ const routeSurfaceSource = await readFile(new URL('../src/components/RouteExperi
 const kcWorkbenchSource = await readFile(new URL('../src/components/KopanoContextWorkbench.tsx', import.meta.url), 'utf8');
 const focSource = await readFile(new URL('../src/components/FOCMatrix.tsx', import.meta.url), 'utf8');
 const systemAtlasSource = await readFile(new URL('../src/components/SystemAtlas.tsx', import.meta.url), 'utf8');
-for (const expected of ['RouteExperienceSurface view="labs"', 'RouteExperienceSurface view="foc"', 'RouteExperienceSurface view="proof"']) {
+
+for (const expected of ['RouteExperienceSurface view="labs"', 'RouteExperienceSurface view="proof"']) {
   if (!appSource.includes(expected)) throw new Error('Convergence gate: missing immersive route surface ' + expected);
 }
+
+// Real-work is intentionally human-first. It must not regress into the retired KC/FOC explainer.
+if (!appSource.includes("view === 'foc'") || !appSource.includes('<FOCMatrix/>')) {
+  throw new Error('Convergence gate: Real work must mount the human evidence surface directly');
+}
+if (appSource.includes('RouteExperienceSurface view="foc"')) {
+  throw new Error('Convergence gate: retired immersive FOC route surface returned to the public evidence path');
+}
+if (!routeSurfaceSource.includes("if (view === 'foc') return null;")) {
+  throw new Error('Convergence gate: FOC spatial explainer must remain disabled on the human evidence route');
+}
+if (!focSource.includes("import evidence from '../data/publicEvidence.json'")) {
+  throw new Error('Convergence gate: Real work must render the parsed public evidence contract');
+}
+for (const internalTerm of ['MMAO', 'GSMB', 'KPSMB', 'CCP', 'FOC RISK', 'renterFamilies', 'convergence-chain']) {
+  if (focSource.includes(internalTerm)) throw new Error('Convergence gate: internal governance leaked into default Real work UI: ' + internalTerm);
+}
+
 if (!siteExperienceSource.includes('RouteExperienceSurface view="content"')) throw new Error('Convergence gate: content estate has no spatial surface');
 if (!siteExperienceSource.includes("addEventListener('popstate'")) throw new Error('Convergence gate: content route does not sync after SPA navigation');
 if (!routeSurfaceSource.includes('<KopanoContextWorkbench />')) throw new Error('Convergence gate: Labs has no visible KC workbench');
@@ -55,9 +76,17 @@ if (entryInfo.size > 400 * 1024) throw new Error(`Convergence gate: first-paint 
 
 const robots = await readFile(new URL('robots.txt', root), 'utf8');
 if (!robots.includes('Disallow: /reports/')) throw new Error('Convergence gate: /reports/ must remain retired in robots.txt');
+if (!robots.includes('Allow: /evidence.json') || !robots.includes('Allow: /evidence.receipt.json')) {
+  throw new Error('Convergence gate: parsed public evidence artifacts must remain discoverable');
+}
 
 const sitemap = await readFile(new URL('sitemap.xml', root), 'utf8');
 if (sitemap.includes('/reports/')) throw new Error('Convergence gate: retired reports route leaked into sitemap.xml');
+
+const evidence = JSON.parse(await readFile(new URL('evidence.json', root), 'utf8'));
+const evidenceReceipt = JSON.parse(await readFile(new URL('evidence.receipt.json', root), 'utf8'));
+if (evidence.schema !== 'kopano.public-evidence.v1' || evidence.items?.length !== 3) throw new Error('Convergence gate: parsed public evidence contract drifted');
+if (evidenceReceipt.gate !== 'ALLOW' || evidenceReceipt.projection?.itemCount !== 3) throw new Error('Convergence gate: public evidence projection receipt is not valid');
 
 const release = JSON.parse(await readFile(new URL('release.json', root), 'utf8'));
 const governance = JSON.parse(await readFile(new URL('governance.json', root), 'utf8'));
@@ -76,4 +105,4 @@ try {
   if (error?.code !== 'ENOENT') throw error;
 }
 
-console.log(`Convergence gate passed: rich runtime + machine artifacts coexist; constrained clients retain CSS-lite proof without first-paint WebGL; entry JS ${entryInfo.size} bytes; reports remain retired.`);
+console.log(`Convergence gate passed: human-first Real work + parsed .NET evidence coexist with immersive Labs/Proof; constrained clients retain CSS-lite proof; entry JS ${entryInfo.size} bytes; reports remain retired.`);

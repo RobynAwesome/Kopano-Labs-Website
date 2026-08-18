@@ -3,7 +3,7 @@
   "source": {
     "repository": "RobynAwesome/kopano-sovereign-hub",
     "path": "governance/public-evidence.json",
-    "commit": "37803430252fc0477684130215ec9864c7d3a44b",
+    "commit": "7cd91a678590a67d72a16b3b400caf0eb8d581a7",
     "expectedSchema": "kopano.public-evidence.v1"
   },
   "projection": {

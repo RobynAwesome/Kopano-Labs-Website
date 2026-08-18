@@ -3,9 +3,9 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { motion } from 'framer-motion';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import * as THREE from 'three';
-import { getExperienceProfile } from '../experienceRuntime';
 import { createKPGSSceneContract, emitKPGSReceipt, type KPGSSceneContract } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
+import { useExperienceProfile } from '../useExperienceProfile';
 import { useKPGSVisibility } from '../useKPGSVisibility';
 import { FivesArenaFeed } from './FivesArenaFeed';
 
@@ -97,7 +97,7 @@ function World({ id, contract }: { id: SystemSceneId; contract: KPGSSceneContrac
 
 export function SystemAtlas({ compact = false, view = 'systems' }: { compact?: boolean; view?: View }) {
   const [active, setActive] = useState<SystemSceneId>('context');
-  const profile = useMemo(() => getExperienceProfile(), []);
+  const profile = useExperienceProfile();
   const selected = systems.find((system)=>system.id === active) ?? systems[0];
   const contract = useMemo(() => createKPGSSceneContract(view, profile, active), [active, profile, view]);
   const visible = useKPGSVisibility();

@@ -2,7 +2,7 @@ import { OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { useMemo, useRef } from 'react';
 import * as THREE from 'three';
-import type { PlayerProfile } from '../AdaptivePlayerApp';
+import type { PlayerProfile } from '../progressiveUpdateContract';
 
 const sceneConfig = {
   mobile: { dpr: [1, 1.15] as [number, number], detail: 1, nodes: 6, lights: 1, power: 'low-power' as const },

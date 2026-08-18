@@ -1,0 +1,74 @@
+{
+  "schema": "kopano-labs.validation-ledger.v1",
+  "lastUpdated": "2026-08-18",
+  "governance": {
+    "law": "Reality receipts govern claims; search visibility is a lagging observer.",
+    "claimDefault": "MAYBE",
+    "convergence": "MCP -> MMAO -> KC/KPGS -> GSMB/KPSMB -> CCP -> POC receipt"
+  },
+  "labourContext": [
+    {
+      "metric": "South Africa official unemployment",
+      "value": 33.6,
+      "unit": "percent",
+      "period": "2026-Q2",
+      "source": "Statistics South Africa Quarterly Labour Force Survey"
+    },
+    {
+      "metric": "Unemployment ages 15-24",
+      "value": 60.9,
+      "unit": "percent",
+      "period": "2026-Q1",
+      "source": "Statistics South Africa youth labour market release"
+    },
+    {
+      "metric": "Unemployment ages 25-34",
+      "value": 40.6,
+      "unit": "percent",
+      "period": "2026-Q1",
+      "source": "Statistics South Africa youth labour market release"
+    }
+  ],
+  "externalValidation": [
+    {
+      "name": "Five's Arena x Hellenic FC",
+      "state": "VALIDATED_LIVE",
+      "relationship": "client / venue operating environment",
+      "publicRoute": "https://fivesarena.com",
+      "evidence": [
+        "Hellenic Football Club venue in Milnerton, Cape Town",
+        "public court booking and event routes",
+        "competition, fixture, tournament and manager surfaces",
+        "Kholofelo Robyn Rababalela publicly identified as Lead Developer"
+      ]
+    },
+    {
+      "name": "North West 10-acre lucerne / alfalfa farm",
+      "state": "VALIDATED_FIELD",
+      "relationship": "field client / operational decision support",
+      "evidence": [
+        "farm-specific frost and regrowth workflow",
+        "irrigation asset, pump, pivot, valve and pipe checks",
+        "livestock cold-stress and water-security checks",
+        "AMBER and RED escalation thresholds tied to field actions"
+      ]
+    },
+    {
+      "name": "Flow Inc Ink",
+      "state": "DELIVERED_EXTERNAL",
+      "relationship": "completed external digital project",
+      "evidence": [
+        "delivery for an operating Midrand tattoo and piercing business"
+      ]
+    },
+    {
+      "name": "UCT PhD development engagement",
+      "state": "ACTIVE_BOUNDED",
+      "relationship": "academic / hands-on development engagement",
+      "evidence": [
+        "active development engagement"
+      ],
+      "governanceNote": "Do not promote to a validated client claim until delivery or commercial evidence exists."
+    }
+  ]
+}

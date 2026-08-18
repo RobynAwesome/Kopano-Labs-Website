@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import { lazy, Suspense, useEffect, useMemo } from 'react';
-import { getExperienceProfile, type ExperienceProfile } from '../experienceRuntime';
+import type { ExperienceProfile } from '../experienceRuntime';
 import { createKPGSSceneContract, emitKPGSReceipt } from '../kpgsSceneContract';
 import type { View } from '../routeRegistry';
+import { useExperienceProfile } from '../useExperienceProfile';
 import '../lite-spatial.css';
 import { KopanoContextWorkbench } from './KopanoContextWorkbench';
 import { ProjectRegistry } from './ProjectRegistry';
@@ -67,18 +68,18 @@ function LiteSpatialScene({ view, stage, profile }: { view: View; stage: string;
       data-kpgs-scene={contract.scene.id}
       data-kpgs-tier={contract.runtime.tier}
       data-kpgs-renderer="css-lite"
-      aria-label="Kopano spatial proof surface, lightweight non-WebGL renderer"
+      aria-label="Lightweight version of the interactive project map"
     >
       <div className="lite-spatial-grid" aria-hidden="true" />
       <div className="lite-spatial-orbit lite-orbit-a" aria-hidden="true" />
       <div className="lite-spatial-orbit lite-orbit-b" aria-hidden="true" />
       <div className="lite-spatial-core" aria-hidden="true"><span>KC</span></div>
-      <div className="lite-spatial-node lite-node-a" aria-hidden="true"><i /><span>INPUT</span></div>
-      <div className="lite-spatial-node lite-node-b" aria-hidden="true"><i /><span>CLASSIFY</span></div>
-      <div className="lite-spatial-node lite-node-c" aria-hidden="true"><i /><span>ROUTE</span></div>
-      <div className="lite-spatial-node lite-node-d" aria-hidden="true"><i /><span>EVIDENCE</span></div>
-      <span className="scene-label scene-label-a">KPGS · CSS LITE</span>
-      <span className="scene-label scene-label-b">NO WEBGL · PROOF PRESERVED</span>
+      <div className="lite-spatial-node lite-node-a" aria-hidden="true"><i /><span>NEED</span></div>
+      <div className="lite-spatial-node lite-node-b" aria-hidden="true"><i /><span>CHOOSE</span></div>
+      <div className="lite-spatial-node lite-node-c" aria-hidden="true"><i /><span>OPEN</span></div>
+      <div className="lite-spatial-node lite-node-d" aria-hidden="true"><i /><span>PROOF</span></div>
+      <span className="scene-label scene-label-a">LIGHTWEIGHT MODE</span>
+      <span className="scene-label scene-label-b">FAST PATH · SAME CONTENT</span>
       <span className="scene-label scene-label-c">{stage}</span>
     </div>
   );
@@ -88,7 +89,7 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
   if (view === 'foc') return null;
 
   const surface = surfaces[view];
-  const profile = useMemo(() => getExperienceProfile(), []);
+  const profile = useExperienceProfile();
   if (!surface) return null;
 
   const avoidWebGL = profile.tier === 'lite' || profile.saveData || profile.reducedMotion;
@@ -107,11 +108,11 @@ export function RouteExperienceSurface({ view, compact = false }: { view: View; 
       <div className="route-experience-stage">
         {avoidWebGL
           ? <LiteSpatialScene view={view} stage={surface.stage} profile={profile} />
-          : <Suspense fallback={<div className="scene-label scene-label-a" role="status">LOADING · SPATIAL CONTRACT</div>}><KopanoScene view={view} /></Suspense>}
+          : <Suspense fallback={<div className="scene-label scene-label-a" role="status">Loading interactive view…</div>}><KopanoScene view={view} /></Suspense>}
         <motion.div className="route-experience-stage-copy" initial={avoidWebGL ? false : { opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
-          <span>{avoidWebGL ? 'LIVE LIGHTWEIGHT CONTRACT' : 'LIVE SPATIAL CONTRACT'}</span>
+          <span>{avoidWebGL ? 'FAST VIEW' : 'INTERACTIVE VIEW'}</span>
           <strong>{surface.stage}</strong>
-          <small>{avoidWebGL ? 'Capability gate preserved the proof surface without requesting WebGL.' : 'Pointer response follows route intent. Motion pauses when the page is hidden or reduced.'}</small>
+          <small>{avoidWebGL ? 'The page automatically keeps the same content while using a lighter renderer.' : 'Drag to explore. Motion automatically adapts to your device and preferences.'}</small>
         </motion.div>
       </div>
       {view === 'labs' && <KopanoContextWorkbench />}

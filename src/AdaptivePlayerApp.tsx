@@ -1,11 +1,17 @@
 import { lazy, Suspense, useEffect, useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { getExperienceProfile, type ExperienceProfile } from './experienceRuntime';
+import {
+  flushPlayerProgressiveQueue,
+  readPlayerProgressiveStatus,
+  readSavedPlayerProfile,
+  saveAndQueuePlayerProfile,
+  type PlayerProgressiveStatus,
+} from './adaptivePlayerProgressiveQueue';
+import type { PlayerProfile } from './progressiveUpdateContract';
 import './adaptive-player.css';
 
 const AdaptivePlayerScene = lazy(() => import('./components/AdaptivePlayerScene').then((module) => ({ default: module.AdaptivePlayerScene })));
-
-export type PlayerProfile = 'lite' | 'mobile' | 'enhanced' | 'immersive';
 
 type InstallChoice = { outcome: 'accepted' | 'dismissed'; platform: string };
 type InstallPromptEvent = Event & {
@@ -58,6 +64,14 @@ function receipt(event: string, details: Record<string, string | number | boolea
   return payload;
 }
 
+function progressiveLabel(status: PlayerProgressiveStatus) {
+  if (status.state === 'pending') return 'SYNC PENDING';
+  if (status.state === 'applied') return 'SYNC APPLIED';
+  if (status.state === 'held') return 'SYNC HELD';
+  if (status.state === 'rejected') return 'SYNC REJECTED';
+  return null;
+}
+
 function LiteScene() {
   return (
     <div className="player-lite-scene" role="img" aria-label="Low-power Kopano adaptive player topology">
@@ -78,14 +92,19 @@ function LiteScene() {
 export function AdaptivePlayerApp() {
   const capability = useMemo(() => getExperienceProfile(), []);
   const maximumProfile = useMemo(() => deriveMaximumProfile(capability), [capability]);
-  const [selectedProfile, setSelectedProfile] = useState<PlayerProfile>(maximumProfile);
+  const maxRank = profileOrder.indexOf(maximumProfile);
+  const [selectedProfile, setSelectedProfile] = useState<PlayerProfile>(() => {
+    const saved = readSavedPlayerProfile();
+    return saved && profileOrder.indexOf(saved) <= maxRank ? saved : maximumProfile;
+  });
   const [online, setOnline] = useState(() => navigator.onLine);
   const [installPrompt, setInstallPrompt] = useState<InstallPromptEvent | null>(null);
   const [pwaState, setPwaState] = useState<'registering' | 'ready' | 'unsupported' | 'error'>('registering');
   const [gateMessage, setGateMessage] = useState('AUTO capability profile active.');
+  const [progressiveStatus, setProgressiveStatus] = useState<PlayerProgressiveStatus>(() => readPlayerProgressiveStatus());
 
-  const maxRank = profileOrder.indexOf(maximumProfile);
   const allowAnimation = !capability.reducedMotion && !capability.saveData;
+  const syncLabel = progressiveLabel(progressiveStatus);
 
   useEffect(() => {
     const manifest = document.createElement('link');
@@ -95,7 +114,11 @@ export function AdaptivePlayerApp() {
     document.head.appendChild(manifest);
     document.documentElement.dataset.playerProfile = selectedProfile;
 
-    const onOnline = () => setOnline(true);
+    const refreshProgressiveStatus = () => setProgressiveStatus(readPlayerProgressiveStatus());
+    const onOnline = () => {
+      setOnline(true);
+      void flushPlayerProgressiveQueue().then(setProgressiveStatus);
+    };
     const onOffline = () => setOnline(false);
     const onInstallPrompt = (event: Event) => {
       event.preventDefault();
@@ -105,6 +128,7 @@ export function AdaptivePlayerApp() {
     window.addEventListener('online', onOnline);
     window.addEventListener('offline', onOffline);
     window.addEventListener('beforeinstallprompt', onInstallPrompt);
+    window.addEventListener('kpgs:adaptive-player-progressive', refreshProgressiveStatus);
 
     if ('serviceWorker' in navigator) {
       void navigator.serviceWorker.register('/adaptive-player-sw.js', { scope: '/adaptive-player/' })
@@ -124,12 +148,14 @@ export function AdaptivePlayerApp() {
       save_data: capability.saveData,
       reduced_motion: capability.reducedMotion,
     });
+    void flushPlayerProgressiveQueue().then(setProgressiveStatus);
 
     return () => {
       manifest.remove();
       window.removeEventListener('online', onOnline);
       window.removeEventListener('offline', onOffline);
       window.removeEventListener('beforeinstallprompt', onInstallPrompt);
+      window.removeEventListener('kpgs:adaptive-player-progressive', refreshProgressiveStatus);
     };
   }, []);
 
@@ -150,8 +176,16 @@ export function AdaptivePlayerApp() {
       receipt('profile_blocked', { requested: profile, max_profile: maximumProfile });
       return;
     }
+
     setSelectedProfile(profile);
     setGateMessage(`${profileCopy[profile].label} selected inside the current capability budget.`);
+    try {
+      saveAndQueuePlayerProfile(profile, maximumProfile);
+      setProgressiveStatus(readPlayerProgressiveStatus());
+      void flushPlayerProgressiveQueue().then(setProgressiveStatus);
+    } catch {
+      setGateMessage(`${profileCopy[profile].label} is active for this view, but the local recovery/update queue could not be saved.`);
+    }
   };
 
   const install = async () => {
@@ -173,6 +207,17 @@ export function AdaptivePlayerApp() {
         <div className="player-statuses" aria-label="Player status">
           <span className={online ? 'status-good' : 'status-warn'}>{online ? 'ONLINE' : 'OFFLINE'}</span>
           <span>{pwaState === 'ready' ? 'PWA READY' : pwaState.toUpperCase()}</span>
+          {syncLabel && (
+            <span
+              className={progressiveStatus.state === 'applied' ? 'status-good' : 'status-warn'}
+              data-testid="player-progressive-status"
+              data-progressive-state={progressiveStatus.state}
+              title={progressiveStatus.reason || undefined}
+              aria-live="polite"
+            >
+              {syncLabel}
+            </span>
+          )}
         </div>
       </header>
 

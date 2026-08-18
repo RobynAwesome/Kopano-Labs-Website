@@ -3,7 +3,7 @@
   "source": {
     "repository": "RobynAwesome/kopano-sovereign-hub",
     "path": "governance/experiments.json",
-    "commit": "5483b0a2be6ac19d7be969546df84140ef31bedd",
+    "commit": "e7eaf19f97454abb6e0dd2579c28aac65bf7431a",
     "expectedSchema": "kopano.sovereign.experiment-estate.v1"
   },
   "projection": {

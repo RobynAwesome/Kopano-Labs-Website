@@ -45,6 +45,9 @@
 .intent-shortcuts button:hover,.intent-shortcuts button:focus-visible { border-color:rgba(0,230,118,.38);background:rgba(0,230,118,.08); }
 .intent-shortcuts span { color:var(--muted-strong,#c4d2dd);font-size:.9rem; }
 
+.scene-runtime-badge{position:absolute;top:12px;right:12px;z-index:3;padding:5px 8px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(5,12,18,.52);color:rgba(220,236,246,.58);font-size:9px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;pointer-events:none}
+html[data-experience-tier='lite'] .scene-runtime-badge{display:none}
+
 html[data-experience-tier='balanced'] .ambient { opacity:.55;filter:blur(18px); }
 html[data-experience-tier='lite'] .ambient { display:none; }
 html[data-experience-tier='lite'] .kopano-scene canvas { opacity:.36; }

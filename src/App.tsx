@@ -6,6 +6,7 @@ import { syncKPGSRuntime } from './experienceRuntime';
 import type { Cars4MarsFocus } from './components/Cars4MarsMissionControl';
 import { FOCMatrix } from './components/FOCMatrix';
 import { GovernanceExperimentMap } from './components/GovernanceExperimentMap';
+import { ProjectRegistry } from './components/ProjectRegistry';
 import { RoverVisual } from './components/RoverVisual';
 import { SpatialDirectory } from './components/SpatialDirectory';
 import { canonicalForView, pathForView, routeForIntent, routeForView, type View, viewForPath } from './routeRegistry';
@@ -118,6 +119,7 @@ export function App() {
         <NavButton id="home" active={primaryView} onClick={navigate}>Now</NavButton>
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
         <NavButton id="labs" active={primaryView} onClick={navigate}>Experiments</NavButton>
+        <NavButton id="content" active={primaryView} onClick={navigate}>Projects</NavButton>
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
         <NavButton id="foc" active={primaryView} onClick={navigate}>Evidence gate</NavButton>
         <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
@@ -168,6 +170,11 @@ export function App() {
           <Suspense fallback={<GovernedFallback label="Loading KC local rehearsal…"/>}><RouteExperienceSurface view="labs"/></Suspense>
           <div className="search-row"><input value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search Cape Campass, Harvest, Starfall, field receipts…"/><span>KSH</span></div>
           <GovernanceExperimentMap query={query}/>
+        </motion.section>}
+
+        {view === 'content' && <motion.section key="content" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
+          <div className="page-head"><span className="eyebrow">ROBYNAWESOME · PUBLIC SOURCE ESTATE</span><h1>All the work.</h1><p>The complete public repository estate is separate from experiment maturity. Ownership proves source authority; deployment, clients, field outcomes and receipts prove operating state.</p></div>
+          <ProjectRegistry/>
         </motion.section>}
 
         {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. The Sovereign Hub connects the governance experiment runtime without collapsing those systems into one product.</p></div><Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas view={view}/></Suspense><SpatialDirectory items={systems} kind="system"/></motion.section>}

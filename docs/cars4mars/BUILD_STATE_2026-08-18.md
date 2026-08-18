@@ -29,8 +29,10 @@ KopanoLabs.com /Cars4Mars/ public projection
 
 - KPGS Cars4Mars contract: `RobynAwesome/Introduction-to-MCP` PR #78, merged at `a064929dcca43b1d78dc11ff7b289e2d76fbbdb1`.
 - Mechanical P-001 contract/evidence: `RobynAwesome/cars4mars-project` PR #5, merged at `e7d5a3d1ef797693e03f382a3c9900bc50de6f6a`.
+- P-001 generated-board/lab-session provenance: `RobynAwesome/cars4mars-project` PR #7, merged at `74fa057fed4a5a68ab9a0b9370b5f01b2be954a8`.
+- Artifact identity register: `engineering/mechanical/P-001_ARTIFACT_REGISTER.json` in the engineering repository.
 - Active engineering work item: `RobynAwesome/cars4mars-project` issue #6.
-- Mechanical evidence row: `C4M-MECH-0001`.
+- Mechanical evidence rows: `C4M-MECH-0001` and `C4M-MECH-0002`.
 
 ## DFR-01 constants that stay locked
 
@@ -80,6 +82,8 @@ The 18 August session produced three useful generated design references:
 3. Cars4Mars Part 1 — Wheel Concept Poster.
 
 Evidence class: **GENERATED DESIGN REFERENCE**.
+
+Their exact byte counts, pixel dimensions and SHA-256 identities are pinned in `P-001_ARTIFACT_REGISTER.json` together with the two HPI d-school session-photo identities. The register is provenance evidence only; the image binaries are not treated as fabrication receipts.
 
 They may support discussion and CAD interpretation. They may not supply hidden measurements, claim fabrication, or overwrite DFR-01.
 

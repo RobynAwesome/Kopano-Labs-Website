@@ -90,11 +90,12 @@ jobs:
           test -f public/rtcp.json
           test -f public/rtcp.receipt.json
           jq -e '.schema == "kopano-labs.governed-experiments.v2"' public/experiments.json
-          jq -e '.source.commit == "e7eaf19f97454abb6e0dd2579c28aac65bf7431a"' public/experiments.json
+          jq -e '.source.commit == "69626af59c0d93ebc3de7f72205002a3545797dd"' public/experiments.json
           jq -e '.authority.projectionPolicy == "PUBLIC_EVIDENCE_ONLY"' public/experiments.json
           jq -e '.nodes[] | select(.id == "portfolio") | .relation == "evidence-surface"' public/experiments.json
           jq -e '.nodes[] | select(.id == "freddy-nw-alfalfa") | .relation == "validation-input" and (.backing | contains("commercial terms withheld"))' public/experiments.json
-          jq -e '.gate == "ALLOW" and .projection.nodeCount == 16' public/experiments.receipt.json
+          jq -e '.nodes[] | select(.id == "depth-population") | .state == "POC" and .relation == "experiment" and .surface == "https://efafieaxwnzizkrkgdrk.supabase.co/functions/v1/depth-portal"' public/experiments.json
+          jq -e '.gate == "ALLOW" and .projection.nodeCount == 17' public/experiments.receipt.json
           ! grep -Eq 'R[[:space:]]?3[,\.]?500|3500/month' public/experiments.json
 
           jq -e '.schema == "kopano.public-evidence.v1" and (.items | length == 3)' public/evidence.json

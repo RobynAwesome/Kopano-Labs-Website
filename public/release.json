@@ -14,7 +14,7 @@
   },
   "experiment_projection": {
     "runtime_authority": "RobynAwesome/kopano-sovereign-hub",
-    "pinned_source_commit": "e7eaf19f97454abb6e0dd2579c28aac65bf7431a",
+    "pinned_source_commit": "69626af59c0d93ebc3de7f72205002a3545797dd",
     "public_registry": "/experiments.json",
     "receipt": "/experiments.receipt.json",
     "projection_policy": "PUBLIC_EVIDENCE_ONLY",

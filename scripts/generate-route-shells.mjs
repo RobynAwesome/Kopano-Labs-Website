@@ -14,6 +14,41 @@ function replaceMeta(html, route) {
   const canonical = `${manifest.site.origin}${route.path}`;
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
+  const aboutEntitySchema = route.path === '/about/'
+    ? `<script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'Person',
+          '@id': 'https://krrababalela.com/#person',
+          name: 'Kholofelo Robyn Rababalela',
+          url: 'https://krrababalela.com/',
+          sameAs: ['https://github.com/RobynAwesome'],
+          jobTitle: 'Founder, Director, and Sovereign System Engineer',
+          founderOf: [
+            { '@id': 'https://kopanolabs.com/#organization' },
+            { '@id': 'https://kopanolabs.com/about/#amaphu-entertainment' },
+          ],
+        },
+        {
+          '@type': 'Organization',
+          '@id': 'https://kopanolabs.com/about/#amaphu-entertainment',
+          name: 'Ama-Phu Entertainment',
+          legalName: 'AMAPHU (PTY) LTD',
+          description: 'A separate entertainment and media entity spanning music, stories, games, publishing, merchandise and creator opportunity.',
+          url: 'https://linktr.ee/amaphu.ent',
+          sameAs: [
+            'https://linktr.ee/amaphu.ent',
+            'https://www.youtube.com/@Ama-PhuEntertainment',
+            'https://open.spotify.com/artist/3N5NlNqY8iY4rR6DzDOpCA',
+            'https://music.apple.com/za/artist/ama-phu/1656490480',
+          ],
+          founder: { '@id': 'https://krrababalela.com/#person' },
+          mainEntityOfPage: 'https://kopanolabs.com/about/',
+        },
+      ],
+    })}</script>`
+    : '';
 
   return html
     .replace(/<title>.*?<\/title>/s, `<title>${title}</title>`)
@@ -23,7 +58,8 @@ function replaceMeta(html, route) {
     .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${description}" />`)
     .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
     .replace(/<meta name="twitter:title" content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${title}" />`)
-    .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`);
+    .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`)
+    .replace('</head>', `${aboutEntitySchema}</head>`);
 }
 
 const indexedRoutes = manifest.routes.filter((entry) => entry.index && entry.path !== '/');

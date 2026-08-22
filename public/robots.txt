@@ -13,6 +13,7 @@ Allow: /systems/
 Allow: /labs/
 Allow: /content/
 Allow: /proof/
+Allow: /about/
 Allow: /robots.txt
 Allow: /sitemap.xml
 Allow: /release.json
@@ -24,6 +25,7 @@ Allow: /experiments.receipt.json
 Allow: /evidence.json
 Allow: /evidence.receipt.json
 Allow: /humans.txt
+Allow: /entities.json
 Disallow: /reports/
 Disallow: /admin/
 Disallow: /api/

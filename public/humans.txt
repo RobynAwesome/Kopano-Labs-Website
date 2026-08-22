@@ -4,6 +4,17 @@ Studio: Kopano Labs
 Location: Cape Town, South Africa
 Website: https://KopanoLabs.com
 GitHub: https://github.com/RobynAwesome/Kopano-Labs-Website
+Entity profile: https://KopanoLabs.com/about/
+Entity graph: https://KopanoLabs.com/entities.json
+
+Founder: Kholofelo Robyn Rababalela
+Founder site: https://KRRababalela.com
+Founder GitHub: https://github.com/RobynAwesome
+
+Related but legally separate public entity: Ama-Phu Entertainment
+Ama-Phu public links: https://linktr.ee/amaphu.ent
+Ama-Phu YouTube: https://www.youtube.com/@Ama-PhuEntertainment
+Ama-Phu Spotify: https://open.spotify.com/artist/3N5NlNqY8iY4rR6DzDOpCA
 
 /* BUILD PRINCIPLE */
 

@@ -5,7 +5,7 @@
   "outputDirectory": "dist",
   "rewrites": [
     {
-      "source": "/((?!robots\\.txt$|sitemap\\.xml$|release\\.json$|governance\\.json$|humans\\.txt$|reports(?:/|$)).*)",
+      "source": "/((?!robots\\.txt$|sitemap\\.xml$|release\\.json$|governance\\.json$|humans\\.txt$|entities\\.json$|reports(?:/|$)).*)",
       "destination": "/index.html"
     }
   ]

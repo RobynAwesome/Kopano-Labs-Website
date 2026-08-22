@@ -1,10 +1,9 @@
 name: production-gate
 
-# Automatic GitHub-hosted execution is temporarily paused while the account-level
-# Actions billing lock prevents jobs from starting. Vercel remains the automatic
-# build/deployment gate for pushes and pull requests; this workflow is preserved
-# for manual execution once GitHub Actions runner access is restored.
 on:
+  push:
+    branches: [main]
+  pull_request:
   workflow_dispatch:
 
 jobs:

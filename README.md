@@ -28,7 +28,7 @@ Adaptive route registry
   ├── robots.txt
   └── CI production gates
         ↓
-Labs · Systems · Content · Cars4Mars · FOC · Proof
+About · Labs · Systems · Content · Cars4Mars · FOC · Proof
 ```
 
 ![Adaptive agent routing](public/assets/diagrams/agent-routing.svg)
@@ -78,6 +78,7 @@ The design submission was completed on **02 August 2026**. The submitted package
 | Route | Purpose | State |
 |---|---|---|
 | `/` | Adaptive public entry + spatial Kopano systems map | **Implemented** |
+| `/about/` | Public entity profile for Kopano Labs, its founder and the separate Ama-Phu Entertainment entity | **Implemented / indexing foundation** |
 | `/systems/` | Operational systems registry | **Implemented / evolving** |
 | `/labs/` | Experiment discovery and focused entry | **Implemented / evolving** |
 | `/content/` | Public estate / connected project surface | **Implemented / evolving** |
@@ -110,7 +111,8 @@ The design submission was completed on **02 August 2026**. The submitted package
 - Generated `sitemap.xml`.
 - Guided `robots.txt`.
 - Canonical web URLs and route-specific metadata.
-- JSON-LD organization metadata.
+- JSON-LD organization/person/entity graph with a crawlable public profile route.
+- Machine-readable `entities.json` identity artifact with privacy-bounded public links.
 - Search Console baseline preserved under `docs/`.
 
 ### Evidence governance
@@ -129,7 +131,7 @@ The design submission was completed on **02 August 2026**. The submitted package
 
 - spatial React/Three runtime;
 - adaptive route registry;
-- public Labs, Systems, Content, Cars4Mars, FOC and Proof routes;
+- public About, Labs, Systems, Content, Cars4Mars, FOC and Proof routes;
 - Cars4Mars mission status, ledger, architecture, media and support surfaces;
 - crawler guidance + generated sitemap;
 - Search Console baseline documentation;

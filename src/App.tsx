@@ -123,6 +123,7 @@ export function App() {
         <NavButton id="cars4mars" active={primaryView} onClick={navigate}>Cars4Mars</NavButton>
         <NavButton id="foc" active={primaryView} onClick={navigate}>Real work</NavButton>
         <NavButton id="proof" active={primaryView} onClick={navigate}>Proof</NavButton>
+        <NavButton id="about" active={primaryView} onClick={navigate}>About</NavButton>
       </nav>
       <a className="source-pill" href="/release.json">Live state ↗</a>
     </header>
@@ -175,6 +176,38 @@ export function App() {
         {view === 'content' && <motion.section key="content" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
           <div className="page-head"><span className="eyebrow">ROBYNAWESOME · PUBLIC SOURCE ESTATE</span><h1>All the work.</h1><p>The complete public repository estate is separate from experiment maturity. Ownership proves source authority; deployment, clients, field outcomes and receipts prove operating state.</p></div>
           <ProjectRegistry/>
+        </motion.section>}
+
+        {view === 'about' && <motion.section key="about" className="page about-page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}>
+          <div className="page-head"><span className="eyebrow">KOPANO LABS · PUBLIC ENTITY PROFILE</span><h1>A lab for systems that have to work.</h1><p>Kopano Labs is a South African experimental systems lab and systems studio. Its public work explores artificial intelligence, web design, blockchain research, offline-first software, public-interest infrastructure and cyber-physical engineering.</p></div>
+          <div className="evidence-grid">
+            <article>
+              <span className="eyebrow">PUBLIC BRAND · TECHNOLOGY</span>
+              <h2>Kopano Labs</h2>
+              <p>Proof-gated systems, experiments and public interfaces built from Cape Town under real infrastructure constraints.</p>
+              <dl>
+                <dt>Legal name</dt><dd>KOPANO LABS</dd>
+                <dt>Role</dt><dd>Experimental systems lab and South African systems studio</dd>
+                <dt>Founder</dt><dd>Kholofelo Robyn Rababalela</dd>
+              </dl>
+              <div className="hero-actions"><a className="secondary" href="/proof/">Open proof ↗</a><a className="secondary" href="https://github.com/Kopano-Labs" target="_blank" rel="noreferrer">GitHub organization ↗</a></div>
+            </article>
+            <article>
+              <span className="eyebrow">SEPARATE COMPANY · ENTERTAINMENT</span>
+              <h2>Ama-Phu Entertainment</h2>
+              <p>A distinct media and entertainment entity spanning music, stories, games, publishing, merchandise and creator opportunity. It is related through the founder, not collapsed into Kopano Labs.</p>
+              <dl>
+                <dt>Legal name</dt><dd>AMAPHU (PTY) LTD</dd>
+                <dt>Role</dt><dd>Entertainment and media company</dd>
+                <dt>Public home</dt><dd><a href="https://linktr.ee/amaphu.ent" target="_blank" rel="noreferrer">Ama-Phu public links ↗</a></dd>
+              </dl>
+              <div className="hero-actions"><a className="secondary" href="https://www.youtube.com/@Ama-PhuEntertainment" target="_blank" rel="noreferrer">YouTube ↗</a><a className="secondary" href="https://open.spotify.com/artist/3N5NlNqY8iY4rR6DzDOpCA" target="_blank" rel="noreferrer">Spotify ↗</a></div>
+            </article>
+          </div>
+          <section className="source-callout">
+            <div><span className="eyebrow">FOUNDER AUTHORITY</span><h2>Kholofelo Robyn Rababalela</h2><p>Founder, Director, and Sovereign System Engineer across both separate entities. Public company claims stay linked to visible artifacts, official profiles and the appropriate legal boundary.</p><div className="hero-actions"><a className="primary" href="https://krrababalela.com/" target="_blank" rel="noreferrer">Open founder site ↗</a><a className="secondary" href="https://github.com/RobynAwesome" target="_blank" rel="noreferrer">GitHub profile ↗</a></div></div>
+            <div><span className="eyebrow">DISCOVERY ARTIFACT</span><h2>One graph. Two companies.</h2><p>The machine-readable entity record keeps the public brand names, legal names, founder link and verified external profiles explicit without publishing private registration identifiers.</p><a className="secondary" href="/entities.json">Open entities.json ↗</a></div>
+          </section>
         </motion.section>}
 
         {view === 'systems' && <motion.section key="systems" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><div className="page-head"><span className="eyebrow">SYSTEMS</span><h1>Working systems.</h1><p>Operational surfaces with separate jobs, routes, constraints, data and evidence. The Sovereign Hub connects the governance experiment runtime without collapsing those systems into one product.</p></div><Suspense fallback={<GovernedFallback label="Loading systems atlas…"/>}><SystemAtlas view={view}/></Suspense><SpatialDirectory items={systems} kind="system"/></motion.section>}

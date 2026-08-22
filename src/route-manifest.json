@@ -124,6 +124,17 @@
       "sitemapOrder": 11,
       "intents": ["proof", "source", "audit", "lineage", "verification", "main brain", "sovereign hub", "receipts"],
       "humanPrompt": "I want the technical evidence, source lineage and verification."
+    },
+    {
+      "id": "about",
+      "path": "/about/",
+      "title": "About Kopano Labs — Experimental Systems Lab",
+      "description": "Kopano Labs is a South African experimental systems lab exploring artificial intelligence, web design, blockchain research, offline-first software and cyber-physical engineering.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 12,
+      "intents": ["about", "entity", "company", "founder", "kopano labs legal name", "ai lab", "web design", "blockchain", "ama-phu", "entertainment"],
+      "humanPrompt": "I want to understand the Kopano Labs entity, founder and related Ama-Phu company."
     }
   ],
   "indexArtifacts": [],
@@ -147,6 +158,7 @@
     "/experiments.receipt.json",
     "/evidence.json",
     "/evidence.receipt.json",
-    "/humans.txt"
+    "/humans.txt",
+    "/entities.json"
   ]
 }

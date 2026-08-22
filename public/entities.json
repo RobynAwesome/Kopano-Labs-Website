@@ -1,0 +1,46 @@
+{
+  "schema": "kopano-public-entity-graph/v1",
+  "updated": "2026-08-22",
+  "privacy": "Public names, roles and public profiles only; private registration identifiers are intentionally withheld.",
+  "founder": {
+    "public_name": "Kholofelo Robyn Rababalela",
+    "role": "Founder, Director, and Sovereign System Engineer",
+    "canonical_url": "https://krrababalela.com/",
+    "public_profiles": [
+      "https://krrababalela.com/",
+      "https://github.com/RobynAwesome"
+    ]
+  },
+  "entities": [
+    {
+      "public_name": "Kopano Labs",
+      "legal_name": "KOPANO LABS",
+      "entity_type": "South African private company",
+      "role": "Experimental systems lab and South African systems studio",
+      "canonical_url": "https://kopanolabs.com/about/",
+      "public_profiles": [
+        "https://kopanolabs.com/",
+        "https://github.com/Kopano-Labs",
+        "https://za.linkedin.com/company/kopano-labs"
+      ],
+      "source_authority": "https://github.com/RobynAwesome/Introduction-to-MCP",
+      "deployment_source_observed": "https://github.com/RobynAwesome/Kopano-Labs-Website"
+    },
+    {
+      "public_name": "Ama-Phu Entertainment",
+      "legal_name": "AMAPHU (PTY) LTD",
+      "entity_type": "South African private company",
+      "role": "Entertainment and media company spanning music, stories, games, publishing, merchandise and creator opportunity",
+      "corporate_domain": null,
+      "public_home": "https://linktr.ee/amaphu.ent",
+      "public_profiles": [
+        "https://linktr.ee/amaphu.ent",
+        "https://www.youtube.com/@Ama-PhuEntertainment",
+        "https://open.spotify.com/artist/3N5NlNqY8iY4rR6DzDOpCA",
+        "https://music.apple.com/za/artist/ama-phu/1656490480"
+      ],
+      "product_record": "https://github.com/RobynAwesome/amaphu-app",
+      "relationship_to_kopano_labs": "Separate company led by the same founder; do not merge the legal or public identities."
+    }
+  ]
+}

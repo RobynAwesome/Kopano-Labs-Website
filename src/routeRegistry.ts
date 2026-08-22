@@ -11,7 +11,8 @@ export type View =
   | 'cars4mars-architecture'
   | 'cars4mars-media'
   | 'cars4mars-support'
-  | 'proof';
+  | 'proof'
+  | 'about';
 
 export type RouteRecord = {
   id: View;

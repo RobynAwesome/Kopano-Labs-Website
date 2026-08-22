@@ -18,10 +18,37 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "Kopano Labs",
-        "url": "https://kopanolabs.com/",
-        "areaServed": "ZA"
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://kopanolabs.com/#organization",
+            "name": "Kopano Labs",
+            "legalName": "KOPANO LABS",
+            "description": "Kopano Labs is a South African experimental systems lab and systems studio exploring artificial intelligence, web design, blockchain research, offline-first software, public-interest infrastructure and cyber-physical engineering.",
+            "url": "https://kopanolabs.com/",
+            "sameAs": [
+              "https://github.com/Kopano-Labs",
+              "https://za.linkedin.com/company/kopano-labs"
+            ],
+            "foundingDate": "2026-06-08",
+            "areaServed": {
+              "@type": "Country",
+              "name": "South Africa"
+            },
+            "founder": {
+              "@id": "https://krrababalela.com/#person"
+            },
+            "knowsAbout": [
+              "Artificial intelligence",
+              "Web design",
+              "Blockchain research",
+              "Offline-first software",
+              "Public-interest technology",
+              "Cyber-physical engineering"
+            ],
+            "mainEntityOfPage": "https://kopanolabs.com/about/"
+          }
+        ]
       }
     </script>
     <title>Kopano Labs — South African Systems Studio</title>

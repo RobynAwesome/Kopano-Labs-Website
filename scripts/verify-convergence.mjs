@@ -9,6 +9,7 @@ const mustExist = [
   'governance.json',
   'evidence.json',
   'evidence.receipt.json',
+  'entities.json',
 ];
 
 for (const file of mustExist) {
@@ -80,6 +81,7 @@ if (!robots.includes('Disallow: /reports/')) throw new Error('Convergence gate: 
 if (!robots.includes('Allow: /evidence.json') || !robots.includes('Allow: /evidence.receipt.json')) {
   throw new Error('Convergence gate: parsed public evidence artifacts must remain discoverable');
 }
+if (!robots.includes('Allow: /entities.json')) throw new Error('Convergence gate: public entity graph must remain discoverable');
 
 const sitemap = await readFile(new URL('sitemap.xml', root), 'utf8');
 if (sitemap.includes('/reports/')) throw new Error('Convergence gate: retired reports route leaked into sitemap.xml');
@@ -88,6 +90,11 @@ const evidence = JSON.parse(await readFile(new URL('evidence.json', root), 'utf8
 const evidenceReceipt = JSON.parse(await readFile(new URL('evidence.receipt.json', root), 'utf8'));
 if (evidence.schema !== 'kopano.public-evidence.v1' || evidence.items?.length !== 3) throw new Error('Convergence gate: parsed public evidence contract drifted');
 if (evidenceReceipt.gate !== 'ALLOW' || evidenceReceipt.projection?.itemCount !== 3) throw new Error('Convergence gate: public evidence projection receipt is not valid');
+
+const entities = JSON.parse(await readFile(new URL('entities.json', root), 'utf8'));
+if (entities.schema !== 'kopano-public-entity-graph/v1' || entities.entities?.length !== 2) throw new Error('Convergence gate: public entity graph drifted');
+if (!entities.entities.some((entity) => entity.public_name === 'Kopano Labs' && entity.legal_name === 'KOPANO LABS')) throw new Error('Convergence gate: Kopano Labs entity identity missing');
+if (!entities.entities.some((entity) => entity.public_name === 'Ama-Phu Entertainment' && entity.legal_name === 'AMAPHU (PTY) LTD')) throw new Error('Convergence gate: Ama-Phu entity identity missing');
 
 const release = JSON.parse(await readFile(new URL('release.json', root), 'utf8'));
 const governance = JSON.parse(await readFile(new URL('governance.json', root), 'utf8'));

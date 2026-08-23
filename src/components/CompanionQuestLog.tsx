@@ -9,6 +9,7 @@ import {
   type CompanionQuestReceipt,
 } from '../companionJourney';
 import type { RtcpRoute } from '../rtcpRuntime';
+import './companion-journey.css';
 
 type JourneyVisual = {
   requestId: string;

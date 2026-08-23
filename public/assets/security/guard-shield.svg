@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Kopano Guard shield</title>
+  <desc id="desc">An original shield emblem representing the permission and policy boundary.</desc>
+  <defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#82dccb"/><stop offset="1" stop-color="#63d5ff"/></linearGradient></defs>
+  <circle cx="128" cy="128" r="112" fill="#081017" stroke="#29454e" stroke-width="2"/>
+  <path d="M128 38 204 68v57c0 48-30 76-76 94-46-18-76-46-76-94V68l76-30Z" fill="#102932" stroke="url(#g)" stroke-width="7" stroke-linejoin="round"/>
+  <path d="m88 127 26 27 56-61" fill="none" stroke="#dffdf5" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M128 52v151" stroke="#82dccb" stroke-width="2" opacity=".18"/>
+</svg>

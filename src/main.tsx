@@ -27,6 +27,7 @@ async function boot() {
     import('./governance-experiments.css'),
     import('./site-experience.css'),
     import('./system-atlas.css'),
+    import('./ecosystem-identity.css'),
     import('./visual-repair.css'),
     import('./cars4mars-simulation.css'),
   ]);

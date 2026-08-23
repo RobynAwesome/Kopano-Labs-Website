@@ -1,0 +1,27 @@
+{
+  "schema": "kopano.search-indexability-receipt.v1",
+  "date": "2026-08-23",
+  "trigger_pr": 32,
+  "live_precheck": {
+    "about_http_200": true,
+    "entities_json_http_200": true,
+    "sitemap_http_200_xml": true,
+    "robots_http_200": true,
+    "about_in_sitemap": true,
+    "robots_advertises_canonical_sitemap": true
+  },
+  "hardening": {
+    "public_allow_root_invariant": true,
+    "crawl_blocker_gate": true,
+    "rendered_indexability_gate": true,
+    "website_entity_node": true,
+    "about_webpage_entity_node": true,
+    "adaptive_player_noindex_until_promotion": true
+  },
+  "google_control_plane": {
+    "search_console_submission_verified": false,
+    "url_inspection_verified": false,
+    "reason": "No connected Google Search Console integration was available in this execution lane."
+  },
+  "state": "CRAWL_AND_INDEX_READINESS_HARDENED_GOOGLE_CONTROL_PLANE_PENDING"
+}

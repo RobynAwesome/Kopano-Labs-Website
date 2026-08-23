@@ -14,10 +14,26 @@ function replaceMeta(html, route) {
   const canonical = `${manifest.site.origin}${route.path}`;
   const title = escapeHtml(route.title);
   const description = escapeHtml(route.description);
+  const robots = route.index === false
+    ? 'noindex,nofollow'
+    : 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1';
   const aboutEntitySchema = route.path === '/about/'
     ? `<script type="application/ld+json">${JSON.stringify({
       '@context': 'https://schema.org',
       '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://kopanolabs.com/about/#webpage',
+          url: 'https://kopanolabs.com/about/',
+          name: 'About Kopano Labs — Experimental Systems Lab',
+          description: 'Kopano Labs is a South African experimental systems lab exploring artificial intelligence, web design, blockchain research, offline-first software and cyber-physical engineering.',
+          isPartOf: { '@id': 'https://kopanolabs.com/#website' },
+          mainEntity: [
+            { '@id': 'https://kopanolabs.com/#organization' },
+            { '@id': 'https://krrababalela.com/#person' },
+            { '@id': 'https://kopanolabs.com/about/#amaphu-entertainment' },
+          ],
+        },
         {
           '@type': 'Person',
           '@id': 'https://krrababalela.com/#person',
@@ -44,7 +60,7 @@ function replaceMeta(html, route) {
             'https://music.apple.com/za/artist/ama-phu/1656490480',
           ],
           founder: { '@id': 'https://krrababalela.com/#person' },
-          mainEntityOfPage: 'https://kopanolabs.com/about/',
+          mainEntityOfPage: { '@id': 'https://kopanolabs.com/about/#webpage' },
         },
       ],
     })}</script>`
@@ -53,6 +69,7 @@ function replaceMeta(html, route) {
   return html
     .replace(/<title>.*?<\/title>/s, `<title>${title}</title>`)
     .replace(/<meta name="description" content="[^"]*"\s*\/>/, `<meta name="description" content="${description}" />`)
+    .replace(/<meta name="robots" content="[^"]*"\s*\/>/, `<meta name="robots" content="${robots}" />`)
     .replace(/<link rel="canonical" href="[^"]*"\s*\/>/, `<link rel="canonical" href="${canonical}" />`)
     .replace(/<meta property="og:title" content="[^"]*"\s*\/>/, `<meta property="og:title" content="${title}" />`)
     .replace(/<meta property="og:description" content="[^"]*"\s*\/>/, `<meta property="og:description" content="${description}" />`)
@@ -74,9 +91,10 @@ const adaptivePlayerRoute = {
   path: '/adaptive-player/',
   title: 'Adaptive PWA Player POC — Kopano Labs',
   description: 'A mobile-first Kopano Labs POC that adapts one governed experience across lite, mobile, enhanced and immersive rendering profiles.',
+  index: false,
 };
 const adaptivePlayerTarget = join(new URL('../dist/', import.meta.url).pathname, 'adaptive-player', 'index.html');
 await mkdir(dirname(adaptivePlayerTarget), { recursive: true });
 await writeFile(adaptivePlayerTarget, replaceMeta(template, adaptivePlayerRoute), 'utf8');
 
-console.log(`Generated ${indexedRoutes.length} public route HTML shells + 1 non-crawl Adaptive Player POC shell.`);
+console.log(`Generated ${indexedRoutes.length} public route HTML shells + 1 explicitly noindex Adaptive Player POC shell.`);

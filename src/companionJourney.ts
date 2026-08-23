@@ -1,5 +1,5 @@
-import { executionClaimForRoute, type ExecutionClaim } from './companionRuntime';
-import type { RtcpRoute } from './rtcpRuntime';
+import type { CompanionRouteSignal } from './companionEvents';
+import type { ExecutionClaim } from './companionRuntime';
 
 export const COMPANION_QUEST_STORAGE_KEY = 'kpgs.companion.quest-log.v1';
 export const MAX_COMPANION_QUEST_RECEIPTS = 8;
@@ -21,6 +21,14 @@ export type CompanionQuestReceipt = {
   createdAt: string;
 };
 
+function executionClaimForSignal(signal: CompanionRouteSignal): ExecutionClaim {
+  if (signal.receipt.gate.toUpperCase().includes('BLOCK') || signal.receipt.outcome.toLowerCase().includes('block')) {
+    return 'BLOCKED';
+  }
+  if (signal.execution.mode === 'PROVIDER_EXECUTED') return 'PROVIDER_EXECUTED';
+  return 'ROUTE_ONLY';
+}
+
 function isQuestReceipt(value: unknown): value is CompanionQuestReceipt {
   if (!value || typeof value !== 'object') return false;
   const candidate = value as Partial<CompanionQuestReceipt>;
@@ -38,20 +46,20 @@ function isQuestReceipt(value: unknown): value is CompanionQuestReceipt {
     && typeof candidate.receipt.adapterId === 'string';
 }
 
-export function questReceiptFromRoute(route: RtcpRoute): CompanionQuestReceipt {
+export function questReceiptFromSignal(signal: CompanionRouteSignal): CompanionQuestReceipt {
   return {
     schema: 'kopano.companion.quest-receipt.v1',
-    requestId: route.requestId,
+    requestId: signal.requestId,
     destination: {
-      id: route.domain.id,
-      label: route.domain.label,
-      state: route.domain.state,
+      id: signal.domain.id,
+      label: signal.domain.label,
+      state: signal.domain.state,
     },
-    executionClaim: executionClaimForRoute(route),
+    executionClaim: executionClaimForSignal(signal),
     receipt: {
-      gate: route.receipt.gate,
-      outcome: route.receipt.outcome,
-      adapterId: route.receipt.adapterId,
+      gate: signal.receipt.gate,
+      outcome: signal.receipt.outcome,
+      adapterId: signal.receipt.adapterId,
     },
     createdAt: new Date().toISOString(),
   };
@@ -70,11 +78,11 @@ export function readCompanionQuestLog(storage?: Storage): CompanionQuestReceipt[
   }
 }
 
-export function appendCompanionQuestReceipt(route: RtcpRoute, storage?: Storage): CompanionQuestReceipt[] {
+export function appendCompanionQuestReceipt(signal: CompanionRouteSignal, storage?: Storage): CompanionQuestReceipt[] {
   const current = readCompanionQuestLog(storage);
-  if (current.some(entry => entry.requestId === route.requestId)) return current;
+  if (current.some(entry => entry.requestId === signal.requestId)) return current;
 
-  const next = [questReceiptFromRoute(route), ...current].slice(0, MAX_COMPANION_QUEST_RECEIPTS);
+  const next = [questReceiptFromSignal(signal), ...current].slice(0, MAX_COMPANION_QUEST_RECEIPTS);
   if (storage) {
     try {
       storage.setItem(COMPANION_QUEST_STORAGE_KEY, JSON.stringify(next));

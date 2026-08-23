@@ -18,10 +18,11 @@
     "evidence:verify": "node scripts/verify-public-evidence.mjs",
     "rtcp:sync": "node scripts/sync-rtcp.mjs",
     "rtcp:verify": "node scripts/verify-rtcp-projection.mjs",
+    "companion:verify": "node scripts/verify-companion-ux.mjs",
     "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
     "player:verify": "node scripts/verify-adaptive-player-poc.mjs",
     "player:progressive:verify": "node scripts/verify-adaptive-player-progressive-update.mjs",
-    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run rtcp:sync && npm run rtcp:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run indexability:verify && npm run convergence:verify && npm run poc:verify && npm run player:verify && npm run player:progressive:verify",
+    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run rtcp:sync && npm run rtcp:verify && npm run companion:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run indexability:verify && npm run convergence:verify && npm run poc:verify && npm run player:verify && npm run player:progressive:verify",
     "preview": "vite preview",
     "assets:verify": "node scripts/verify-public-assets.mjs"
   },

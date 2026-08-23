@@ -1,12 +1,12 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { subscribeCompanionRoute } from '../companionEvents';
 import {
   appendCompanionQuestReceipt,
   clearCompanionQuestLog,
   readCompanionQuestLog,
   type CompanionQuestReceipt,
 } from '../companionJourney';
-import type { RtcpRoute } from '../rtcpRuntime';
 
 function deviceStorage(): Storage | undefined {
   if (typeof window === 'undefined') return undefined;
@@ -23,17 +23,16 @@ function timeLabel(value: string) {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-export function CompanionQuestLog({ route }: { route: RtcpRoute | null }) {
+export function CompanionQuestLog() {
   const [entries, setEntries] = useState<CompanionQuestReceipt[]>([]);
 
   useEffect(() => {
-    setEntries(readCompanionQuestLog(deviceStorage()));
+    const storage = deviceStorage();
+    setEntries(readCompanionQuestLog(storage));
+    return subscribeCompanionRoute(route => {
+      setEntries(appendCompanionQuestReceipt(route, storage));
+    });
   }, []);
-
-  useEffect(() => {
-    if (!route) return;
-    setEntries(appendCompanionQuestReceipt(route, deviceStorage()));
-  }, [route?.requestId]);
 
   const clear = () => setEntries(clearCompanionQuestLog(deviceStorage()));
 

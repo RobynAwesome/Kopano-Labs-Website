@@ -1,0 +1,11 @@
+{
+  "schema": "kopano.search-console-follow-up.v1",
+  "date": "2026-08-23",
+  "canonical_sitemap": "https://kopanolabs.com/sitemap.xml",
+  "inspect_urls": [
+    "https://kopanolabs.com/",
+    "https://kopanolabs.com/about/"
+  ],
+  "status": "PENDING_EXTERNAL_RECEIPT",
+  "completion_rule": "Attach Search Console submission and URL Inspection evidence before marking complete."
+}

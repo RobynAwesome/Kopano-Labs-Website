@@ -18,10 +18,11 @@ const sitemap = [
 
 const robots = [
   '# Kopano Labs crawl guide',
-  '# Public discovery is welcome. Follow the public route map; operational surfaces stay out of crawl scope.',
+  '# Public discovery is welcome. Public content defaults open; only explicitly protected operational lanes are blocked.',
   '',
   'User-agent: *',
-  ...routes.map((route) => `Allow: ${route.path}`),
+  'Allow: /',
+  ...routes.filter((route) => route.path !== '/').map((route) => `Allow: ${route.path}`),
   ...manifest.publicArtifacts.map((path) => `Allow: ${path}`),
   ...manifest.protectedPaths.map((path) => `Disallow: ${path}`),
   '',
@@ -32,4 +33,4 @@ const robots = [
 await writeFile(new URL('../public/sitemap.xml', import.meta.url), sitemap, 'utf8');
 await writeFile(new URL('../public/robots.txt', import.meta.url), robots, 'utf8');
 
-console.log(`Generated crawl policy for ${routes.length} public routes and ${indexArtifacts.length} public artifacts.`);
+console.log(`Generated crawl policy for ${routes.length} public routes and ${indexArtifacts.length} public artifacts; public crawl defaults open.`);

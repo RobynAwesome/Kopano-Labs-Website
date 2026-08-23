@@ -1,14 +1,14 @@
 # Kopano Labs crawl guide
-# Public discovery is welcome. Follow the public route map; operational surfaces stay out of crawl scope.
+# Public discovery is welcome. Public content defaults open; only explicitly protected operational lanes are blocked.
 
 User-agent: *
+Allow: /
 Allow: /Cars4Mars/
 Allow: /Cars4Mars/Ledger/
 Allow: /Cars4Mars/Architecture/
 Allow: /Cars4Mars/Media/
 Allow: /Cars4Mars/Support/
 Allow: /FOC/
-Allow: /
 Allow: /systems/
 Allow: /labs/
 Allow: /content/

@@ -47,15 +47,46 @@ for (const url of actualUrls) {
   }
 }
 
+const robotLines = robots.split(/\r?\n/).map((line) => line.trim()).filter(Boolean);
+const allowLines = robotLines.filter((line) => line.toLowerCase().startsWith('allow:'));
+const disallowLines = robotLines.filter((line) => line.toLowerCase().startsWith('disallow:'));
+const sitemapDirectives = robotLines.filter((line) => line.toLowerCase().startsWith('sitemap:'));
 const expectedSitemapDirective = `Sitemap: ${origin}/sitemap.xml`;
-const sitemapDirectives = robots
-  .split(/\r?\n/)
-  .filter((line) => line.trim().toLowerCase().startsWith('sitemap:'));
-if (sitemapDirectives.length !== 1 || sitemapDirectives[0].trim() !== expectedSitemapDirective) {
+
+if (!robotLines.includes('User-agent: *')) {
+  throw new Error('Crawl gate: robots.txt must include the public User-agent: * group');
+}
+if (allowLines.filter((line) => line === 'Allow: /').length !== 1) {
+  throw new Error('Crawl gate: robots.txt must default public discovery open with exactly one Allow: /');
+}
+if (disallowLines.some((line) => line === 'Disallow: /')) {
+  throw new Error('Crawl gate: robots.txt must never block the entire public site');
+}
+if (sitemapDirectives.length !== 1 || sitemapDirectives[0] !== expectedSitemapDirective) {
   throw new Error(`Crawl gate: robots.txt must advertise exactly ${expectedSitemapDirective}`);
 }
-if (!robots.includes('Allow: /sitemap.xml')) {
+if (!robotLines.includes('Allow: /sitemap.xml')) {
   throw new Error('Crawl gate: robots.txt must explicitly allow /sitemap.xml');
 }
 
-console.log(`Crawl gate passed: ${actualUrls.length} canonical XML sitemap URLs; robots advertises ${origin}/sitemap.xml.`);
+const disallowedPrefixes = disallowLines
+  .map((line) => line.slice('Disallow:'.length).trim())
+  .filter(Boolean);
+const publicPaths = [
+  ...routes.map((route) => route.path),
+  ...manifest.publicArtifacts,
+];
+for (const path of publicPaths) {
+  const blocker = disallowedPrefixes.find((prefix) => path.startsWith(prefix));
+  if (blocker) {
+    throw new Error(`Crawl gate: public path ${path} is blocked by robots rule Disallow: ${blocker}`);
+  }
+}
+
+for (const protectedPath of manifest.protectedPaths) {
+  if (!robotLines.includes(`Disallow: ${protectedPath}`)) {
+    throw new Error(`Crawl gate: protected path ${protectedPath} must remain blocked`);
+  }
+}
+
+console.log(`Crawl gate passed: ${actualUrls.length} canonical sitemap URLs; public crawl defaults open; ${manifest.protectedPaths.length} protected prefixes remain blocked.`);

@@ -10,6 +10,7 @@
     "crawl:generate": "node scripts/generate-crawl-policy.mjs",
     "crawl:verify": "node scripts/verify-crawl-policy.mjs",
     "routes:generate": "node scripts/generate-route-shells.mjs",
+    "indexability:verify": "node scripts/verify-indexability.mjs",
     "convergence:verify": "node scripts/verify-convergence.mjs",
     "experiments:sync": "node scripts/sync-sovereign-experiments.mjs",
     "experiments:verify": "node scripts/verify-governed-experiments.mjs",
@@ -20,7 +21,7 @@
     "poc:verify": "node scripts/verify-cars4mars-poc.mjs",
     "player:verify": "node scripts/verify-adaptive-player-poc.mjs",
     "player:progressive:verify": "node scripts/verify-adaptive-player-progressive-update.mjs",
-    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run rtcp:sync && npm run rtcp:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run convergence:verify && npm run poc:verify && npm run player:verify && npm run player:progressive:verify",
+    "build": "npm run assets:verify && npm run experiments:sync && npm run experiments:verify && npm run evidence:sync && npm run evidence:verify && npm run rtcp:sync && npm run rtcp:verify && npm run crawl:generate && npm run crawl:verify && tsc -b && vite build && npm run routes:generate && npm run indexability:verify && npm run convergence:verify && npm run poc:verify && npm run player:verify && npm run player:progressive:verify",
     "preview": "vite preview",
     "assets:verify": "node scripts/verify-public-assets.mjs"
   },

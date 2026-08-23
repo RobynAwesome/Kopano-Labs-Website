@@ -64,7 +64,21 @@ function messageFor(intent: string, route: RtcpRoute) {
   return `I found a good route for that: ${destination}. You can continue there, or ask me why I chose it.`;
 }
 
-function executionClaim(route: RtcpRoute): ExecutionClaim {
+function openActionLabel(route: RtcpRoute) {
+  switch (route.domain.id) {
+    case 'kasilink': return 'Browse KasiLink opportunities';
+    case 'fivesarena': return 'Open FiveS Arena fixtures';
+    case 'crisisconnect': return 'Open CrisisConnect field lane';
+    case 'starfall': return 'Enter Starfall Salvage';
+    case 'cars4mars': return 'Inspect Cars4Mars evidence';
+    case 'context': return 'Open Kopano Context';
+    case 'portfolio': return 'Open founder portfolio';
+    case 'kopanolabs': return 'Explore Kopano Labs';
+    default: return `Open ${route.domain.label}`;
+  }
+}
+
+export function executionClaimForRoute(route: RtcpRoute): ExecutionClaim {
   if (route.receipt.gate.toUpperCase().includes('BLOCK') || route.receipt.outcome.toLowerCase().includes('block')) {
     return 'BLOCKED';
   }
@@ -73,7 +87,7 @@ function executionClaim(route: RtcpRoute): ExecutionClaim {
 }
 
 export function companionTurnForRoute(intent: string, route: RtcpRoute): CompanionTurn {
-  const claim = executionClaim(route);
+  const claim = executionClaimForRoute(route);
   const proofLine = claim === 'PROVIDER_EXECUTED'
     ? 'A provider execution receipt is attached to this route.'
     : claim === 'BLOCKED'
@@ -87,7 +101,7 @@ export function companionTurnForRoute(intent: string, route: RtcpRoute): Compani
     goalSummary: goalFromIntent(intent),
     routeSummary: `${route.domain.label} · ${route.domain.state}`,
     actions: [
-      { id: 'open', label: `Open ${route.domain.label}` },
+      { id: 'open', label: openActionLabel(route) },
       { id: 'why', label: 'Why this route?' },
       { id: 'again', label: 'Try another request' },
     ],

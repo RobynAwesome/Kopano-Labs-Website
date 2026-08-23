@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Starfall Salvage orbit glyph</title>
+  <desc id="desc">An original orbital salvage emblem for the Kopano Labs systems atlas.</desc>
+  <defs><radialGradient id="c" cx="40%" cy="38%" r="68%"><stop stop-color="#f0d9ff"/><stop offset=".32" stop-color="#c38cff"/><stop offset="1" stop-color="#38264e"/></radialGradient></defs>
+  <circle cx="128" cy="128" r="112" fill="#0b0712" stroke="#3d2b51" stroke-width="2"/>
+  <ellipse cx="128" cy="128" rx="91" ry="40" fill="none" stroke="#c38cff" stroke-width="4" opacity=".55" transform="rotate(-24 128 128)"/>
+  <ellipse cx="128" cy="128" rx="70" ry="93" fill="none" stroke="#63d5ff" stroke-width="2" opacity=".24" transform="rotate(39 128 128)"/>
+  <path d="m128 58 17 43 46 3-36 29 11 45-38-25-39 25 12-45-37-29 47-3 17-43Z" fill="url(#c)" stroke="#e9d4ff" stroke-width="3" stroke-linejoin="round"/>
+  <circle cx="202" cy="95" r="10" fill="#63d5ff"/><circle cx="70" cy="188" r="7" fill="#f3c87a"/>
+</svg>

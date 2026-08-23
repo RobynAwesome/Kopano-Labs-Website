@@ -1,5 +1,6 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useState } from 'react';
+import './companion.css';
 
 type NodeId = 'you' | 'companion' | 'guard' | 'system' | 'receipt';
 

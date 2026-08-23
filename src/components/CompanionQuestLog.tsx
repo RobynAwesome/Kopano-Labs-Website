@@ -1,14 +1,13 @@
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { subscribeCompanionRoute } from '../companionEvents';
+import { subscribeCompanionRoute, type CompanionRouteSignal } from '../companionEvents';
 import {
   appendCompanionQuestReceipt,
   clearCompanionQuestLog,
   readCompanionQuestLog,
   type CompanionQuestReceipt,
 } from '../companionJourney';
-import type { RtcpRoute } from '../rtcpRuntime';
 import './companion-journey.css';
 
 type JourneyVisual = {
@@ -32,8 +31,8 @@ function timeLabel(value: string) {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 }
 
-function atlasWorldLabel(route: RtcpRoute) {
-  switch (route.domain.id) {
+function atlasWorldLabel(signal: CompanionRouteSignal) {
+  switch (signal.domain.id) {
     case 'fivesarena': return 'FiveS Arena';
     case 'kasilink': return 'KasiLink';
     case 'crisisconnect': return 'CrisisConnect';
@@ -61,11 +60,11 @@ export function CompanionQuestLog() {
   useEffect(() => {
     const storage = deviceStorage();
     setEntries(readCompanionQuestLog(storage));
-    return subscribeCompanionRoute(route => {
-      const worldLabel = atlasWorldLabel(route);
-      setEntries(appendCompanionQuestReceipt(route, storage));
+    return subscribeCompanionRoute(signal => {
+      const worldLabel = atlasWorldLabel(signal);
+      setEntries(appendCompanionQuestReceipt(signal, storage));
       activateAtlasWorld(worldLabel);
-      setJourney({ requestId: route.requestId, destination: route.domain.label, worldLabel });
+      setJourney({ requestId: signal.requestId, destination: signal.domain.label, worldLabel });
     });
   }, []);
 

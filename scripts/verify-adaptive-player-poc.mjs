@@ -16,6 +16,7 @@ const publicManifest = JSON.parse(crawlPolicy);
 const failures = [];
 
 if (!routeShells.includes("path: '/adaptive-player/'") || !routeShells.includes("'adaptive-player', 'index.html'")) failures.push('adaptive-player direct route shell missing');
+if (!routeShells.includes('index: false')) failures.push('adaptive-player route shell must remain explicitly noindex before promotion');
 if (publicManifest.routes.some((route) => route.path === '/adaptive-player/')) failures.push('POC route leaked into public crawl manifest before promotion');
 if (!main.includes("startsWith('/adaptive-player/')") || !main.includes("import('./AdaptivePlayerApp')")) failures.push('boot-time player split missing');
 for (const profile of ['lite', 'mobile', 'enhanced', 'immersive']) {
@@ -36,4 +37,4 @@ if (failures.length) {
 
 console.log('Adaptive Player POC verification PASS');
 console.log('Profiles: lite -> mobile -> enhanced -> immersive');
-console.log('Three.js: lazy; lite: zero-WebGL; PWA: scoped; crawl: blocked pending promotion');
+console.log('Three.js: lazy; lite: zero-WebGL; PWA: scoped; indexing: blocked with noindex pending governed promotion');

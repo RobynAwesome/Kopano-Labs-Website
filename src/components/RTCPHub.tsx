@@ -3,8 +3,10 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMemo, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import * as THREE from 'three';
+import { companionGreeting, companionTurnForRoute } from '../companionRuntime';
 import { council, routeRtcpIntent, rtcpDomains, type RtcpRoute } from '../rtcpRuntime';
 import { useExperienceProfile } from '../useExperienceProfile';
+import { CompanionSecurityGraph } from './CompanionSecurityGraph';
 import './rtcp-hub.css';
 
 const seatPositions = council.map((_, index) => {
@@ -106,7 +108,7 @@ function CouncilWorld({ activeIds, animate }: { activeIds: Set<string>; animate:
 
 function LiteCouncil({ activeIds }: { activeIds: Set<string> }) {
   return <div className="rtcp-lite" aria-hidden="true">
-    <div className="rtcp-lite-table"><span>RTC</span></div>
+    <div className="rtcp-lite-table"><span>KC</span></div>
     {council.map((member, index) => <i
       key={member.id}
       className={activeIds.has(member.id) ? 'active' : ''}
@@ -122,56 +124,106 @@ function domainHref(host: string) {
 export function RTCPHub({ compact = false }: { compact?: boolean }) {
   const profile = useExperienceProfile();
   const [intent, setIntent] = useState('');
+  const [submittedIntent, setSubmittedIntent] = useState('');
   const [route, setRoute] = useState<RtcpRoute | null>(null);
   const [running, setRunning] = useState(false);
+  const [showWhy, setShowWhy] = useState(false);
   const activeIds = useMemo(() => new Set(route?.council.map(member => member.id) ?? ['kc', 'khelos', 'antigravity']), [route]);
   const useLite = profile.tier === 'lite' || profile.saveData || profile.reducedMotion;
+  const turn = route ? companionTurnForRoute(submittedIntent, route) : companionGreeting;
+
+  const runIntent = async (nextIntent: string) => {
+    const clean = nextIntent.trim();
+    if (!clean) return;
+    setRunning(true);
+    setShowWhy(false);
+    setSubmittedIntent(clean);
+    const next = await routeRtcpIntent(clean);
+    setRoute(next);
+    setRunning(false);
+  };
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
-    setRunning(true);
-    const next = await routeRtcpIntent(intent);
-    setRoute(next);
-    setRunning(false);
+    await runIntent(intent);
   };
 
   const selectedDomain = route?.domain ?? rtcpDomains[0];
   const connected = route?.receipt.adapterId === 'kpgs.rtcp.vercel.route';
   const transportMessage = !route
-    ? 'Ready for one request'
+    ? 'Your companion is ready'
     : connected
-      ? 'Hub connected · council route confirmed'
-      : 'Local council map · Hub transport is not reachable yet';
+      ? 'Route confirmed by the Hub'
+      : 'Safe local route · no external model execution claimed';
 
-  return <section className={`rtcp-hub ${compact ? 'compact' : ''}`} aria-label="Round Table Council operating hub">
+  return <section className={`rtcp-hub companion-mode ${compact ? 'compact' : ''}`} aria-label="Kopano companion and Round Table Council">
     <div className="rtcp-copy">
-      <span className="eyebrow">KOPANO SOVEREIGN HUB · ROUND TABLE</span>
-      <h2>One request. One council. The right system wakes up.</h2>
-      <p>You should not have to know which AI, app or department to talk to. Tell Kopano what you need. The council routes the work and keeps each product in its own lane.</p>
+      <div className="companion-intro">
+        <motion.img
+          src="/assets/companion/companion-orb.svg"
+          alt=""
+          className="companion-avatar"
+          animate={profile.reducedMotion ? undefined : { y: [0, -5, 0], rotate: [0, 2, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+        />
+        <div>
+          <span className="eyebrow">KOPANO COMPANION</span>
+          <h2>Tell me what you're trying to do. I'll walk with you.</h2>
+        </div>
+      </div>
+      <p>Talk normally. You do not need to know which app, AI or council seat handles the work.</p>
+
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={`${route?.requestId ?? 'hello'}-${running}`}
+          className={`companion-turn ${running ? 'is-running' : ''}`}
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -6 }}
+          aria-live="polite"
+        >
+          <span>{running ? 'COMPANION' : turn.speaker.toUpperCase()}</span>
+          <strong>{running ? 'I’m checking the right lane…' : turn.message}</strong>
+          {!running && route && <small>{turn.proofLine}</small>}
+        </motion.div>
+      </AnimatePresence>
 
       <form className="rtcp-intent" onSubmit={submit}>
-        <label htmlFor="rtcp-intent">What do you need?</label>
+        <label htmlFor="rtcp-intent">Talk to Kopano</label>
         <div>
-          <input id="rtcp-intent" value={intent} onChange={(event) => setIntent(event.target.value)} placeholder="Find work, review a rover decision, help a learner, check a system…" />
-          <button type="submit" disabled={running}>{running ? 'Council routing…' : 'Ask the council →'}</button>
+          <input id="rtcp-intent" value={intent} onChange={(event) => setIntent(event.target.value)} placeholder="I need work near me… Help me with the rover…" />
+          <button type="submit" disabled={running || !intent.trim()}>{running ? 'Checking…' : 'Let’s go →'}</button>
         </div>
       </form>
 
-      <div className="rtcp-suggestions" aria-label="Example council requests">
-        {['I need work near me', 'Review our rover architecture', 'Help scale the company AI', 'Check a crisis report'].map(example =>
-          <button key={example} type="button" onClick={() => setIntent(example)}>{example}</button>)}
+      <div className="rtcp-suggestions" aria-label="Things you can ask the companion">
+        {['I need work near me', 'Show me the rover mission', 'Help me learn something', 'Check a crisis report'].map(example =>
+          <button key={example} type="button" onClick={() => { setIntent(example); void runIntent(example); }}>{example}</button>)}
       </div>
 
+      {route && <div className="companion-actions" aria-label="Companion next actions">
+        <a href={domainHref(selectedDomain.host)} target="_blank" rel="noreferrer">{turn.actions[0]?.label ?? 'Open system'} ↗</a>
+        <button type="button" onClick={() => setShowWhy(value => !value)}>{showWhy ? 'Hide why' : 'Why this route?'}</button>
+        <button type="button" onClick={() => { setRoute(null); setSubmittedIntent(''); setIntent(''); setShowWhy(false); }}>Ask something else</button>
+      </div>}
+
+      <AnimatePresence>
+        {route && showWhy && <motion.div className="companion-why" initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} exit={{ opacity: 0, height: 0 }}>
+          <span>WHY I CHOSE THIS</span>
+          <strong>{turn.routeSummary}</strong>
+          <p>Goal I understood: {turn.goalSummary}. The council selected only the seats attached to this lane. This is {turn.executionClaim === 'ROUTE_ONLY' ? 'routing guidance, not a claim that an external AI or protected tool already acted.' : 'backed by the execution state shown in the receipt.'}</p>
+        </motion.div>}
+      </AnimatePresence>
+
       <AnimatePresence mode="wait">
-        <motion.div key={selectedDomain.id} className="rtcp-return" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
+        <motion.div key={selectedDomain.id} className="rtcp-return companion-route" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}>
           <div>
-            <span>{route ? 'COUNCIL ROUTE' : 'READY'}</span>
+            <span>{route ? 'WHERE I’M TAKING YOU' : 'FIRST LANE'}</span>
             <strong>{selectedDomain.label}</strong>
-            <small>{selectedDomain.host} · {selectedDomain.state}</small>
+            <small>{route ? selectedDomain.state : 'I’ll choose after you tell me what you need.'}</small>
           </div>
           <div className="rtcp-return-actions">
-            <b>{selectedDomain.integration === 'ADAPT_EXISTING' ? 'Existing system preserved' : selectedDomain.integration}</b>
-            {route && <a href={domainHref(selectedDomain.host)} target="_blank" rel="noreferrer">Open system ↗</a>}
+            <b>{transportMessage}</b>
           </div>
         </motion.div>
       </AnimatePresence>
@@ -182,35 +234,37 @@ export function RTCPHub({ compact = false }: { compact?: boolean }) {
         <CouncilWorld activeIds={activeIds} animate={!profile.reducedMotion && !profile.saveData} />
       </Canvas>}
 
-      <div className="rtcp-stage-label">
-        <span>ROUND TABLE COUNCIL</span>
-        <strong>{route ? `${route.council.length} seats active` : 'Standing council'}</strong>
-        <small>{transportMessage}{route ? ' · external AI provider not attached' : ''}</small>
+      <div className="rtcp-stage-label companion-stage-label">
+        <span>{route ? 'THE RIGHT SPECIALISTS WOKE UP' : 'YOUR COMPANION TRAVELS WITH YOU'}</span>
+        <strong>{route ? `${route.council.length} specialists active behind the scene` : 'One companion in front · council behind'}</strong>
+        <small>{transportMessage}</small>
       </div>
     </div>
 
-    <div className="rtcp-seat-strip" aria-label="Round Table Council members">
-      {council.map((member, index) => <motion.article
-        key={member.id}
-        className={activeIds.has(member.id) ? 'active' : ''}
-        initial={{ opacity: 0, y: 8 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: Math.min(index * .035, .24) }}
-      >
-        <span>{String(member.seat).padStart(2, '0')}</span>
-        <div><strong>{member.name}</strong><small>{member.title}</small></div>
-      </motion.article>)}
-    </div>
+    <CompanionSecurityGraph />
 
-    <details className="rtcp-details">
-      <summary>How this works</summary>
+    <details className="rtcp-details operator-details">
+      <summary>Operator view · council and receipt details</summary>
+      <div className="rtcp-seat-strip" aria-label="Round Table Council members">
+        {council.map((member, index) => <motion.article
+          key={member.id}
+          className={activeIds.has(member.id) ? 'active' : ''}
+          initial={{ opacity: 0, y: 8 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: Math.min(index * .035, .24) }}
+        >
+          <span>{String(member.seat).padStart(2, '0')}</span>
+          <div><strong>{member.name}</strong><small>{member.title}</small></div>
+        </motion.article>)}
+      </div>
       <div className="rtcp-details-grid">
-        <article><span>1</span><strong>One ingress</strong><p>Your request enters the Hub once instead of being copied across ten agents.</p></article>
-        <article><span>2</span><strong>Council route</strong><p>RTCP selects only the identities needed for the decision and the correct domain lane.</p></article>
-        <article><span>3</span><strong>Adapt, don’t rebuild</strong><p>The target PWA keeps its state, UX and local agents. The Hub adds governance around it.</p></article>
-        <article><span>4</span><strong>Receipt before claim</strong><p>A route is not model execution. Provider, domain and evidence receipts close that gap.</p></article>
+        <article><span>1</span><strong>One request</strong><p>The companion receives the user's goal once.</p></article>
+        <article><span>2</span><strong>Guarded route</strong><p>RTCP selects the required domain and council seats without granting new authority.</p></article>
+        <article><span>3</span><strong>Existing system</strong><p>The target product keeps its state, UX and local agents.</p></article>
+        <article><span>4</span><strong>Receipt before claim</strong><p>A route is not model/tool execution. The receipt must say what actually happened.</p></article>
       </div>
+      {route && <p className="operator-receipt">Receipt: {route.receipt.adapterId} · {route.receipt.outcome} · {route.execution.mode}</p>}
     </details>
   </section>;
 }

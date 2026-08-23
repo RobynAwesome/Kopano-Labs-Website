@@ -1,3 +1,4 @@
+import { announceCompanionRoute } from './companionEvents';
 import rtcpProjection from './data/rtcp.json';
 
 export type RtcpSeat = {
@@ -93,6 +94,7 @@ function localRoute(intent: string): RtcpRoute {
 export async function routeRtcpIntent(intent: string): Promise<RtcpRoute> {
   const configured = import.meta.env.VITE_KOPANO_HUB_API_BASE as string | undefined;
   const base = (configured || DEFAULT_RTCP_HUB_BASE).replace(/\/$/, '');
+  let route: RtcpRoute;
 
   try {
     const response = await fetch(`${base}/api/rtcp/route`, {
@@ -100,9 +102,11 @@ export async function routeRtcpIntent(intent: string): Promise<RtcpRoute> {
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ intent }),
     });
-    if (!response.ok) return localRoute(intent);
-    return await response.json() as RtcpRoute;
+    route = response.ok ? await response.json() as RtcpRoute : localRoute(intent);
   } catch {
-    return localRoute(intent);
+    route = localRoute(intent);
   }
+
+  announceCompanionRoute(route);
+  return route;
 }

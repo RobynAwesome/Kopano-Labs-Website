@@ -27,6 +27,8 @@ const deliverables = [
   'Post-change Validation Report',
 ] as const;
 
+const kopanoLinkedIn = 'https://za.linkedin.com/company/kopano-labs';
+
 export function SEAHomeStrip() {
   return (
     <section className="sea-home-strip" aria-labelledby="sea-home-title">
@@ -60,7 +62,7 @@ export function SearchEntityArchitecture() {
           <p className="sea-kicker">Make your company machine-understandable.</p>
           <p>We help people, businesses and institutions become easier for search engines and AI systems to discover, distinguish, understand, retrieve and verify.</p>
           <div className="hero-actions">
-            <a className="primary" href="mailto:hello@kopanolabs.com?subject=SEA%20Entity%20State%20Audit">Audit my entity</a>
+            <a className="primary" href={kopanoLinkedIn} target="_blank" rel="noreferrer">Start a SEA conversation ↗</a>
             <a className="secondary" href="#sea-method">See the method</a>
           </div>
         </div>
@@ -133,7 +135,7 @@ export function SearchEntityArchitecture() {
         <h2>We don't control AI.<br/>We engineer the evidence it can find.</h2>
         <p>No provider can be forced to index, rank, cite or repeat a claim. SEA works on the controllable surface: clear technical structure, canonical identity, truthful relationships, useful public evidence and reproducible validation.</p>
         <div className="hero-actions">
-          <a className="primary" href="mailto:hello@kopanolabs.com?subject=SEA%20Consultation">Talk to Kopano Labs</a>
+          <a className="primary" href={kopanoLinkedIn} target="_blank" rel="noreferrer">Talk to Kopano Labs ↗</a>
           <a className="secondary" href="https://github.com/RobynAwesome/Search-Entity-Architecture" target="_blank" rel="noreferrer">Inspect the public method ↗</a>
         </div>
       </section>

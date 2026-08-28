@@ -9,6 +9,7 @@ Allow: /Cars4Mars/Architecture/
 Allow: /Cars4Mars/Media/
 Allow: /Cars4Mars/Support/
 Allow: /FOC/
+Allow: /SEA/
 Allow: /systems/
 Allow: /labs/
 Allow: /content/

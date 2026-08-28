@@ -15,6 +15,8 @@ const Cars4MarsMissionControl = lazy(() => import('./components/Cars4MarsMission
 const KopanoScene = lazy(() => import('./components/KopanoScene').then((module) => ({ default: module.KopanoScene })));
 const MarsRoverScene = lazy(() => import('./components/MarsRoverScene').then((module) => ({ default: module.MarsRoverScene })));
 const RouteExperienceSurface = lazy(() => import('./components/RouteExperienceSurface').then((module) => ({ default: module.RouteExperienceSurface })));
+const SearchEntityArchitecture = lazy(() => import('./components/SearchEntityArchitecture').then((module) => ({ default: module.SearchEntityArchitecture })));
+const SEAHomeStrip = lazy(() => import('./components/SearchEntityArchitecture').then((module) => ({ default: module.SEAHomeStrip })));
 const SystemAtlas = lazy(() => import('./components/SystemAtlas').then((module) => ({ default: module.SystemAtlas })));
 
 const systems: [string, string, string][] = [
@@ -117,6 +119,7 @@ export function App() {
       <button className="brand" onClick={() => navigate('home')}><span className="brand-mark"><img src="/assets/brand/kopano-mark.svg" alt=""/></span><span><strong>Kopano Labs</strong><small>SOUTH AFRICAN SYSTEMS STUDIO</small></span></button>
       <nav aria-label="Primary">
         <NavButton id="home" active={primaryView} onClick={navigate}>Now</NavButton>
+        <NavButton id="sea" active={primaryView} onClick={navigate}>SEA</NavButton>
         <NavButton id="systems" active={primaryView} onClick={navigate}>Systems</NavButton>
         <NavButton id="labs" active={primaryView} onClick={navigate}>Labs</NavButton>
         <NavButton id="content" active={primaryView} onClick={navigate}>Projects</NavButton>
@@ -149,6 +152,8 @@ export function App() {
             <p>Kopano Labs connects governance experiments, client delivery, public-interest software, community infrastructure and cyber-physical builds without pretending they are the same product.</p>
           </motion.div>
 
+          <Suspense fallback={<GovernedFallback label="Loading Search Entity Architecture…"/>}><SEAHomeStrip/></Suspense>
+
           <section className="now-surface" aria-label="Current Kopano Labs work">
             {now.map((item,index)=><motion.a key={item.id} className={`now-card ${item.tone}`} href={item.href} target={item.href.startsWith('http')?'_blank':undefined} rel={item.href.startsWith('http')?'noreferrer':undefined} initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} whileHover={{y:-6,scale:1.01}} viewport={{once:true}} transition={{delay:index*.05}}>
               {item.id==='cars4mars'?<RoverVisual className="now-rover"/>:<strong className="now-mark">{item.mark}</strong>}
@@ -163,6 +168,8 @@ export function App() {
 
           <section className="next-public-strip"><span>UP NEXT</span><strong>Falling Walls Lab collaboration page</strong><strong>NICIS founder-in-action page</strong></section>
         </motion.section>}
+
+        {view === 'sea' && <motion.section key="sea" className="page sea-route" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><Suspense fallback={<GovernedFallback label="Loading Search Entity Architecture…"/>}><SearchEntityArchitecture/></Suspense></motion.section>}
 
         {view === 'foc' && <motion.section key="foc" className="page" initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} exit={{opacity:0,y:-12}}><FOCMatrix/></motion.section>}
 

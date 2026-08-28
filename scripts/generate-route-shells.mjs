@@ -65,6 +65,32 @@ function replaceMeta(html, route) {
       ],
     })}</script>`
     : '';
+  const seaServiceSchema = route.path === '/SEA/'
+    ? `<script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@graph': [
+        {
+          '@type': 'WebPage',
+          '@id': 'https://kopanolabs.com/SEA/#webpage',
+          url: 'https://kopanolabs.com/SEA/',
+          name: 'Search Entity Architecture (SEA) — Kopano Labs',
+          description: 'Search Entity Architecture by Kopano Labs engineers and validates public digital identity so search engines and AI systems can discover, distinguish, understand, retrieve and verify people, businesses and institutions.',
+          isPartOf: { '@id': 'https://kopanolabs.com/#website' },
+          mainEntity: { '@id': 'https://kopanolabs.com/SEA/#service' },
+        },
+        {
+          '@type': 'Service',
+          '@id': 'https://kopanolabs.com/SEA/#service',
+          name: 'Search Entity Architecture',
+          alternateName: 'SEA',
+          serviceType: 'Public digital identity and search entity architecture consulting',
+          description: 'A Kopano Labs service for auditing, engineering and validating the public evidence environment through which search engines and generative AI systems discover and interpret an entity.',
+          provider: { '@id': 'https://kopanolabs.com/#organization' },
+          mainEntityOfPage: { '@id': 'https://kopanolabs.com/SEA/#webpage' },
+        },
+      ],
+    })}</script>`
+    : '';
 
   return html
     .replace(/<title>.*?<\/title>/s, `<title>${title}</title>`)
@@ -76,7 +102,7 @@ function replaceMeta(html, route) {
     .replace(/<meta property="og:url" content="[^"]*"\s*\/>/, `<meta property="og:url" content="${canonical}" />`)
     .replace(/<meta name="twitter:title" content="[^"]*"\s*\/>/, `<meta name="twitter:title" content="${title}" />`)
     .replace(/<meta name="twitter:description" content="[^"]*"\s*\/>/, `<meta name="twitter:description" content="${description}" />`)
-    .replace('</head>', `${aboutEntitySchema}</head>`);
+    .replace('</head>', `${aboutEntitySchema}${seaServiceSchema}</head>`);
 }
 
 const indexedRoutes = manifest.routes.filter((entry) => entry.index && entry.path !== '/');

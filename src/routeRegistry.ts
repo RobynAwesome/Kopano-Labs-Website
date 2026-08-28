@@ -6,6 +6,7 @@ export type View =
   | 'systems'
   | 'content'
   | 'foc'
+  | 'sea'
   | 'cars4mars'
   | 'cars4mars-ledger'
   | 'cars4mars-architecture'

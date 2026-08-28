@@ -82,13 +82,24 @@
       "humanPrompt": "I want to understand Kopano Labs and what it is building now."
     },
     {
+      "id": "sea",
+      "path": "/SEA/",
+      "title": "Search Entity Architecture (SEA) — Kopano Labs",
+      "description": "Search Entity Architecture by Kopano Labs engineers and validates public digital identity so search engines and AI systems can discover, distinguish, understand, retrieve and verify people, businesses and institutions.",
+      "index": true,
+      "crawl": true,
+      "sitemapOrder": 8,
+      "intents": ["sea", "search entity architecture", "entity seo", "geo", "generative engine optimization", "ai search", "ai visibility", "machine understandable", "digital identity", "knowledge graph", "entity graph", "what does ai think", "google indexing", "structured data"],
+      "humanPrompt": "I want to understand or improve what search engines and AI systems understand about me or my organization."
+    },
+    {
       "id": "systems",
       "path": "/systems/",
       "title": "Interactive Systems Atlas — Kopano Labs",
       "description": "Explore Kopano Labs systems through Kopano Sovereign Hub, Kopano Context, FiveS Arena, KasiLink, CrisisConnect, Starfall Salvage and Cars4Mars.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 8,
+      "sitemapOrder": 9,
       "intents": ["systems", "sovereign hub", "kopano context", "crisisconnect", "fives arena", "football", "kasilink", "starfall", "infrastructure", "threejs", "interactive"],
       "humanPrompt": "I want to interact with the systems being built."
     },
@@ -99,7 +110,7 @@
       "description": "See what Kopano Labs is testing across community infrastructure, agriculture, education, mobility, games and engineering.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 9,
+      "sitemapOrder": 10,
       "intents": ["labs", "experiments", "cape campass", "cape campus", "harvest 4 all", "harvest-4-all", "starfall salvage", "crisisconnect", "kasilink", "project jennifer", "education", "field validation"],
       "humanPrompt": "Show me the projects and experiments Kopano Labs is testing."
     },
@@ -110,7 +121,7 @@
       "description": "Explore Kopano Labs public projects and source repositories across products, client systems, governance runtimes, engineering, labs and workshops.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 10,
+      "sitemapOrder": 11,
       "intents": ["content", "projects", "portfolio", "repositories", "repos", "estate", "robynawesome", "github", "domains", "apps"],
       "humanPrompt": "I want the full public project and repository estate."
     },
@@ -121,7 +132,7 @@
       "description": "Inspect source authority, runtime provenance, public artifacts and technical verification behind Kopano Labs work.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 11,
+      "sitemapOrder": 12,
       "intents": ["proof", "source", "audit", "lineage", "verification", "main brain", "sovereign hub", "receipts"],
       "humanPrompt": "I want the technical evidence, source lineage and verification."
     },
@@ -132,7 +143,7 @@
       "description": "Kopano Labs is a South African experimental systems lab exploring artificial intelligence, web design, blockchain research, offline-first software and cyber-physical engineering.",
       "index": true,
       "crawl": true,
-      "sitemapOrder": 12,
+      "sitemapOrder": 13,
       "intents": ["about", "entity", "company", "founder", "kopano labs legal name", "ai lab", "web design", "blockchain", "ama-phu", "entertainment"],
       "humanPrompt": "I want to understand the Kopano Labs entity, founder and related Ama-Phu company."
     }

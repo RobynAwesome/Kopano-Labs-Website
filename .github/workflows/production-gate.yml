@@ -63,6 +63,7 @@ jobs:
           grep -q 'Allow: /Cars4Mars/Media/' public/robots.txt
           grep -q 'Allow: /Cars4Mars/Support/' public/robots.txt
           grep -q 'Allow: /FOC/' public/robots.txt
+          grep -q 'Allow: /SEA/' public/robots.txt
           grep -q 'Allow: /content/' public/robots.txt
           ! grep -q 'KOPANO_LABS.pdf' public/robots.txt
           grep -q 'Sitemap: https://kopanolabs.com/sitemap.xml' public/robots.txt
@@ -71,16 +72,20 @@ jobs:
 
       - name: Verify sitemap follows route registry
         run: |
-          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC systems labs content proof; do grep -q "https://kopanolabs.com/$route/" public/sitemap.xml; done
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC SEA systems labs content proof; do grep -q "https://kopanolabs.com/$route/" public/sitemap.xml; done
           ! grep -q 'KOPANO_LABS.pdf' public/sitemap.xml
           grep -q '"id": "foc"' src/route-manifest.json
+          grep -q '"id": "sea"' src/route-manifest.json
           grep -q '"id": "cars4mars"' src/route-manifest.json
           grep -q '"id": "content"' src/route-manifest.json
 
       - name: Verify crawl shells and canonical metadata
         run: |
-          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC systems labs content proof; do test -f "dist/$route/index.html"; done
+          for route in Cars4Mars Cars4Mars/Ledger Cars4Mars/Architecture Cars4Mars/Media Cars4Mars/Support FOC SEA systems labs content proof; do test -f "dist/$route/index.html"; done
           grep -q 'rel="canonical" href="https://kopanolabs.com/FOC/"' dist/FOC/index.html
+          grep -q 'rel="canonical" href="https://kopanolabs.com/SEA/"' dist/SEA/index.html
+          grep -q 'Search Entity Architecture' dist/SEA/index.html
+          grep -q '"@type":"Service"' dist/SEA/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/Cars4Mars/"' dist/Cars4Mars/index.html
           grep -q 'rel="canonical" href="https://kopanolabs.com/content/"' dist/content/index.html
 
